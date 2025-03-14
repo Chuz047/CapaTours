@@ -35,28 +35,28 @@ promotions. Built using C#, CSS, HTML, Javascript, Microsoft SQL Server and SCSS
 
 1. **Clone the repository** 📂🔄
 
-    ´´´bash
+    ```bash
     git clone https://github.com/Chuz047/CapaTours.git
-    ´´´
+    ```
 
 2. **Set up the Microsoft SQL Server database** 🗄️⚙️
 
-   - 🏗️ Open **SQL Server Management Studio**.
-   - 🆕 Create a new database called `CapaToursBD`.
-   - 📥 Import the provided SQL file `CapaToursBD.sql` into the `CapaToursBD` database using your server.
+   - Open **SQL Server Management Studio** 🏗️
+   - Create a new database called `CapaToursBD` 🆕
+   - Import the provided SQL file `CapaToursBD.sql` into the `CapaToursBD` database using your server 📥
 
 3. **Configure the project** 📝🔧
 
-    ´´´appsettings.json (Web API)
+    ```appsettings.json (Web API)
 
     "ConnectionStrings": {
         "BDConnection": "Server=your_server;Database=CapaTourBD;Trusted_Connection=True;TrustServerCertificate=True"
     },
 
-    ´´´
+    ```
 
 4. **Start the IIS Express Server** 🚀🌐
 
-    - 🖥️ Open the software on **Visual Studio 2022** and click on "https" for both MVC and Web API .
+    - Open the software on **Visual Studio 2022** and click on "https" for both MVC and Web API 🖥️
 
-5. Access the software in your browser. 🌍🔗
+5. **Access the software in your browser** 🌍🔗
