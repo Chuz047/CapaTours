@@ -97,17 +97,6 @@ CREATE TABLE [dbo].[ToursImagenes] (
     [TourID] [bigint] NOT NULL,
     [Imagen] [varchar](1000) NOT NULL,
     CONSTRAINT FK_ToursImagenes_Tours FOREIGN KEY ([TourID]) REFERENCES [dbo].[Tours]([TourID])
-<<<<<<< HEAD:SQL/CapaToursBD.sql
-)
-GO
-
--- Tabla de errores
-CREATE TABLE [dbo].[AuditoriaErrores] (
-	[ErrorID] [bigint] IDENTITY(1,1) PRIMARY KEY,
-	[Mensaje] [varchar](4000) NOT NULL,
-	[Fecha] [datetime] NOT NULL DEFAULT(GETDATE())
-=======
->>>>>>> dev:CapaTours/CapaToursBD.sql
 )
 GO
 

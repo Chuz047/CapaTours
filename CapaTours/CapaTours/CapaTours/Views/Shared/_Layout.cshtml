@@ -12,6 +12,7 @@
 	<title>@ViewData["Title"]</title>
 
 	<link href="~/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
 	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 		  rel="stylesheet">
 	<link href="~/css/sb-admin-2.min.css" rel="stylesheet">
@@ -44,41 +45,57 @@
 
 			<hr class="sidebar-divider">
 
+			@* Estos hay que mostrarlos por rol más adelante *@
 			<div class="sidebar-heading">
-				Funcionalidad #1
+				Administrador
 			</div>
 
 			<li class="nav-item">
-				<a class="nav-link collapsed" href="#">
-					<i class="fas fa-question"></i>
-					<span>Opción #1</span>
+				<a class="nav-link collapsed" href="@Url.Action("Listado", "Tours")">
+					<i class="fa-solid fa-mountain-sun"></i>
+					<span>Tours</span>
 				</a>
 			</li>
 
 			<li class="nav-item">
-				<a class="nav-link collapsed" href="#">
-					<i class="fas fa-question"></i>
-					<span>Opción #2</span>
+				<a class="nav-link collapsed" href="@Url.Action("Listado", "Clientes")">
+					<i class="fa fa-users"></i>
+					<span>Clientes</span>
+				</a>
+			</li>
+
+			<li class="nav-item">
+				<a class="nav-link collapsed" href="@Url.Action("Listado", "Reservas")">
+					<i class="fa fa-ticket"></i>
+					<span>Reservas</span>
 				</a>
 			</li>
 
 			<hr class="sidebar-divider">
 
+			@* Estos hay que mostrarlos por rol más adelante *@
 			<div class="sidebar-heading">
-				Funcionalidad #2
+				Cliente
 			</div>
 
 			<li class="nav-item">
 				<a class="nav-link collapsed" href="#">
 					<i class="fas fa-question"></i>
-					<span>Opción #1</span>
+					<span>Tours</span>
 				</a>
 			</li>
 
 			<li class="nav-item">
 				<a class="nav-link collapsed" href="#">
 					<i class="fas fa-question"></i>
-					<span>Opción #2</span>
+					<span>Reservas</span>
+				</a>
+			</li>
+
+			<li class="nav-item">
+				<a class="nav-link collapsed" href="#">
+					<i class="fas fa-question"></i>
+					<span>Reseñas</span>
 				</a>
 			</li>
 
@@ -106,7 +123,7 @@
 							<input type="text" class="form-control bg-light border-0 small" placeholder="Buscar..."
 								   aria-label="Search" aria-describedby="basic-addon2">
 							<div class="input-group-append">
-								<button class="btn btn-primary" type="button" style="background-color: #44572f;">
+								<button class="btn" type="button" style="background-color: #44572f; color:white">
 									<i class="fas fa-search fa-sm"></i>
 								</button>
 							</div>
@@ -192,9 +209,8 @@
 	</a>
 
 	<!-- Logout Modal-->
-	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-		 aria-hidden="true">
-		<div class="modal-dialog" role="document">
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">¿Estás seguro?</h5>
@@ -204,13 +220,17 @@
 				</div>
 				<div class="modal-body">Selecciona "Cerrar Sesión" si deseas terminar tu sesión actual.</div>
 				<div class="modal-footer">
-					<button class="btn btn-secondary" type="button" data-dismiss="modal" style="background-color:#3B4333">Regresar</button>
-					<a asp-controller="Autenticacion" asp-action="Login" class="btn btn-primary" style="background-color:#44572f" ;>Cerrar Sesión</a>
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">Regresar</button>
+					<a asp-controller="Autenticacion" asp-action="Login" class="btn btn-danger">Cerrar Sesión</a>
 				</div>
 			</div>
 		</div>
 	</div>
 
+
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/vendor/jquery/jquery.min.js"></script>
 	<script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>

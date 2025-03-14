@@ -1,0 +1,6 @@
+@CapaToursAPI_HostAddress = http://localhost:7212
+
+GET {{CapaToursAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
