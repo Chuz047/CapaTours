@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace CapaTours.Controllers.Admin
+namespace CapaTours.Controllers.Cliente
 {
     public class ReservasController : Controller
     {
@@ -12,20 +12,10 @@ namespace CapaTours.Controllers.Admin
             _configuration = configuration;
         }
 
-        #region RealizarReserva
+        #region Listado
 
         [HttpGet]
-        public IActionResult RealizarReserva()
-        {
-            return View();
-        }
-
-        #endregion
-
-        #region Listado2
-
-        [HttpGet]
-        public IActionResult Listado2()
+        public IActionResult Listado()
         {
             return View();
         }

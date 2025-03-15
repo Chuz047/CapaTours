@@ -1,0 +1,65 @@
+﻿@* @model List<CapaTours.Models.ResennasModel> *@
+
+<div class="row px-5">
+	<div class="col-12 px-0">
+		<div class="row mx-1 mb-4">
+			<div class="col-auto">
+				<a href="@Url.Action("Listado", "Resennas")" class="btn btn-secondary btn-sm">
+					<i class="fa-solid fa-arrow-left"></i> Regresar
+				</a>
+			</div>
+		</div>
+
+		<!-- Encabezado -->
+		<div class="row mx-1 mb-4">
+			<div class="display-3 px-0 col-12">Creación de Reseñas</div>
+			<div class="text-muted px-0">Complete el formulario para agregar una nueva reseña.</div>
+		</div>
+
+		<!-- Contenedor del Formulario -->
+		<div class="mt-4 p-5 rounded shadow-lg" style="background-color: #f9f9f9; border-left: 5px solid #44572F;">
+
+			<form asp-action="CrearResenna" asp-controller="Resennas">
+
+				<h5 class="text mt-4">Información de la Reseña</h5>
+				<hr>
+				<div class="row g-3 mt-2">
+					<!-- Calificación -->
+					<div class="col-md-6">
+						<div class="form-floating">
+							<label>Calificación (Del 1 al 5)</label>
+							<input type="number" class="form-control input-lg" @*asp-for="Calificacion"*@ placeholder="Calificación" required>
+						</div>
+					</div>
+				</div>
+				<!-- Título -->
+				<div class="row g-3 mt-2">
+					<div class="col-md-12">
+						<div class="form-floating">
+							<label>Título</label>
+							<input type="text" class="form-control input-lg" @*asp-for="Titulo"*@ placeholder="Título" required>
+						</div>
+					</div>
+				</div>
+				<!-- Contenido -->
+				<div class="row g-3 mt-2">
+					<div class="col-md-12">
+						<div class="form-floating">
+							<label>Contenido</label>
+							<input type="text" class="form-control input-lg" @*asp-for="Contenido"*@ placeholder="Contenido" required>
+						</div>
+					</div>
+				</div>
+
+				<!-- Botón Guardar -->
+				<div class="row g-2 mt-4">
+					<div class="col-md">
+						<button type="submit" class="btn btn-success w-100" style="background-color: #44572f">
+							<i class="fa-solid fa-square-check"></i> Añadir
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

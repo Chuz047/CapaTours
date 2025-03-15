@@ -1,15 +1,22 @@
-﻿@* @model List<CapaTours.Models.ReservasModel>*@
+﻿@* @model List<CapaTours.Models.ToursModel> *@
 
 <div class="row px-5">
 	<div class="col-12">
-		<div class="row">
-			<div class="col-6">
-				<div class="display-3 px-0">Reservas</div>
-				<div class="text-muted px-0 ">Listado de todas las reservas registradas en el sistema.</div>
-				<br>
+		<div class="row mx-1 mb-4">
+			<div class="col-auto">
+				<a href="@Url.Action("RealizarReserva", "Reservas")" class="btn btn-secondary btn-sm">
+					<i class="fa-solid fa-arrow-left"></i> Regresar
+				</a>
 			</div>
 		</div>
 
+		<div class="row">
+			<div class="col-6">
+				<div class="display-3 px-0">Reservas</div>
+				<div class="text-muted px-0 ">Listado de reservas realizadas por el usuario.</div>
+				<br>
+			</div>
+		</div>
 
 		<div class="row mt-3 mb-2"></div>
 		<div class="row">
@@ -31,16 +38,15 @@
 								<td>"Ejemplo"</td>
 								<td>"Ejemplo"</td>
 								<td class="text-center">
-
-									@* Abre un form (no editable) con los datos poblados dinámicante de la reserva de la fila *@
-									<a href="@Url.Action("", "")" class="btn btn-sm" style="background-color: #7B9C36; color:white">
-										<i class="fa-solid fa-eye"></i> Ver Detalles
-									</a>
-
-									<button class="btn btn-sm btn-danger me-1" data-bs-toggle="modal" data-bs-target="#cancelarReservaModal">
-										<i class="fa-solid fa-ban"></i> Cancelar Reserva
+									<button class="btn btn-sm btn-danger me-1" data-bs-toggle="modal" data-bs-target="#anularReservaModal">
+										<i class="fa fa-times"></i> Anular Reserva
 									</button>
-
+									<a href="@Url.Action("", "")" class="btn btn-sm" style="background-color: #7B9C36; color:white">
+										<i class="fa fa-credit-card"></i> Pagar Reserva
+									</a>
+									<a href="@Url.Action("CrearResenna", "Resennas")" class="btn btn-sm" style="background-color: #7B9C36; color:white">
+										<i class="fa fa-star"></i> Añadir Reseña
+									</a>
 								</td>
 							</tr>
 						</tbody>
@@ -51,19 +57,19 @@
 	</div>
 </div>
 
-<div class="modal fade" id="cancelarReservaModal" tabindex="-1" aria-labelledby="cancelarReservaModalLabel" aria-hidden="true">
+<div class="modal fade" id="anularReservaModal" tabindex="-1" aria-labelledby="anularReservaModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="cancelarReservaModalLabel">Confirmar Cancelación</h5>
+				<h5 class="modal-title" id="anularReservaModalLabel">Confirmar Anulación</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				<p>¿Está seguro de que desea cancelar esta reserva?</p>
+				<p>¿Está seguro de que desea anular esta reserva? Esta acción no se puede deshacer.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-				<button type="button" class="btn btn-danger">Desactivar</button>
+				<button type="button" class="btn btn-danger">Anular</button>
 			</div>
 		</div>
 	</div>
