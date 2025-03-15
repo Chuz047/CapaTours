@@ -9,8 +9,9 @@
 				<br>
 			</div>
 		</div>
-
-
+		<a href="@Url.Action("CrearCliente", "Clientes")" id="AgregarNuevoPersonal" class="btn btn-sm mb-0 nowrap" style="white-space: nowrap; background-color: #44572f; color: white">
+			<i class="fa-solid fa-plus"></i> Crear Cliente
+		</a>
 		<div class="row mt-3 mb-2"></div>
 		<div class="row">
 			<div class="col-12 px-0">
@@ -33,7 +34,7 @@
 								<td class="text-center">
 
 									@* Abre un form con los datos poblados dinámicante del usuario de la fila, permite ver/editar los datos del usuario *@
-									<a href="@Url.Action("", "")" class="btn btn-sm" style="background-color: #7B9C36; color:white">
+									<a href="@Url.Action("EditarCliente", "Clientes")" class="btn btn-sm" style="background-color: #7B9C36; color:white">
 										<i class="fas fa-edit"></i> Editar Detalles
 									</a>
 

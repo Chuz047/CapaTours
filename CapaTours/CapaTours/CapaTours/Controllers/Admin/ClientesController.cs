@@ -22,5 +22,22 @@ namespace CapaTours.Controllers.Admin
 
         #endregion
 
+        #region CrearCliente
+
+        [HttpGet]
+        public IActionResult CrearCliente()
+        {
+            return View();
+        }
+        #endregion
+
+        #region EditarCliente
+
+        [HttpGet]
+        public IActionResult EditarCliente()
+        {
+            return View();
+        }
+        #endregion
     }
 }

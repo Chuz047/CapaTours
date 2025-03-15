@@ -31,7 +31,7 @@ namespace CapaTours.Controllers.Admin
         }
         #endregion
 
-        #region Editar
+        #region EditarTour
 
         [HttpGet]
         public IActionResult EditarTour()
