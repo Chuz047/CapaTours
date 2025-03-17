@@ -49,12 +49,12 @@ promotions. Built using C#, CSS, HTML, Javascript, Microsoft SQL Server and SCSS
 
 ## Technologies Used 🛠️💡
 
-- **Frontend:** CSS, HTML, JavaScript, SCSS 🌐🎨
-- **Backend:** C# 💻🔙
-- **Frameworks:** ASP.Net Core, Bootstrap, JQuery 🖥️📚
-- **Database:** Microsoft SQL Server 🗄️🔗
-- **Server:** IIS Express 🔷🖥️
-- **Version Control:** Git 🔂📁
+- **Frontend**: CSS, HTML, JavaScript, SCSS 🌐🎨
+- **Backend**: C# 💻🔙
+- **Frameworks**: ASP.Net Core, Bootstrap, JQuery 🖥️📚
+- **Database**: Microsoft SQL Server 🗄️🔗
+- **Server**: IIS Express 🔷🖥️
+- **Version Control**: Git 🔂📁
 
 ## Installation 🚀⚙️
 
