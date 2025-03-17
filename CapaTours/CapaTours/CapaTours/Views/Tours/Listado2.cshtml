@@ -1,0 +1,116 @@
+﻿@* @model List<CapaTours.Models.ToursModel> *@
+
+<div class="row px-5">
+	<div class="col-12">
+		<div class="row mx-1 mb-4">
+			<div class="col-auto">
+				<a href="@Url.Action("Inicio", "Tours")" class="btn btn-secondary btn-sm">
+					<i class="fa-solid fa-arrow-left"></i> Regresar
+				</a>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-6">
+				<div class="display-3 px-0">Tours</div>
+				<div class="text-muted px-0 ">Listado de todos los tours actualmente disponibles.</div>
+				<br>
+			</div>
+		</div>
+		
+		<div class="row mt-3 mb-2"></div>
+		<div class="row">
+			<div class="col-12 px-0">
+				<div class="table-responsive shadow-lg" style="background-color: #f9f9f9; border-left: 5px solid #44572f; border-radius: 10px;">
+					<table id="example" class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>Columna #1</th>
+								<th>Columna #2</th>
+								<th>Columna #3</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							@*Aquí van los resultados del query *@
+							<tr>
+								<td>"Ejemplo"</td>
+								<td>"Ejemplo"</td>
+								<td>"Ejemplo"</td>
+								<td class="text-center">
+									<a href="@Url.Action("DetallesTour", "Tours")" class="btn btn-sm" style="background-color: #7B9C36; color:white">
+										<i class="fas fa-eye"></i> Ver Detalles
+									</a>
+									<button class="btn btn-sm" style="background-color: #7B9C36; color: white" data-bs-toggle="modal" data-bs-target="#aplicarFiltroPrecioModal">
+										<i class="fas fa-tag"></i> Filtrar Por Precio
+									</button>
+									<button class="btn btn-sm" style="background-color: #7B9C36; color: white" data-bs-toggle="modal" data-bs-target="#aplicarFiltroDestinoModal">
+										<i class="fas fa-map-pin"></i> Filtrar Por Destino
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="aplicarFiltroPrecioModal" tabindex="-1" aria-labelledby="aplicarFiltroPrecioModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="aplicarFiltroPrecioModalLabel">Aplicar Filtro</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<label for="filtroPrecioInput" class="form-label">Ingrese el valor del precio a filtrar:</label>
+				<input type="number" class="form-control" id="filtroPrecioInput" placeholder="Ejemplo: 10500">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+				<button type="button" class="btn" style="background-color:#44572f; color:white" id="confirmarFiltroPrecioBtn">Confirmar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="aplicarFiltroDestinoModal" tabindex="-1" aria-labelledby="aplicarFiltroDestinoModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="aplicarFiltroDestinoModalLabel">Aplicar Filtro</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<label for="filtroDestinoInput" class="form-label">Ingrese el nombre del destino a filtrar:</label>
+				<input type="text" class="form-control" id="filtroDestinoInput" placeholder="Ejemplo: San Carlos">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+				<button type="button" class="btn" style="background-color:#44572f; color:white" id="confirmarFiltroDestinoBtn">Confirmar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function () {
+
+		$("#example").DataTable({
+			language: {
+				url: '//cdn.datatables.net/plug-ins/2.1.8/i18n/es-ES.json',
+			},
+			responsive: true,
+			columnDefs: [
+				{
+					targets: [2],
+					className: 'text-center'
+				}
+			],
+			order: [[0, 'desc']]
+		});
+
+	});
+</script>

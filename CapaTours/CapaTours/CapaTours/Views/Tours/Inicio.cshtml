@@ -1,0 +1,80 @@
+﻿@* @model List<CapaTours.Models.ToursModel> *@
+
+<div class="container mt-5">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <h1 class="display-4" style="color: #44572f;">Bienvenido a Nuestra Agencia de Tours</h1>
+            <p class="lead text-muted">Explora los destinos más increíbles con nuestros paquetes exclusivos. Descubre nuevas experiencias y crea recuerdos inolvidables.</p>
+            <a href="@Url.Action("Listado2", "Tours")" class="btn btn-lg mt-3" style="background-color: #7B9C36; color: white;">
+                Ver Tours Disponibles <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="~/img/Tours/mapaturisticoCR.jpg" alt="Imagen de Tours" class="img-fluid rounded shadow">
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h2 class="text-center" style="color: #44572f;">¿Por qué elegirnos?</h2>
+    <div class="row text-center mt-4">
+        <div class="col-md-4">
+            <i class="fa-solid fa-globe fa-3x mb-3" style="color: #7B9C36;"></i>
+            <h4>Destinos Exóticos</h4>
+            <p class="text-muted">Explora los lugares más fascinantes con nuestros paquetes turísticos personalizados.</p>
+        </div>
+        <div class="col-md-4">
+            <i class="fa-solid fa-star fa-3x mb-3" style="color: #7B9C36;"></i>
+            <h4>Calidad Garantizada</h4>
+            <p class="text-muted">Experiencia y servicio de primera para que disfrutes sin preocupaciones.</p>
+        </div>
+        <div class="col-md-4">
+            <i class="fa-solid fa-headset fa-3x mb-3" style="color: #7B9C36;"></i>
+            <h4>Atención 24/7</h4>
+            <p class="text-muted">Soporte continuo para asegurar una experiencia de viaje perfecta.</p>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5 text-center">
+    <h2 class="mb-4" style="color: #44572f;">Explora Nuestros Tours Populares</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0">
+                <img src="/img/Tours/playa.jpg" class="card-img-top" alt="Playa">
+                <div class="card-body">
+                    <h5 class="card-title">Aventura en la Playa</h5>
+                    <p class="card-text text-muted">Disfruta de las playas más hermosas con actividades acuáticas incluidas.</p>
+                    <a href="@Url.Action("Listado2", "Tours")" class="btn btn-sm" style="background-color: #7B9C36; color:white;">
+                        Ver Más
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0">
+                <img src="/img/Tours/montaña.jpg" class="card-img-top" alt="Montañas">
+                <div class="card-body">
+                    <h5 class="card-title">Escapada a las Montañas</h5>
+                    <p class="card-text text-muted">Explora paisajes espectaculares y sumérgete en la naturaleza.</p>
+                    <a href="@Url.Action("Listado2", "Tours")" class="btn btn-sm" style="background-color: #7B9C36; color:white;">
+                        Ver Más
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0">
+                <img src="/img/Tours/ciudad.jpg" class="card-img-top" alt="Ciudad">
+                <div class="card-body">
+                    <h5 class="card-title">Turismo Urbano</h5>
+                    <p class="card-text text-muted">Descubre las ciudades más vibrantes con visitas guiadas exclusivas.</p>
+                    <a href="@Url.Action("Listado2", "Tours")" class="btn btn-sm" style="background-color: #7B9C36; color:white;">
+                        Ver Más
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
