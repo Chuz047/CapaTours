@@ -41,3 +41,12 @@
         padding: 2rem;
     }
 
+.star {
+    font-size: 2rem;
+    cursor: pointer;
+    color: gray;
+}
+
+    .star.selected {
+        color: gold !important;
+    }

@@ -21,9 +21,9 @@ namespace CapaTours.Controllers.Cliente
 
 		#endregion
 
-		#region Listado2
+		#region ListadoCliente
 
-		public IActionResult Listado2()
+		public IActionResult ListadoCliente()
 		{
 			return View();
 		}

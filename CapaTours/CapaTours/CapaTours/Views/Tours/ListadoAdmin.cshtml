@@ -36,7 +36,7 @@
 										<i class="fas fa-edit"></i> Editar Detalles
 									</a>
 									<button class="btn btn-sm btn-danger me-1" data-bs-toggle="modal" data-bs-target="#desactivarTourModal">
-										<i class="fa-solid fa-ban"></i> Desactivar Tour
+										<i class="fa-regular fa-circle-xmark"></i> Desactivar Tour
 									</button>
 									<button class="btn btn-sm" style="background-color: #7B9C36; color: white" data-bs-toggle="modal" data-bs-target="#aplicarDescuentoModal">
 										<i class="fas fa-tag"></i> Aplicar Descuento
@@ -51,6 +51,7 @@
 	</div>
 </div>
 
+@* Modal de Desactivar Tour *@
 <div class="modal fade" id="desactivarTourModal" tabindex="-1" aria-labelledby="desactivarTourModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
@@ -59,16 +60,17 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				<p>¿Está seguro de que desea desactivar este tour? Esta acción no se puede deshacer.</p>
+				<p>¿Está seguro de que desea desactivar este tour?</p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
 				<button type="button" class="btn btn-danger">Desactivar</button>
 			</div>
 		</div>
 	</div>
 </div>
 
+@* Modal de Aplicar Descuento *@
 <div class="modal fade" id="aplicarDescuentoModal" tabindex="-1" aria-labelledby="aplicarDescuentoModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
@@ -81,13 +83,14 @@
 				<input type="number" class="form-control" id="descuentoInput" placeholder="Ejemplo: 10">
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-				<button type="button" class="btn" style="background-color:#44572f; color:white" id="confirmarDescuentoBtn">Confirmar</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn" style="background-color:#44572f; color:white" id="confirmarDescuentoBtn">Aplicar</button>
 			</div>
 		</div>
 	</div>
 </div>
 
+@* DataTable *@
 <script>
 	$(document).ready(function () {
 

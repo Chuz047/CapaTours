@@ -2,18 +2,10 @@
 
 <div class="row px-5">
 	<div class="col-12">
-		<div class="row mx-1 mb-4">
-			<div class="col-auto">
-				<a href="@Url.Action("RealizarReserva", "Reservas")" class="btn btn-secondary btn-sm">
-					<i class="fa-solid fa-arrow-left"></i> Regresar
-				</a>
-			</div>
-		</div>
-
 		<div class="row">
 			<div class="col-6">
 				<div class="display-3 px-0">Reservas</div>
-				<div class="text-muted px-0 ">Listado de reservas realizadas por el usuario.</div>
+				<div class="text-muted px-0 ">Aquí puede encontrar todas las reservas que ha realizado previamente.</div>
 				<br>
 			</div>
 		</div>
@@ -38,15 +30,21 @@
 								<td>"Ejemplo"</td>
 								<td>"Ejemplo"</td>
 								<td class="text-center">
-									<button class="btn btn-sm btn-danger me-1" data-bs-toggle="modal" data-bs-target="#anularReservaModal">
-										<i class="fa fa-times"></i> Anular Reserva
-									</button>
-									<a href="@Url.Action("", "")" class="btn btn-sm" style="background-color: #7B9C36; color:white">
+
+									@* Abrir una nueva vista con un form para pagar la reserva *@
+									<a class="btn btn-sm" style="background-color: #7B9C36; color:white" asp-controller="" asp-action="">
 										<i class="fa fa-credit-card"></i> Pagar Reserva
 									</a>
-									<a href="@Url.Action("CrearResenna", "Resennas")" class="btn btn-sm" style="background-color: #7B9C36; color:white">
+
+									@* Este SOLO se debe mostrar cuando el estado de la reserva pasa a "Completado" *@
+									<a class="btn btn-sm" style="background-color: #7B9C36; color:white" asp-controller="Resennas" asp-action="CrearResenna">
 										<i class="fa fa-star"></i> Añadir Reseña
 									</a>
+
+									@* Este se debe esconder cuando el estado de la reserva pasa a "Completado" *@
+									<button class="btn btn-sm btn-danger me-1" data-bs-toggle="modal" data-bs-target="#anularReservaModal">
+										<i class="fa-regular fa-circle-xmark"></i> Anular Reserva
+									</button>
 								</td>
 							</tr>
 						</tbody>
@@ -57,6 +55,7 @@
 	</div>
 </div>
 
+@* Modal de Anular Reserva *@
 <div class="modal fade" id="anularReservaModal" tabindex="-1" aria-labelledby="anularReservaModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
@@ -68,13 +67,14 @@
 				<p>¿Está seguro de que desea anular esta reserva? Esta acción no se puede deshacer.</p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
 				<button type="button" class="btn btn-danger">Anular</button>
 			</div>
 		</div>
 	</div>
 </div>
 
+@* DataTable *@
 <script>
 	$(document).ready(function () {
 
