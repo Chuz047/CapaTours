@@ -5,7 +5,7 @@ promotions. Built using C#, CSS, HTML, Javascript, Microsoft SQL Server and SCSS
 
 ## Project Members 🧑🏻‍💻👥
 
-- **Esteban Quirós Martínez**
+- **Esteban Roberto Quirós Martínez**
 - **Cristopher Rodríguez Fernández**
 - **Brenda Karina Rojas Cortés**
 - **Paola Segura Bellanero**
@@ -13,7 +13,39 @@ promotions. Built using C#, CSS, HTML, Javascript, Microsoft SQL Server and SCSS
 
 ## Features ✨🔍
 
-🚧 Features coming soon 🚧
+### Admin Panel 🛠️📊
+
+- **Tour Management** 🚍📅
+    - 📋 **List View**: Displays all tours in a table with key details and tour status (Pending, In Progress, Completed).
+    - ✏️ **Edit**: Modify existing tours using a pre-filled form.
+    - ❌ **Deactivate**: Option to disable outdated or unavailable tours.
+    - 🎟️ **Promotions**: Apply or remove discounts for specific tours.
+- **Client Management** 👥📜
+    - 📋 **List View**: Displays all registered clients in a table with key information.
+    - 🚫 **Account Deactivation**: Confirmation modal to deactivate a client account.
+- **Reservations Management** 📅📑
+    - 📋 **List View**: Displays all reservations along with relevant details.
+    - 🔎 **Filters**: Search and filter by ID/passport number.
+    - 💵 **Payment Details**: Modal displaying payment information for a reservation.
+    - ❌ **Cancel Reservations**: Option to manually cancel a reservation.
+
+### Clients 👤🔑
+
+- **Authentication** 🔐📲
+    - 🔑 **Login**: Page to access the system using email and password.
+    - 📄 **Registration**: Sign-up form requiring personal details.
+    - 📩 **Password Recovery**: Request to reset a password via email.
+- **Tour Exploration** 🌎🗺️
+    - 🏠 **Home Page**: Aesthetic landing page featuring images and descriptions.
+    - 📋 **Tour Listing**: View all available tours with filters for price and destination.
+    - 📖 **Tour Details**: Detailed information about each tour, including ratings and reviews.
+- **Reservations & Payments** 💳📝
+    - 📅 **Make a Reservation**: Modal allowing users to select the number of people for a booking.
+    - 📊 **Reservation Management**: Table displaying all reservations and their statuses (Pending, Confirmed, Canceled, Completed).
+    - 📤 **Payments**: Modal for uploading a payment receipt and receiving a confirmation invoice via email.
+- **User Interaction & Reviews** ⭐📝
+    - 💬 **Review Form**: Users can rate the tour (1-5), add a title, and leave a comment.
+    - 👀 **Review Display**: Reviews are publicly visible on the tour details page.
 
 ## Technologies Used 🛠️💡
 
