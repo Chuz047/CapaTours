@@ -4,7 +4,7 @@
 	<div class="col-12 px-0">
 		<div class="row mx-1 mb-4">
 			<div class="col-auto">
-				<a href="@Url.Action("Listado", "Resennas")" class="btn btn-secondary btn-sm">
+				<a class="btn btn-secondary btn-sm" asp-controller="Resennas" asp-action="ListadoCliente">
 					<i class="fa-solid fa-arrow-left"></i> Regresar
 				</a>
 			</div>
@@ -25,12 +25,18 @@
 				<hr>
 				<div class="row g-3 mt-2">
 					<!-- Calificación -->
-					<div class="col-md-6">
-						<div class="form-floating">
-							<label>Calificación (Del 1 al 5)</label>
-							<input type="number" class="form-control input-lg" @*asp-for="Calificacion"*@ placeholder="Calificación" required>
+					<div class="container text-center mt-5">
+						<h3>Califique su experiencia</h3>
+						<div id="star-rating">
+							<i class="fas fa-star star" data-value="1"></i>
+							<i class="fas fa-star star" data-value="2"></i>
+							<i class="fas fa-star star" data-value="3"></i>
+							<i class="fas fa-star star" data-value="4"></i>
+							<i class="fas fa-star star" data-value="5"></i>
 						</div>
+						<p id="rating-value" class="mt-2">Calificación: 0</p>
 					</div>
+
 				</div>
 				<!-- Título -->
 				<div class="row g-3 mt-2">
@@ -41,12 +47,12 @@
 						</div>
 					</div>
 				</div>
-				<!-- Contenido -->
+				<!-- Comentarios -->
 				<div class="row g-3 mt-2">
 					<div class="col-md-12">
 						<div class="form-floating">
-							<label>Contenido</label>
-							<input type="text" class="form-control input-lg" @*asp-for="Contenido"*@ placeholder="Contenido" required>
+							<label>Comentarios</label>
+							<input type="text" class="form-control input-lg" @*asp-for="Contenido"*@ placeholder="Comentarios" required>
 						</div>
 					</div>
 				</div>
@@ -63,3 +69,27 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	window.onload = function() {
+		const stars = document.querySelectorAll(".star");
+		const ratingValue = document.getElementById("rating-value");
+
+		stars.forEach(star => {
+			star.addEventListener("click", function() {
+				const rating = this.getAttribute("data-value");
+				ratingValue.textContent = `Calificación: ${rating}`;
+
+				stars.forEach(s => {
+					s.classList.remove("selected");
+					s.style.color = 'gray';
+				});
+
+				for (let i = 0; i < rating; i++) {
+					stars[i].classList.add("selected");
+					stars[i].style.color = 'gold';
+				}
+			});
+		});
+	};
+</script>

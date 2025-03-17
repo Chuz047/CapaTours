@@ -15,7 +15,7 @@ namespace CapaTours.Controllers.Cliente
         #region Listado
 
         [HttpGet]
-        public IActionResult Listado()
+        public IActionResult ListadoCliente()
         {
             return View();
         }

@@ -27,7 +27,7 @@
 		<!-- Sidebar -->
 		<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #44572f;">
 
-			<a class="sidebar-brand d-flex align-items-center justify-content-center" asp-controller="Home" asp-action="Home">
+			<a class="sidebar-brand d-flex align-items-center justify-content-center">
 				<div class="sidebar-brand-icon rotate-n-15">
 					<i class='fas fa-campground'></i>
 				</div>
@@ -36,8 +36,9 @@
 
 			<hr class="sidebar-divider my-0">
 
+			@* Solo visible por los clientes *@
 			<li class="nav-item active">
-				<a class="nav-link" asp-controller="Home" asp-action="Home">
+				<a class="nav-link" asp-controller="Tours" asp-action="Inicio">
 					<i class="fas fa-home"></i>
 					<span>Inicio</span>
 				</a>
@@ -51,21 +52,21 @@
 			</div>
 
 			<li class="nav-item">
-				<a class="nav-link collapsed" href="@Url.Action("Listado", "Tours")">
+				<a class="nav-link collapsed" asp-controller="Tours" asp-action="ListadoAdmin">
 					<i class="fa-solid fa-mountain-sun"></i>
 					<span>Tours</span>
 				</a>
 			</li>
 
 			<li class="nav-item">
-				<a class="nav-link collapsed" href="@Url.Action("Listado", "Clientes")">
+				<a class="nav-link collapsed" asp-controller="Clientes" asp-action="ListadoAdmin">
 					<i class="fa fa-users"></i>
 					<span>Clientes</span>
 				</a>
 			</li>
 
 			<li class="nav-item">
-				<a class="nav-link collapsed" href="@Url.Action("Listado", "Reservas")">
+				<a class="nav-link collapsed" asp-controller="Reservas" asp-action="ListadoAdmin">
 					<i class="fa fa-ticket"></i>
 					<span>Reservas</span>
 				</a>
@@ -79,21 +80,21 @@
 			</div>
 
 			<li class="nav-item">
-				<a class="nav-link collapsed" href="@Url.Action("Inicio", "Tours")">
+				<a class="nav-link collapsed" asp-controller="Tours" asp-action="ListadoCliente">
 					<i class="fa-solid fa-mountain-sun"></i>
 					<span>Tours</span>
 				</a>
 			</li>
 
 			<li class="nav-item">
-				<a class="nav-link collapsed" href="@Url.Action("RealizarReserva", "Reservas")">
+				<a class="nav-link collapsed" asp-controller="Reservas" asp-action="ListadoCliente">
 					<i class="fa fa-ticket"></i>
 					<span>Reservas</span>
 				</a>
 			</li>
 
 			<li class="nav-item">
-				<a class="nav-link collapsed" href="@Url.Action("Listado", "Resennas")">
+				<a class="nav-link collapsed" asp-controller="Resennas" asp-action="ListadoCliente">
 					<i class="fa fa-comments"></i>
 					<span>Reseñas</span>
 				</a>

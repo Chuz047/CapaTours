@@ -32,11 +32,6 @@
 								<td>"Ejemplo"</td>
 								<td class="text-center">
 
-									@* Abre un form con los datos poblados dinámicante del usuario de la fila, permite ver/editar los datos del usuario *@
-									<a href="@Url.Action("", "")" class="btn btn-sm" style="background-color: #7B9C36; color:white">
-										<i class="fas fa-edit"></i> Editar Detalles
-									</a>
-
 									@* A futuro hay que agregar otro boton/modal que solo se muestren cuando Estado = 0, para reactivar la cuenta *@
 									<button class="btn btn-sm btn-danger me-1" data-bs-toggle="modal" data-bs-target="#desactivarClienteModal">
 										<i class="fa-solid fa-user-slash"></i> Desactivar Cuenta
@@ -52,6 +47,7 @@
 	</div>
 </div>
 
+@* Modal de Desactivar Cuenta *@
 <div class="modal fade" id="desactivarClienteModal" tabindex="-1" aria-labelledby="desactivarClienteModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
@@ -63,13 +59,14 @@
 				<p>¿Está seguro de que desea desactivar esta cuenta?</p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
 				<button type="button" class="btn btn-danger">Desactivar</button>
 			</div>
 		</div>
 	</div>
 </div>
 
+@* Data Table *@
 <script>
 	$(document).ready(function () {
 

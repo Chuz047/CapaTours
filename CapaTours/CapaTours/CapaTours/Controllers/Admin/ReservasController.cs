@@ -22,10 +22,10 @@ namespace CapaTours.Controllers.Admin
 
         #endregion
 
-        #region Listado2
+        #region Listado
 
         [HttpGet]
-        public IActionResult Listado2()
+        public IActionResult ListadoAdmin()
         {
             return View();
         }
