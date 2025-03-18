@@ -9,7 +9,7 @@
 				<br>
 			</div>
 		</div>
-		<a href="@Url.Action("CrearTour", "Tours")" id="AgregarNuevoPersonal" class="btn btn-sm mb-0 nowrap" style="white-space: nowrap; background-color: #44572f; color: white">
+		<a href="@Url.Action("CrearTour", "Tours")" id="AgregarNuevoPersonal" class="btn mb-0 nowrap" style="white-space: nowrap; background-color: #44572f; color: white">
 			<i class="fa-solid fa-plus"></i> Crear Tour
 		</a>
 		<div class="row mt-3 mb-2"></div>
@@ -19,9 +19,14 @@
 					<table id="example" class="table table-bordered table-hover">
 						<thead>
 							<tr>
-								<th>Columna #1</th>
-								<th>Columna #2</th>
-								<th>Columna #3</th>
+								<th>Nombre</th>
+								<th>Destino</th>
+								<th>Precio por Persona</th>
+								<th>Capacidad</th>
+								<th>Fecha de Inicio</th>
+								<th>Fecha de Fin</th>
+								<th>Estado</th>
+								<th>Descuento</th>
 								<th>Acciones</th>
 							</tr>
 						</thead>
@@ -31,8 +36,13 @@
 								<td>"Ejemplo"</td>
 								<td>"Ejemplo"</td>
 								<td>"Ejemplo"</td>
+								<td>"Ejemplo"</td>
+								<td>"Ejemplo"</td>
+								<td>"Ejemplo"</td>
+								<td>"Ejemplo"</td>
+								<td>"Ejemplo"</td>
 								<td class="text-center">
-									<a href="@Url.Action("EditarTour", "Tours")" class="btn btn-sm" style="background-color: #7B9C36; color:white">
+									<a class="btn btn-sm" style="background-color: #7B9C36; color:white" asp-controller="Tours" asp-action="EditarTour">
 										<i class="fas fa-edit"></i> Editar Detalles
 									</a>
 									<button class="btn btn-sm btn-danger me-1" data-bs-toggle="modal" data-bs-target="#desactivarTourModal">

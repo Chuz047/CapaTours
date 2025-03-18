@@ -21,5 +21,12 @@ namespace CapaTours.Controllers.Cliente
         }
 
         #endregion
+
+
+        [HttpGet]
+        public IActionResult PagarReserva()
+        {
+            return View();
+        }
     }
 }
