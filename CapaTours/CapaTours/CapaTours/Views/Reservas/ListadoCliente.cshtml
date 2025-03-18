@@ -17,9 +17,12 @@
 					<table id="example" class="table table-bordered table-hover">
 						<thead>
 							<tr>
-								<th>Columna #1</th>
-								<th>Columna #2</th>
-								<th>Columna #3</th>
+								<th>ID de Reserva</th>
+								<th>Tour</th>
+								<th>Fecha de Inicio</th>
+								<th>Fecha de Fin</th>
+								<th>Cantidad de Personas</th>
+								<th>Estado</th>
 								<th>Acciones</th>
 							</tr>
 						</thead>
@@ -29,11 +32,14 @@
 								<td>"Ejemplo"</td>
 								<td>"Ejemplo"</td>
 								<td>"Ejemplo"</td>
+								<td>"Ejemplo"</td>
+								<td>"Ejemplo"</td>
+								<td>"Ejemplo"</td>
 								<td class="text-center">
 
-									@* Abrir una nueva vista con un form para pagar la reserva *@
-									<a class="btn btn-sm" style="background-color: #7B9C36; color:white" asp-controller="" asp-action="">
-										<i class="fa fa-credit-card"></i> Pagar Reserva
+									@* Abrir otra vista con un form para pagar la reserva *@
+									<a class="btn btn-sm" style="background-color: #7B9C36; color:white" asp-controller="Reservas" asp-action="PagarReserva">
+										<i class="fa-regular fa-credit-card"></i> Pagar Reserva
 									</a>
 
 									@* Este SOLO se debe mostrar cuando el estado de la reserva pasa a "Completado" *@

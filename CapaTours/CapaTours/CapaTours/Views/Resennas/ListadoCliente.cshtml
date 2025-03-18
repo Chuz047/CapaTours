@@ -17,9 +17,8 @@
 					<table id="example" class="table table-bordered table-hover">
 						<thead>
 							<tr>
-								<th>Columna #1</th>
-								<th>Columna #2</th>
-								<th>Columna #3</th>
+								<th>Título</th>
+								<th>Calificación</th>
 								<th>Acciones</th>
 							</tr>
 						</thead>
@@ -28,11 +27,13 @@
 							<tr>
 								<td>"Ejemplo"</td>
 								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
 								<td class="text-center">
 									<a href="@Url.Action("EditarResenna", "Resennas")" class="btn btn-sm" style="background-color: #7B9C36; color:white">
 										<i class="fas fa-edit"></i>  Editar Reseña
 									</a>
+									<button class="btn btn-sm btn-danger me-1" data-bs-toggle="modal" data-bs-target="#anularResennaModal">
+										<i class="fa-regular fa-circle-xmark"></i> Eliminar Reseña
+									</button>
 								</td>
 							</tr>
 						</tbody>
@@ -43,6 +44,26 @@
 	</div>
 </div>
 
+@* Modal de Eliminar Reseña *@
+<div class="modal fade" id="anularResennaModal" tabindex="-1" aria-labelledby="anularResennaModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="anularResennaModalLabel">Confirmar Eliminación</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p>¿Está seguro de que desea eliminar esta reseña? Esta acción no se puede deshacer.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-danger">Eliminar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+@* DataTable *@
 <script>
 	$(document).ready(function () {
 

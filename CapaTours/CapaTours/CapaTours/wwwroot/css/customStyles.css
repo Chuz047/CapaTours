@@ -50,3 +50,23 @@
     .star.selected {
         color: gold !important;
     }
+
+.card-hover:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.custom-position {
+    position: relative;
+}
+
+.item-card img {
+    object-fit: cover;
+    min-height: 300px;
+    max-height: 300px;
+}
+
+.card-with-border {
+    border-left: 5px solid #44572f;
+    border-radius: 10px;
+}
