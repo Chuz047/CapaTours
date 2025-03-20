@@ -43,7 +43,7 @@ promotions. Built using C#, CSS, HTML, Javascript, Microsoft SQL Server and SCSS
 
 - **Frontend**: CSS, HTML, JavaScript, SCSS 🌐🎨
 - **Backend**: C# 💻🔙
-- **Frameworks**: ASP.Net Core, Bootstrap, JQuery 🖥️📚
+- **Frameworks**: ASP.Net Core, Bootstrap 🖥️📚
 - **Database**: Microsoft SQL Server 🗄️🔗
 - **Server**: IIS Express 🔷🖥️
 - **Version Control**: Git 🔂📁
