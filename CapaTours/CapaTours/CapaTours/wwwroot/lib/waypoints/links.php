@@ -61,7 +61,7 @@
      * - 'shortcut_sticky1' and 'shortcut_sticky2': Allow making an element sticky at the top of the page.
      */
     'shortcut_infinite1' => 'lib/waypoints/shortcuts/infinite.js',
-    'shortcut_infinite2' => 'lib/waypoints/shortcut/infinite.min.js',
+    'shortcut_infinite2' => 'lib/waypoints/shortcuts/infinite.min.js',
     'shortcut_inview1' => 'lib/waypoints/shortcuts/inview.js',
     'shortcut_inview2' => 'lib/waypoints/shortcuts/inview.min.js',
     'shortcut_sticky1' => 'lib/waypoints/shortcuts/sticky.js',
