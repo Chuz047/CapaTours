@@ -86,10 +86,10 @@ promotions. Built using C#, CSS, HTML, Javascript, Microsoft SQL Server and SCSS
 5. **Access the software in your browser** 🌍🔗
 
 >[!NOTE]
->## Project Members 🧑🏻‍💻👥
->Esteban Roberto Quirós Martínez <br>
->Cristopher Rodríguez Fernández <br>
->Brenda Karina Rojas Cortés <br>
->Paola Segura Bellanero <br>
->Jesús Daniel Vega Marvez <br>
+>**Project Members** 🧑🏻‍💻👥
+>- Esteban Roberto Quirós Martínez <br>
+>- Cristopher Rodríguez Fernández <br>
+>- Brenda Karina Rojas Cortés <br>
+>- Paola Segura Bellanero <br>
+>- Jesús Daniel Vega Marvez <br>
 ***
