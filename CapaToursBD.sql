@@ -103,7 +103,10 @@ GO
 -- Tabla de errores
 CREATE TABLE [dbo].[AuditoriaErrores] (
 	[ErrorID] [bigint] IDENTITY(1,1) PRIMARY KEY,
-	[Mensaje] [varchar](4000) NOT NULL,
-	[Fecha] [datetime] NOT NULL DEFAULT(GETDATE())
+	[UsuarioID] [bigint] NOT NULL,
+	[Mensaje] [varchar](MAX) NOT NULL,
+	[Fecha] [datetime] NOT NULL DEFAULT(GETDATE()),
+	[Origen] [varchar] (500) NOT NULL,
+	CONSTRAINT FK_AuditoriaErrores_Usuarios FOREIGN KEY ([UsuarioID]) REFERENCES [dbo].[Usuarios]([UsuarioID])
 )
 GO
