@@ -1,82 +1,61 @@
 ﻿@* @model List<CapaTours.Models.ToursModel> *@
 
 <div class="row px-5">
-    <div class="col-12">
-        <div class="row mx-1 mb-4">
-            <div class="col-auto">
-                <a class="btn btn-secondary btn-sm" asp-controller="Tours" asp-action="ListadoCliente">
-                    <i class="fa-solid fa-arrow-left"></i> Regresar
-                </a>
-            </div>
-        </div>
-
-        <!-- Encabezado -->
-        <div class="row mx-1 mb-4">
-            <div class="display-3 px-0 col-12">Tours</div>
-            <div class="text-muted px-0">Detalles del tour disponible.</div>
-        </div>
-
-		<div class="row mt-3 mb-2"></div>
-		<div class="row">
-			<div class="col-12 px-0">
-				<div class="table-responsive shadow-lg" style="background-color: #f9f9f9; border-left: 5px solid #44572f; border-radius: 10px;">
-					<table id="example" class="table table-bordered table-hover">
-						<thead>
-							<tr>
-								<th>Nombre</th>
-								<th>Destino</th>
-								<th>Descripción</th>
-								<th>Itinerario</th>
-								<th>Precio</th>
-								<th>Capacidad</th>
-								<th>Fecha de Inicio</th>
-								<th>Fecha de Fin</th>
-								<th>Descuento</th>
-								<th>Acciones</th>
-							</tr>
-						</thead>
-						<tbody>
-							@*Aquí van los resultados del query *@
-							<tr>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td class="text-center">
-									<button class="btn btn-sm" style="background-color: #7B9C36; color: white" data-bs-toggle="modal" data-bs-target="#reservarTourModal">
-										<i class="fas fa-calendar-alt"></i> ¡Reservá Hoy!
-									</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+	<div class="col-12 px-0">
+		<div class="row mx-1 mb-4">
+			<div class="col-auto">
+				<a class="btn btn-secondary btn-sm" asp-controller="Tours" asp-action="ListadoAdmin">
+					<i class="fa-solid fa-arrow-left"></i> Regresar
+				</a>
 			</div>
 		</div>
-    </div>
+
+        <!-- Encabezado -->
+        <div class="container mt-5">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="display-3 px-0">Detalles de Tour</div>
+                    <div class="text-muted px-0 ">Encuentra cada detalle del tour que hayas seleccionado</div>
+                    <br>
+                    <!-- Contenedor de la Tabla -->
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Destino:</strong> Ejemplo</li>
+                        <li class="list-group-item"><strong>Descripción:</strong> Ejemplo</li>
+                        <li class="list-group-item"><strong>Itinerario:</strong> Ejemplo</li>
+                        <li class="list-group-item"><strong>Precio:</strong> Ejemplo</li>
+                        <li class="list-group-item"><strong>Capacidad:</strong> Ejemplo</li>
+                        <li class="list-group-item"><strong>Fecha de Inicio:</strong> Ejemplo</li>
+                        <li class="list-group-item"><strong>Fecha de Fin:</strong> Ejemplo</li>
+                        <li class="list-group-item"><strong>Descuento:</strong> Ejemplo</li>
+                    </ul>
+                    <button class="btn btn-lg mt-3" style="background-color: #7B9C36; color: white;" data-bs-toggle="modal" data-bs-target="#reservarTourModal">
+                        ¡Reserva hoy! <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="col-md-6 text-center">
+                    <img src="~/img/Tours/detalleGeneral.jpg" alt="Imagen de Tour" class="img-fluid rounded shadow">
+                </div>
+            </div>
+        </div>
+	</div>
 </div>
 
 @* Modal de Reservar Tour *@
 <div class="modal fade" id="reservarTourModal" tabindex="-1" aria-labelledby="reservarTourModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="reservarTourModalLabel">Reservar Tour</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<label for="reservaInput" class="form-label">Ingrese la cantidad de personas a reservar:</label>
-				<input type="number" class="form-control" id="reservaInput" placeholder="Ejemplo: 3">
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-				<button type="button" class="btn" style="background-color:#44572f; color:white" id="confirmarReservaBtn">Reservar</button>
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reservarTourModalLabel">Reservar Tour</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label for="reservaInput" class="form-label">Ingrese la cantidad de personas a reservar:</label>
+                <input type="number" class="form-control" id="reservaInput" placeholder="Ejemplo: 3">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn" style="background-color:#44572f; color:white" id="confirmarReservaBtn">Reservar</button>
+            </div>
+        </div>
+    </div>
 </div>
