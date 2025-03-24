@@ -18,6 +18,13 @@ CREATE TABLE [dbo].[Roles] (
 )
 GO
 
+SELECT * FROM dbo.Roles;
+
+SELECT * FROM dbo.Roles WHERE RolID = 1;
+
+SELECT DB_NAME();
+
+SELECT * FROM dbo.Usuarios;
 -- Tabla de usuarios
 CREATE TABLE [dbo].[Usuarios] (
     [UsuarioID] [bigint] IDENTITY(1,1) PRIMARY KEY,
@@ -34,6 +41,10 @@ CREATE TABLE [dbo].[Usuarios] (
     CONSTRAINT FK_Usuarios_Roles FOREIGN KEY ([RolID]) REFERENCES [dbo].[Roles] ([RolID])
 )
 GO
+
+INSERT INTO Usuarios (Identificacion, Nombre, ApellidoPaterno, ApellidoMaterno, Correo, Contrasenna, TieneContrasennaTemp, FechaVencimientoTemp, Estado, RolID)
+VALUES ('402660567', 'Brenda', 'Rojas', 'Cortés', 'brenkaco29@gmail.com', 'brojas291002004', 0, NULL, 1, 1);
+
 
 -- Tabla de tours
 CREATE TABLE [dbo].[Tours] (
@@ -106,4 +117,56 @@ CREATE TABLE [dbo].[AuditoriaErrores] (
 	[Mensaje] [varchar](4000) NOT NULL,
 	[Fecha] [datetime] NOT NULL DEFAULT(GETDATE())
 )
+GO
+
+
+CREATE PROCEDURE [dbo].[Login]
+    @correo VARCHAR(15),
+    @Contrasenna VARCHAR(50)
+AS
+BEGIN
+   
+    SELECT  U.UsuarioID,
+            U.Identificacion,
+            U.Nombre 'NombreUsuario',
+            U.Correo,
+            U.Estado,
+            U.RolID,
+            R.NombreRol 'NombreRol'
+    FROM    dbo.Usuarios U
+    INNER JOIN dbo.Roles R ON U.RolID = R.RolID
+    WHERE   U.Correo = @Correo
+            AND U.Contrasenna = @Contrasenna
+            AND U.Estado = 1 s
+END
+GO
+
+
+CREATE PROCEDURE [dbo].[Registro]
+    @Identificacion VARCHAR(15),
+    @Nombre VARCHAR(50),
+    @ApellidoPaterno VARCHAR(250),
+    @ApellidoMaterno VARCHAR(100),
+    @Correo VARCHAR(100),
+    @Contrasenna VARCHAR(100),
+    @RolID BIGINT 
+AS
+BEGIN
+   
+    IF NOT EXISTS(SELECT 1 FROM dbo.Usuarios WHERE Identificacion = @Identificacion OR Correo = @Correo)
+    BEGIN
+        
+        INSERT INTO dbo.Usuarios (Identificacion, Contrasenna, Nombre, ApellidoPaterno, ApellidoMaterno, Correo, Estado, RolID)
+        VALUES (@Identificacion, @Contrasenna, @Nombre, @ApellidoPaterno, @ApellidoMaterno, @Correo, 1, @RolID);
+        
+        PRINT 
+    END
+    ELSE
+    BEGIN
+        PRINT 
+    END
+END
+GO
+
+DROP PROCEDURE IF EXISTS [dbo].[Registro];
 GO
