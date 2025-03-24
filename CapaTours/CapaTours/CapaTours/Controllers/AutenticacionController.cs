@@ -62,10 +62,9 @@ namespace CapaTours.Controllers
         [HttpPost]
         public IActionResult Login(UsuarioModel model)
         {
-
             using (var api = _httpClient.CreateClient())
             {
-                var url = _configuration.GetSection("Variables:urlApi").Value + "Autenticacion/Registro";
+                var url = _configuration.GetSection("Variables:urlApi").Value + "Autenticacion/Login"; 
                 var response = api.PostAsJsonAsync(url, model).Result;
 
                 if (response.IsSuccessStatusCode)
@@ -77,12 +76,10 @@ namespace CapaTours.Controllers
                         var datosResult = JsonSerializer.Deserialize<UsuarioModel>((JsonElement)result.Datos!);
 
                         HttpContext.Session.SetString("Token", datosResult!.Token!);
-                        HttpContext.Session.SetString("Nombre", datosResult!.Nombre!);
-                        HttpContext.Session.SetString("Primer Apellido", datosResult!.ApellidoPaterno!);
-                        HttpContext.Session.SetString("Segundo Apellido", datosResult!.ApellidoMaterno!);
                         HttpContext.Session.SetString("Correo", datosResult!.Correo!);
-                        HttpContext.Session.SetString("Contraseña", datosResult!.Contrasenna!);
-                        return RedirectToAction("Principal", "Autenticacion");
+                        
+                        
+                        return RedirectToAction("Inicio", "Tours");
                     }
                     else
                     {
@@ -95,8 +92,9 @@ namespace CapaTours.Controllers
                 }
             }
 
-            return View("Inicio", "Tours");
+            return View();
         }
+
 
         #endregion
 

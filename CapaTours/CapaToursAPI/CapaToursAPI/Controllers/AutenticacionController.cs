@@ -45,7 +45,7 @@ namespace CapaToursApi.Controllers
                 else
                 {
                     respuesta.Indicador = false;
-                    respuesta.Mensaje = "Su información no ha registrado correctamente";
+                    respuesta.Mensaje = "Su información no se ha registrado correctamente";
                 }
 
                 return Ok(respuesta);
@@ -59,9 +59,12 @@ namespace CapaToursApi.Controllers
             using (var context = new SqlConnection(_configuration.GetSection("ConnectionStrings:BDConnection").Value))
             {
                 var result = context.QueryFirstOrDefault<UsuarioModel>("Login",
-                    new { model.Identificacion, model.Contrasenna });
+                 new { model.Correo, model.Contrasenna });
+
 
                 var respuesta = new RespuestaModel();
+
+                
 
                 if (result != null)
                 {
@@ -82,9 +85,15 @@ namespace CapaToursApi.Controllers
         }
 
 
+
         private string GenerarToken(long UsuarioID, long RolID)
         {
-            string SecretKey = _configuration.GetSection("Variables:llaveToken").Value!;
+            string? SecretKey = _configuration.GetSection("Variables:llaveCifrado").Value!;
+
+            if (string.IsNullOrEmpty(SecretKey))
+            {
+                throw new InvalidOperationException("La llave del token no está configurada correctamente.");
+            }
 
             List<Claim> claims = new List<Claim>();
             claims.Add(new Claim("UsuarioID", UsuarioID.ToString()));
