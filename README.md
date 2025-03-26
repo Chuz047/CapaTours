@@ -3,14 +3,6 @@
 A comprehensive tourism management software, designed to optimize the administration of tours, reservations, clients, payments and
 promotions. Built using C#, CSS, HTML, Javascript, Microsoft SQL Server and SCSS, this project represents a significant improvement in the administration of its tourist services, facilitating key processes such as the management of reservations, clients, payments and promotions. By optimizing these tasks, the operational burden on staff is reduced, improving efficiency.
 
-## Project Members 🧑🏻‍💻👥
-
-- **Esteban Roberto Quirós Martínez**
-- **Cristopher Rodríguez Fernández**
-- **Brenda Karina Rojas Cortés**
-- **Paola Segura Bellanero**
-- **Jesús Daniel Vega Marvez**
-
 ## Features ✨🔍
 
 ### Admin Panel 🛠️📊
@@ -51,7 +43,7 @@ promotions. Built using C#, CSS, HTML, Javascript, Microsoft SQL Server and SCSS
 
 - **Frontend**: CSS, HTML, JavaScript, SCSS 🌐🎨
 - **Backend**: C# 💻🔙
-- **Frameworks**: ASP.Net Core, Bootstrap, JQuery 🖥️📚
+- **Frameworks**: ASP.Net Core, Bootstrap 🖥️📚
 - **Database**: Microsoft SQL Server 🗄️🔗
 - **Server**: IIS Express 🔷🖥️
 - **Version Control**: Git 🔂📁
@@ -92,3 +84,12 @@ promotions. Built using C#, CSS, HTML, Javascript, Microsoft SQL Server and SCSS
     - 🖥️ Open the software on **Visual Studio 2022** and click on "https" for both MVC and Web API.
 
 5. **Access the software in your browser** 🌍🔗
+
+>[!NOTE]
+>**Project Members** 🧑🏻‍💻👥
+>- Esteban Roberto Quirós Martínez <br>
+>- Cristopher Rodríguez Fernández <br>
+>- Brenda Karina Rojas Cortés <br>
+>- Paola Segura Bellanero <br>
+>- Jesús Daniel Vega Marvez <br>
+***
