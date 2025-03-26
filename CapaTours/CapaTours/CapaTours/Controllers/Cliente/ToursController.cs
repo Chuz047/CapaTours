@@ -12,18 +12,22 @@ namespace CapaTours.Controllers.Cliente
 			_configuration = configuration;
 		}
 
-		#region Inicio
+        #region Inicio
 
-		public IActionResult Inicio()
-		{
-			return View();
-		}
+        [HttpGet]
+        public IActionResult Inicio()
+        {
+            if (HttpContext.Session.GetString("Token") == null)
+                return RedirectToAction("Login", "Autenticacion");
 
-		#endregion
+            return View();
+        }
 
-		#region ListadoCliente
+        #endregion
 
-		public IActionResult ListadoCliente()
+        #region ListadoCliente
+
+        public IActionResult ListadoCliente()
 		{
 			return View();
 		}

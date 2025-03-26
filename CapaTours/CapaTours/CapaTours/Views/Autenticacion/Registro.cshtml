@@ -1,65 +1,61 @@
-﻿@{
-	ViewData["Title"] = "Registro";
-}
-
+﻿@using CapaTours.Models
+@model UsuarioModel
 @{
-	Layout = "_LayoutExterno";
+    ViewData["Title"] = "Registro";
+    Layout = "_LayoutExterno";
 }
 
 <body style="background-color: #B9C9A4;">
+    <div class="cards-autenticacion">
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card-autenticacion o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-register-image" style="background-image: url('/img/registro.jpg');"></div>
 
-	<div class="cards-autenticacion">
-		<div class="row justify-content-center">
-			<div class="col-xl-10 col-lg-12 col-md-9">
-				<div class="card-autenticacion o-hidden border-0 shadow-lg my-5">
-					<div class="card-body p-0">
-						<div class="row">
-							<div class="col-lg-6 d-none d-lg-block bg-register-image" style="background-image: url('/img/registro.jpg');"></div>
-							<div class="col-lg-6">
-								<div class="p-5">
-									<div class="text-center">
-										<h1 class="h4 text-gray-900 mb-4">Creación de Usuario</h1>
-										<h1 class="h6 text-gray-600 mb-4">El primer paso hacia tu próxima aventura comienza aquí. ¡Regístrate con Capa Tours!</h1>
-									</div>
-									<form class="user">
-										<div class="form-group row">
-											<div class="col-sm-6 mb-3 mb-sm-0">
-												<input type="text" class="form-control form-control-user" id="exampleFirstName"
-													   placeholder="Nombre">
-											</div>
-											<div class="col-sm-6 mb-3 mb-sm-0">
-												<input type="text" class="form-control form-control-user" id="exampleLastName"
-													   placeholder="Apellido">
-											</div>
-										</div>
-										<div class="form-group row">
-											<div class="col-sm-6 mb-3 mb-sm-0">
-												<input type="email" class="form-control form-control-user" id="exampleInputEmail"
-													   placeholder="Correo">
-											</div>
-											<div class="col-sm-6 mb-3 mb-sm-0">
-												<input type="password" class="form-control form-control-user"
-													   id="exampleInputPassword" placeholder="Contraseña">
-											</div>
-										</div>
-										<a asp-controller="Autenticacion" asp-action="Login" class="btn btn-primary btn-user btn-block" style="background-color: #44572f;">
-											Registrarse
-										</a>
-									</form>
-									<hr>
-									<div class="text-center">
-										<a class="small" href="#" style="color: #44572f;">¿Olvidaste tu contraseña?</a>
-									</div>
-									<div class="text-center">
-										<a class="small" asp-controller="Autenticacion" asp-action="Login" style="color: #44572f;">¿Ya tienes una cuenta? Iniciar sesión</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Creación de Usuario</h1>
+                                        <h1 class="h6 text-gray-600 mb-4">El primer paso hacia tu próxima aventura comienza aquí. ¡Regístrate con Capa Tours!</h1>
+                                    </div>
+                                    <form class="user" asp-controller="Autenticacion" asp-action="Registro" method="post">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control input-lg" asp-for="Identificacion" placeholder="Identificación">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control input-lg" asp-for="Nombre" placeholder="Nombre">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control input-lg" asp-for="ApellidoPaterno" placeholder="Primer Apellido">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control input-lg" asp-for="ApellidoMaterno" placeholder="Segundo Apellido">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" class="form-control input-lg" asp-for="Correo" placeholder="Correo Electrónico">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control input-lg" asp-for="Contrasenna" placeholder="Contraseña">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block" style="background-color: #44572f;">
+                                            Registrarse
+                                        </button>
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small" href="#" style="color: #44572f;">¿Olvidaste tu contraseña?</a>
+                                    </div>
+                                    <div class="text-center">
+                                        <a class="small" asp-controller="Autenticacion" asp-action="Login" style="color: #44572f;">¿Ya tienes una cuenta? Iniciar sesión</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
