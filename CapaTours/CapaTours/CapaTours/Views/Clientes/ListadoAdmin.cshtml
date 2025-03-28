@@ -32,19 +32,40 @@
 									<td>@item.Identificacion</td>
 									<td>@item.Nombre</td>
 									<td>@item.Correo</td>
-									<td>@item.Estado</td>
-
-									<td class="text-center">
-										<a class="btn btn-sm" style="background-color: #7B9C36; color:white" asp-controller="Clientes" asp-action="EditarCliente">
-											<i class="fas fa-edit"></i> Editar Detalles
-										</a>
-										<button class="btn btn-sm btn-danger me-1" data-bs-toggle="modal" data-bs-target="#desactivarClienteModal">
-											<i class="fa-solid fa-user-slash"></i> Desactivar Cuenta
-										</button>
+									 <td>
+									<td>
+												@if (item.Estado)
+												{
+											<span class="badge bg-success">Activo</span>
+												}
+												else
+												{
+											<span class="badge bg-danger">Inactivo</span>
+												}
+									</td>
+									<td>
+												@if (item.Estado)
+												{
+											<form method="post" action="@Url.Action("DesactivarUsuario", "Clientes")" class="d-inline">
+												<input type="hidden" name="usuarioID" value="@item.UsuarioID" />
+												<button type="submit" class="btn btn-sm btn-danger me-1">
+													<i class="fa-solid fa-user-slash"></i> Desactivar Cuenta
+												</button>
+											</form>
+												}
+												else
+												{
+											<form method="post" action="@Url.Action("ActivarUsuario", "Clientes")" class="d-inline">
+												<input type="hidden" name="usuarioID" value="@item.UsuarioID" />
+												<button type="submit" class="btn btn-sm btn-success me-1">
+													<i class="fa-solid fa-user-check"></i> Activar Cuenta
+												</button>
+											</form>
+												}
 									</td>
 								</tr>
 								}
-							</tr>
+							
 						</tbody>
 					</table>
 
@@ -54,24 +75,8 @@
 	</div>
 </div>
 
-@* Modal de Desactivar Cuenta *@
-<div class="modal fade" id="desactivarClienteModal" tabindex="-1" aria-labelledby="desactivarClienteModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="desactivarClienteModalLabel">Confirmar Desactivación</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<p>¿Está seguro de que desea desactivar esta cuenta?</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-				<button type="button" class="btn btn-danger">Desactivar</button>
-			</div>
-		</div>
-	</div>
-</div>
+
+
 
 @* Data Table *@
 <script>

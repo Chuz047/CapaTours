@@ -1,7 +1,10 @@
 ﻿using CapaTours.Dependencias;
 using CapaTours.Models;
 using CapaToursAPI.Models;
+using Dapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace CapaTours.Controllers.Admin
@@ -44,6 +47,54 @@ namespace CapaTours.Controllers.Admin
         }
 
         #endregion
+
+        [HttpPost]
+        public IActionResult DesactivarUsuario(long usuarioID)
+        {
+            using (var api = _httpClient.CreateClient())
+            {
+                var url = _configuration.GetSection("Variables:urlApi").Value + "Clientes/DesactivarUsuario";
+
+                api.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+                var result = api.PutAsJsonAsync(url, usuarioID).Result;
+
+                if (result.IsSuccessStatusCode)
+                {
+                    ViewBag.Mensaje = "El usuario ha sido desactivado correctamente.";
+                }
+                else
+                {
+                    ViewBag.Mensaje = "Hubo un error al desactivar el usuario.";
+                }
+            }
+
+            return RedirectToAction("ListadoAdmin");
+        }
+
+        [HttpPost]
+        public IActionResult ActivarUsuario(long usuarioID)
+        {
+            using (var api = _httpClient.CreateClient())
+            {
+                var url = _configuration.GetSection("Variables:urlApi").Value + "Clientes/ActivarUsuario";
+
+                api.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+                var result = api.PutAsJsonAsync(url, usuarioID).Result;
+
+                if (result.IsSuccessStatusCode)
+                {
+                    ViewBag.Mensaje = "El usuario ha sido activado correctamente.";
+                }
+                else
+                {
+                    ViewBag.Mensaje = "Hubo un error al activar el usuario.";
+                }
+            }
+
+            return RedirectToAction("ListadoAdmin");
+        }
+
+
 
         #region Editar
 

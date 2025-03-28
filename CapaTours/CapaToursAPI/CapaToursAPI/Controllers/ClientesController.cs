@@ -49,6 +49,55 @@ namespace CapaToursAPI.Controllers
         }
 
         #endregion
+        [HttpPut]
+        [Route("DesactivarUsuario")]
+        public IActionResult DesactivarUsuario([FromBody] long usuarioID)
+        {
+            using (var connection = new SqlConnection(_configuration.GetSection("ConnectionStrings:BDConnection").Value))
+            {
+                var result = connection.Execute("DesactivarUsuario", new { UsuarioID = usuarioID });
+
+                var respuesta = new RespuestaModel();
+
+                if (result > 0)
+                {
+                    respuesta.Indicador = true;
+                    respuesta.Mensaje = "Usuario desactivado correctamente.";
+                }
+                else
+                {
+                    respuesta.Indicador = false;
+                    respuesta.Mensaje = "No se pudo desactivar el usuario.";
+                }
+
+                return Ok(respuesta);
+            }
+        }
+        [HttpPut]
+        [Route("ActivarUsuario")]
+        public IActionResult ActivarUsuario([FromBody] long usuarioID)
+        {
+            using (var connection = new SqlConnection(_configuration.GetSection("ConnectionStrings:BDConnection").Value))
+            {
+                var result = connection.Execute("ActivarUsuario", new { UsuarioID = usuarioID });
+
+                var respuesta = new RespuestaModel();
+
+                if (result > 0)
+                {
+                    respuesta.Indicador = true;
+                    respuesta.Mensaje = "Usuario activado correctamente.";
+                }
+                else
+                {
+                    respuesta.Indicador = false;
+                    respuesta.Mensaje = "No se pudo activar el usuario.";
+                }
+
+                return Ok(respuesta);
+            }
+        }
+
 
     }
 }
