@@ -86,6 +86,21 @@ namespace CapaToursAPI.Controllers
 
         #endregion
 
+        [HttpGet("ObtenerUsuarioPorCorreo/{correo}")]
+        public IActionResult ObtenerUsuarioPorCorreo(string correo)
+        {
+            using (var context = new SqlConnection(_configuration.GetSection("ConnectionStrings:BDConnection").Value))
+            {
+                var result = context.QueryFirstOrDefault<UsuarioModel>("ObtenerUsuarioCompleto", new { correo }, commandType: System.Data.CommandType.StoredProcedure);
+
+                if (result == null)
+                    return NotFound();
+
+                return Ok(result);
+            }
+        }
+
+
         #region Otros Métodos
         private string GenerarToken(long UsuarioID, long RolID)
         {
