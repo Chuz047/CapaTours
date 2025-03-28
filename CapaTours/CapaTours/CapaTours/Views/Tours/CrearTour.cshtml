@@ -1,4 +1,5 @@
-﻿@* @model List<CapaTours.Models.ToursModel> *@
+﻿@using CapaTours.Models
+@model TourModel
 
 <div class="row px-5">
 	<div class="col-12 px-0">
@@ -19,93 +20,75 @@
 		<!-- Contenedor del Formulario -->
 		<div class="mt-4 p-5 rounded shadow-lg" style="background-color: #f9f9f9; border-left: 5px solid #44572F;">
 
-			<form asp-action="CrearTour" asp-controller="Tours">
+			<form asp-controller="Tours" asp-action="CrearTour" method="post" enctype="multipart/form-data">
+				<div class="row">
 
-				<h5 class="text mt-4">Información del Tour</h5>
-				<hr>
-				<div class="row g-3 mt-2">
-					<!-- Nombre -->
-					<div class="col-md-6">
-						<div class="form-floating">
-							<label>Nombre</label>
-							<input type="text" class="form-control input-lg" @*asp-for="Nombre"*@ placeholder="Nombre" required>
-						</div>
-					</div>
-					<!-- Destino -->
-					<div class="col-md-6">
-						<div class="form-floating">
-							<label>Destino</label>
-							<input type="text" class="form-control input-lg" @*asp-for="Destino"*@ placeholder="Destino" required>
-						</div>
-					</div>
-				</div>
-				<div class="row g-3 mt-2">
-					<!-- Precio -->
-					<div class="col-md-6">
-						<div class="form-floating">
-							<label>Precio</label>
-							<input type="number" class="form-control input-lg" @*asp-for="Precio"*@ placeholder="Precio" required>
-						</div>
-					</div>
-					<!-- Capacidad -->
-					<div class="col-md-6">
-						<div class="form-floating">
-							<label>Capacidad</label>
-							<input type="number" class="form-control input-lg" @*asp-for="Capacidad"*@ placeholder="Capacidad" required>
-						</div>
-					</div>
-				</div>
-				<div class="row g-3 mt-2">
-					<!-- Fecha de Inicio -->
-					<div class="col-md-6">
-						<div class="form-floating">
-							<label>Fecha de Inicio</label>
-							<input type="date" class="form-control input-lg" @*asp-for="FechaInicio"*@ placeholder="Fecha de Inicio" required>
-						</div>
-					</div>
-					<!-- Fecha de Fin -->
-					<div class="col-md-6">
-						<div class="form-floating">
-							<label>Fecha de Fin</label>
-							<input type="date" class="form-control input-lg" @*asp-for="FechaFin"*@ placeholder="Fecha de Fin" required>
-						</div>
-					</div>
-				</div>
-				<!-- Descripción -->
-				<div class="row g-3 mt-2">
-					<div class="col-md-12">
-						<div class="form-floating">
-							<label>Descripción</label>
-							<input type="text" class="form-control input-lg" @*asp-for="Descripcion"*@ placeholder="Descripcion" required>
-						</div>
-					</div>
-				</div>
-				<!-- Itinerario -->
-				<div class="row g-3 mt-2">
-					<div class="col-md-12">
-						<div class="form-floating">
-							<label>Itinerario</label>
-							<input type="text" class="form-control input-lg" @*asp-for="Itinerario"*@ placeholder="Itinerario" required>
-						</div>
-					</div>
-				</div>
-				<h5 class="text mt-4">Imágenes del Tour</h5>
-				<hr>
-				<!-- Imágenes -->
-				<div class="row g-3 mt-2">
-					<div class="col-md-12">
-						<label for="Imagenes" class="form-label text-muted">Subir imágenes</label>
-						<input type="file" class="form-control" id="Imagenes" name="Imagenes" multiple>
-					</div>
-				</div>
+					<div class="col-2"></div>
+					<div class="col-8">
 
-				<!-- Botón Guardar -->
-				<div class="row g-2 mt-4">
-					<div class="col-md">
-						<button type='button' class='btn w-100' style='background-color: #44572F; color: white;'>
-							<i class='fa-solid fa-check'></i> Guardar Tour
-						</button>
+						<!-- Nombre -->
+						<div class="form-group col-md-12 mb-4">
+							Nombre
+							<input type="text" class="form-control input-lg" asp-for="Nombre" placeholder="Nombre" required>
+						</div>
+
+						<!-- Destino -->
+						<div class="form-group col-md-12 mb-4">
+							Destino
+							<input type="text" class="form-control input-lg" asp-for="Destino" placeholder="Destino" required>
+						</div>
+
+						<!-- Precio -->
+						<div class="form-group col-md-12 mb-4">
+							Precio
+							<input type="number" class="form-control input-lg" asp-for="Precio" placeholder="Precio" required>
+						</div>
+
+						<!-- Capacidad -->
+						<div class="form-group col-md-12 mb-4">
+							Capacidad
+							<input type="number" class="form-control input-lg" asp-for="Capacidad" placeholder="Capacidad" required>
+						</div>
+
+						<!-- Fecha de Inicio -->
+						<div class="form-group col-md-12 mb-4">
+							Fecha de Inicio
+							<input type="datetime-local" class="form-control input-lg" asp-for="FechaInicio" placeholder="Fecha de Inicio" required>
+						</div>
+
+						<!-- Fecha de Fin -->
+						<div class="form-group col-md-12 mb-4">
+							Fecha de Fin
+							<input type="datetime-local" class="form-control input-lg" asp-for="FechaFin" placeholder="Fecha de Fin" required>
+						</div>
+
+						<!-- Descripción -->
+						<div class="form-group col-md-12 mb-4">
+							Descripción
+							<textarea class="form-control input-lg" asp-for="Descripcion" placeholder="Descripción" required></textarea>
+						</div>
+
+						<!-- Itinerario -->
+						<div class="form-group col-md-12 mb-4">
+							Itinerario
+							<textarea class="form-control input-lg" asp-for="Itinerario" placeholder="Itinerario" required></textarea>
+						</div>
+
+						<!-- Imágenes -->
+						<div class="form-group col-md-12 mb-4">
+							<label for="Imagenes" class="form-label text-muted">Subir imágenes</label>
+							<input type="file" class="form-control" id="Imagenes" name="Imagenes" multiple>
+						</div> 
+
+						<!-- Botón Guardar -->
+						<div class="col-md-12">
+							<button type="submit" class="btn btn-primary btn-pill mb-4" style="background-color: #44572F; color: white;">
+								<i class="fa-solid fa-check"></i> Guardar Tour
+							</button>
+						</div>
+
 					</div>
+
 				</div>
 			</form>
 		</div>

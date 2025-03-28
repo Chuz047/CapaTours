@@ -1,8 +1,4 @@
-﻿using CapaToursAPI.Models;
-
-using System;
-
-namespace CapaTours.Models
+﻿namespace CapaTours.Models
 {
     public class UsuarioModel
     {

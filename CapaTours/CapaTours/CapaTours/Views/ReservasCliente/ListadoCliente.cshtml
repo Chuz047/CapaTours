@@ -38,12 +38,12 @@
 								<td class="text-center">
 
 									@* Abrir otra vista con un form para pagar la reserva *@
-									<a class="btn btn-sm" style="background-color: #7B9C36; color:white" asp-controller="Reservas" asp-action="PagarReserva">
+									<a class="btn btn-sm" style="background-color: #7B9C36; color:white" asp-controller="ReservasCliente" asp-action="PagarReserva">
 										<i class="fa-regular fa-credit-card"></i> Pagar Reserva
 									</a>
 
 									@* Este SOLO se debe mostrar cuando el estado de la reserva pasa a "Completado" *@
-									<a class="btn btn-sm" style="background-color: #7B9C36; color:white" asp-controller="Resennas" asp-action="CrearResenna">
+									<a class="btn btn-sm" style="background-color: #7B9C36; color:white" asp-controller="ResennasCliente" asp-action="CrearResenna">
 										<i class="fa fa-star"></i> Añadir Reseña
 									</a>
 

@@ -12,16 +12,6 @@ namespace CapaTours.Controllers.Admin
             _configuration = configuration;
         }
 
-        #region RealizarReserva
-
-        [HttpGet]
-        public IActionResult RealizarReserva()
-        {
-            return View();
-        }
-
-        #endregion
-
         #region Listado
 
         [HttpGet]
