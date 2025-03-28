@@ -1,10 +1,8 @@
-﻿using CapaTours.Models;
-using CapaToursAPI.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using CapaTours.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CapaTours.Controllers
 {
@@ -29,21 +27,28 @@ namespace CapaTours.Controllers
 
         [HttpPost]
         public IActionResult Registro(UsuarioModel model)
+
+        // Encriptación
+
         {
             using (var api = _httpClient.CreateClient())
             {
 
                 var url = _configuration.GetSection("Variables:urlApi").Value + "Autenticacion/Registro";
-                var result = api.PostAsJsonAsync(url, model).Result;
 
-                if (result.IsSuccessStatusCode)
+                var response = api.PostAsJsonAsync(url, model).Result;
+
+                if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("Login", "Autenticacion");
+                    var result = response.Content.ReadFromJsonAsync<RespuestaModel>().Result;
+
+                    if (result != null && result.Indicador)
+                        return RedirectToAction("Login", "Autenticacion");
+                    else
+                        ViewBag.Msj = result!.Mensaje;
                 }
                 else
-                {
                     ViewBag.Msj = "No se pudo completar su petición";
-                }
             }
 
             return View();
@@ -62,9 +67,11 @@ namespace CapaTours.Controllers
         [HttpPost]
         public IActionResult Login(UsuarioModel model)
         {
+            // Encriptación 
+
             using (var api = _httpClient.CreateClient())
             {
-                var url = _configuration.GetSection("Variables:urlApi").Value + "Autenticacion/Login"; 
+                var url = _configuration.GetSection("Variables:urlApi").Value + "Autenticacion/Login";
                 var response = api.PostAsJsonAsync(url, model).Result;
 
                 if (response.IsSuccessStatusCode)
@@ -75,11 +82,20 @@ namespace CapaTours.Controllers
                     {
                         var datosResult = JsonSerializer.Deserialize<UsuarioModel>((JsonElement)result.Datos!);
 
+                        // Datos de Sesión
                         HttpContext.Session.SetString("Token", datosResult!.Token!);
                         HttpContext.Session.SetString("Correo", datosResult!.Correo!);
-                        
-                        
-                        return RedirectToAction("Inicio", "Tours");
+                        HttpContext.Session.SetString("RolID", datosResult!.RolID.ToString());
+
+                        if (datosResult.RolID == 1)
+                        {
+                            return RedirectToAction("ListadoAdmin", "Tours");
+                        }
+                        else if (datosResult.RolID == 2)
+                        {
+                            return RedirectToAction("Inicio", "ToursCliente");
+                        }
+
                     }
                     else
                     {
@@ -95,21 +111,9 @@ namespace CapaTours.Controllers
             return View();
         }
 
-
         #endregion
 
-        [HttpGet]
-        public IActionResult RecuperarContrasenna()
-        {
-            return View();
-        }
-
-        [FiltroSeguridadSesion]
-        [HttpGet]
-        public IActionResult Principal()
-        {
-            return View();
-        }
+        #region CerrarSesion
 
         [FiltroSeguridadSesion]
         [HttpGet]
@@ -118,7 +122,17 @@ namespace CapaTours.Controllers
             HttpContext.Session.Clear();
             return RedirectToAction("Login", "Autenticacion");
         }
+        #endregion
 
+        #region RecuperarContrasenna
+        [HttpGet]
+        public IActionResult RecuperarContrasenna()
+        {
+            return View();
+        }
+        #endregion
+
+        #region Otros Métodos
         private string Encrypt(string texto)
         {
             byte[] iv = new byte[16];
@@ -172,6 +186,8 @@ namespace CapaTours.Controllers
                 }
             }
         }
+
+        #endregion
 
     }
 }

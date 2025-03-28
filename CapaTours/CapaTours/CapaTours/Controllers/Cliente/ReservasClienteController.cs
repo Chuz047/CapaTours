@@ -2,11 +2,11 @@
 
 namespace CapaTours.Controllers.Cliente
 {
-    public class ReservasController : Controller
+    public class ReservasClienteController : Controller
     {
         private readonly IHttpClientFactory _httpClient;
         private readonly IConfiguration _configuration;
-        public ReservasController(IHttpClientFactory httpClient, IConfiguration configuration)
+        public ReservasClienteController(IHttpClientFactory httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
             _configuration = configuration;

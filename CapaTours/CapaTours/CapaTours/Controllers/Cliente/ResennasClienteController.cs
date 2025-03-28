@@ -2,11 +2,11 @@
 
 namespace CapaTours.Controllers.Cliente
 {
-    public class ResennasController : Controller
+    public class ResennasClienteController : Controller
     {
 		private readonly IHttpClientFactory _httpClient;
 		private readonly IConfiguration _configuration;
-		public ResennasController(IHttpClientFactory httpClient, IConfiguration configuration)
+		public ResennasClienteController(IHttpClientFactory httpClient, IConfiguration configuration)
 		{
 			_httpClient = httpClient;
 			_configuration = configuration;

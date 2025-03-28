@@ -1,4 +1,4 @@
-﻿namespace CapaToursAPI.Models
+﻿namespace CapaTours.Models
 {
     public class RespuestaModel
     {

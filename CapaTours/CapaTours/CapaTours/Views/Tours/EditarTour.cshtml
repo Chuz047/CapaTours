@@ -1,4 +1,4 @@
-﻿@* @model CapaTours.Models.ToursModel *@
+﻿@model CapaTours.Models.TourModel
 
 <div class="row px-5">
 	<div class="col-12 px-0">
@@ -17,91 +17,92 @@
 
 		<div class="mt-4 p-5 rounded shadow-lg" style="background-color: #f9f9f9; border-left: 5px solid #44572F;">
 
-			@*  <form asp-action="ActualizarTour" asp-controller="Tours" method="post">
-                <input type="hidden" asp-for="Id" /> *@
+			<form asp-action="EditarTour" asp-controller="Tours" method="post">
+				<input type="hidden" asp-for="TourID" />
 
-			<h5 class="text mt-4">Información del Tour</h5>
-			<hr>
-			<div class="row g-3 mt-2">
-				<div class="col-md-6">
-					<div class="form-floating">
-						<label>Nombre</label>
-						<input type="text" class="form-control input-lg" @* asp-for="Nombre" *@ required>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="form-floating">
-						<label>Destino</label>
-						<input type="text" class="form-control input-lg" @* asp-for="Destino" *@ required>
-					</div>
-				</div>
-			</div>
+				<h5 class="text mt-4">Información del Tour</h5>
+				<hr>
 
-			<div class="row g-3 mt-2">
-				<div class="col-md-6">
-					<div class="form-floating">
-						<label>Precio</label>
-						<input type="number" class="form-control input-lg" @* asp-for="Precio" *@ required>
+				<div class="row g-3 mt-2">
+					<div class="col-md-6">
+						<div class="form-floating">
+							<input type="text" class="form-control input-lg" asp-for="Nombre" value="@Model.Nombre" required>
+							<label>Nombre</label>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-floating">
+							<input type="text" class="form-control input-lg" asp-for="Destino" value="@Model.Destino" required>
+							<label>Destino</label>
+						</div>
 					</div>
 				</div>
-				<div class="col-md-6">
-					<div class="form-floating">
-						<label>Capacidad</label>
-						<input type="number" class="form-control input-lg" @* asp-for="Capacidad" *@ required>
-					</div>
-				</div>
-			</div>
 
-			<div class="row g-3 mt-2">
-				<div class="col-md-6">
-					<div class="form-floating">
-						<label>Fecha de Inicio</label>
-						<input type="date" class="form-control input-lg" @* asp-for="FechaInicio" *@ required>
+				<div class="row g-3 mt-2">
+					<div class="col-md-6">
+						<div class="form-floating">
+							<input type="number" class="form-control input-lg" asp-for="Precio" value="@Model.Precio" required>
+							<label>Precio</label>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-floating">
+							<input type="number" class="form-control input-lg" asp-for="Capacidad" value="@Model.Capacidad" required>
+							<label>Capacidad</label>
+						</div>
 					</div>
 				</div>
-				<div class="col-md-6">
-					<div class="form-floating">
-						<label>Fecha de Fin</label>
-						<input type="date" class="form-control input-lg" @* asp-for="FechaFin" *@ required>
+
+				<div class="row g-3 mt-2">
+					<div class="col-md-6">
+						<div class="form-floating">
+							<input type="datetime-local" class="form-control input-lg" asp-for="FechaInicio" value="@Model.FechaInicio?.ToString("yyyy-MM-ddTHH:mm")" required>
+							<label>Fecha de Inicio</label>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-floating">
+							<input type="datetime-local" class="form-control input-lg" asp-for="FechaFin" value="@Model.FechaFin?.ToString("yyyy-MM-ddTHH:mm")" required>
+							<label>Fecha de Fin</label>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="row g-3 mt-2">
-				<div class="col-md-12">
-					<div class="form-floating">
-						<label>Descripción</label>
-						<input type="text" class="form-control input-lg"@*  asp-for="Descripcion" *@ required>
+				<div class="row g-3 mt-2">
+					<div class="col-md-12">
+						<div class="form-floating">
+							<textarea class="form-control input-lg" asp-for="Descripcion" value="@Model.Descripcion" required></textarea>
+							<label>Descripción</label>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="row g-3 mt-2">
-				<div class="col-md-12">
-					<div class="form-floating">
-						<label>Itinerario</label>
-						<input type="text" class="form-control input-lg" @* asp-for="Itinerario" *@ required>
+				<div class="row g-3 mt-2">
+					<div class="col-md-12">
+						<div class="form-floating">
+							<textarea class="form-control input-lg" asp-for="Itinerario" value="@Model.Itinerario" required></textarea>
+							<label>Itinerario</label>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<h5 class="text mt-4">Imágenes del Tour</h5>
-			<hr>
-			<div class="row g-3 mt-2">
-				<div class="col-md-12">
-					<label for="Imagenes" class="form-label text-muted">Subir nuevas imágenes</label>
-					<input type="file" class="form-control" id="Imagenes" name="Imagenes" multiple>
+				<h5 class="text mt-4">Imágenes del Tour</h5>
+				<hr>
+				<div class="row g-3 mt-2">
+					<div class="col-md-12">
+						<label for="Imagenes" class="form-label text-muted">Subir nuevas imágenes</label>
+						<input type="file" class="form-control" id="Imagenes" name="Imagenes" multiple>
+					</div>
 				</div>
-			</div>
 
-			<div class="row g-2 mt-4">
-				<div class="col-md">
-					<button type='button' class='btn w-100' style='background-color: #44572F; color: white;'>
-						<i class='fa-solid fa-check'></i> Editar Tour
-					</button>
+				<div class="row g-2 mt-4">
+					<div class="col-md">
+						<button type="submit" class="btn w-100" style="background-color: #44572F; color: white;">
+							<i class="fa-solid fa-check"></i> Editar Tour
+						</button>
+					</div>
 				</div>
-			</div>
-			@* </form> *@
+			</form>
 		</div>
 	</div>
 </div>

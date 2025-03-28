@@ -1,18 +1,14 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Dapper;
-using CapaTours.Models;
 using CapaToursAPI.Models;
+using Dapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Tokens;
 
-namespace CapaToursApi.Controllers
+namespace CapaToursAPI.Controllers
 {
     [AllowAnonymous]
     [Route("api/[controller]")]
@@ -25,6 +21,8 @@ namespace CapaToursApi.Controllers
         {
             _configuration = configuration;
         }
+
+        #region Registro
 
         [HttpPost]
         [Route("Registro")]
@@ -52,6 +50,10 @@ namespace CapaToursApi.Controllers
             }
         }
 
+        #endregion
+
+        #region Login
+
         [HttpPost]
         [Route("Login")]
         public IActionResult Login(UsuarioModel model)
@@ -63,8 +65,6 @@ namespace CapaToursApi.Controllers
 
 
                 var respuesta = new RespuestaModel();
-
-                
 
                 if (result != null)
                 {
@@ -84,8 +84,9 @@ namespace CapaToursApi.Controllers
             }
         }
 
+        #endregion
 
-
+        #region Otros Métodos
         private string GenerarToken(long UsuarioID, long RolID)
         {
             string? SecretKey = _configuration.GetSection("Variables:llaveCifrado").Value!;
@@ -109,6 +110,8 @@ namespace CapaToursApi.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        #endregion
     }
 }
 

@@ -1,21 +1,29 @@
-﻿@* @model List<CapaTours.Models.ToursModel> *@
+﻿@model List<CapaTours.Models.TourModel>
 
 <div class="row px-5">
 	<div class="col-12">
 		<div class="row">
 			<div class="col-6">
 				<div class="display-3 px-0">Tours</div>
-				<div class="text-muted px-0 ">Listado de todos los tours registrados en el sistema.</div>
+				<div class="text-muted px-0">Listado de todos los tours registrados en el sistema.</div>
 				<br>
 			</div>
 		</div>
-		<a href="@Url.Action("CrearTour", "Tours")" id="AgregarNuevoPersonal" class="btn mb-0 nowrap" style="white-space: nowrap; background-color: #44572f; color: white">
+		<a href="@Url.Action("CrearTour", "Tours")" id="AgregarNuevoPersonal" class="btn mb-0 nowrap" style="white-space: nowrap; background-color: #44572f; color: white"> @* /////////////asp controller *@
 			<i class="fa-solid fa-plus"></i> Crear Tour
 		</a>
 		<div class="row mt-3 mb-2"></div>
 		<div class="row">
 			<div class="col-12 px-0">
 				<div class="table-responsive shadow-lg" style="background-color: #f9f9f9; border-left: 5px solid #44572f; border-radius: 10px;">
+
+					@if (@ViewBag.Msj != null)
+					{
+						<div class="alert alert-default text-center" role="alert">
+							@ViewBag.Msj
+						</div>
+					}
+
 					<table id="example" class="table table-bordered table-hover">
 						<thead>
 							<tr>
@@ -31,50 +39,48 @@
 							</tr>
 						</thead>
 						<tbody>
-							@*Aquí van los resultados del query *@
-							<tr>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td class="text-center">
-									<a class="btn btn-sm" style="background-color: #7B9C36; color:white" asp-controller="Tours" asp-action="EditarTour">
-										<i class="fas fa-edit"></i> Editar Detalles
-									</a>
-									<button class="btn btn-sm btn-danger me-1" data-bs-toggle="modal" data-bs-target="#desactivarTourModal">
-										<i class="fa-regular fa-circle-xmark"></i> Desactivar Tour
-									</button>
-									<button class="btn btn-sm" style="background-color: #7B9C36; color: white" data-bs-toggle="modal" data-bs-target="#aplicarDescuentoModal">
-										<i class="fas fa-tag"></i> Aplicar Descuento
-									</button>
-								</td>
-							</tr>
+							@foreach (var item in Model)
+							{
+								<tr>
+									<td>@item.Nombre</td>
+									<td>@item.Destino</td>
+									<td>@item.Precio</td>
+									<td>@item.Capacidad</td>
+									<td>@item.FechaInicio</td>
+									<td>@item.FechaFin</td>
+									<td>@(item.Estado ? "Activo" : "Inactivo")</td>
+									<td>@item.Descuento</td>
+									<td class="text-center">
+										<a class="btn btn-sm" style="background-color: #7B9C36; color:white" asp-controller="Tours" asp-action="EditarTour" asp-route-TourID="@item.TourID">
+											<i class="fas fa-edit"></i> Editar Detalles
+										</a>
+										@if (item.Estado)
+										{
+											<form method="post" asp-controller="Tours" asp-action="DesactivarTour" class="d-inline">
+												<input type="hidden" name="tourID" value="@item.TourID" />
+												<button type="submit" class="btn btn-sm btn-danger me-1">
+													<i class="fa-regular fa-circle-xmark"></i> Desactivar Tour
+												</button>
+											</form>
+										}
+										else
+										{
+											<form method="post" asp-controller="Tours" asp-action="ActivarTour" class="d-inline">
+												<input type="hidden" name="tourID" value="@item.TourID" />
+												<button type="submit" class="btn btn-sm" style="background-color: #7B9C36; color:white">
+													<i class="fa-regular fa-circle-check"></i> Activar Tour
+												</button>
+											</form>
+										}
+										<button class="btn btn-sm" style="background-color: #7B9C36; color: white" data-bs-toggle="modal" data-bs-target="#aplicarDescuentoModal">
+											<i class="fas fa-tag"></i> Aplicar Descuento
+										</button>
+									</td>
+								</tr>
+							}
 						</tbody>
 					</table>
 				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-@* Modal de Desactivar Tour *@
-<div class="modal fade" id="desactivarTourModal" tabindex="-1" aria-labelledby="desactivarTourModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="desactivarTourModalLabel">Confirmar Desactivación</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<p>¿Está seguro de que desea desactivar este tour?</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-				<button type="button" class="btn btn-danger">Desactivar</button>
 			</div>
 		</div>
 	</div>

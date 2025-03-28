@@ -1,6 +1,10 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 
+@{
+	long rolID = long.Parse(Context.Session.GetString("RolID") ?? "0");
+}
+
 <head>
 
 	<meta charset="utf-8">
@@ -12,9 +16,9 @@
 	<title>@ViewData["Title"]</title>
 
 	<link href="~/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
 	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-		  rel="stylesheet">
+	rel="stylesheet">
 	<link href="~/css/sb-admin-2.min.css" rel="stylesheet">
 	<link href="~/css/customStyles.css" rel="stylesheet">
 
@@ -36,76 +40,81 @@
 
 			<hr class="sidebar-divider my-0">
 
-			@* Solo visible por los clientes *@
-			<li class="nav-item active">
-				<a class="nav-link" asp-controller="Tours" asp-action="Inicio">
+			@if (rolID == 2)
+			{
+				<li class="nav-item active">
+					<a class="nav-link" asp-controller="ToursCliente" asp-action="Inicio">
 					<i class="fas fa-home"></i>
 					<span>Inicio</span>
 				</a>
 			</li>
+			}
 
 			<hr class="sidebar-divider">
 
-			@* Estos hay que mostrarlos por rol más adelante *@
-			<div class="sidebar-heading">
-				Administrador
-			</div>
+			@if (rolID == 1)
+			{
+				<div class="sidebar-heading">
+					Administrador
+				</div>
 
-			<li class="nav-item">
-				<a class="nav-link collapsed" asp-controller="Tours" asp-action="ListadoAdmin">
-					<i class="fa-solid fa-mountain-sun"></i>
-					<span>Tours</span>
-				</a>
-			</li>
+				<li class="nav-item">
+					<a class="nav-link collapsed" asp-controller="Tours" asp-action="ListadoAdmin">
+						<i class="fa-solid fa-mountain-sun"></i>
+						<span>Tours</span>
+					</a>
+				</li>
 
-			<li class="nav-item">
-				<a class="nav-link collapsed" asp-controller="Clientes" asp-action="ListadoAdmin">
-					<i class="fa fa-users"></i>
-					<span>Clientes</span>
-				</a>
-			</li>
+				<li class="nav-item">
+					<a class="nav-link collapsed" asp-controller="Clientes" asp-action="ListadoAdmin">
+						<i class="fa fa-users"></i>
+						<span>Clientes</span>
+					</a>
+				</li>
 
-			<li class="nav-item">
-				<a class="nav-link collapsed" asp-controller="Reservas" asp-action="ListadoAdmin">
-					<i class="fa fa-ticket"></i>
-					<span>Reservas</span>
-				</a>
-			</li>
+				<li class="nav-item">
+					<a class="nav-link collapsed" asp-controller="Reservas" asp-action="ListadoAdmin">
+						<i class="fa fa-ticket"></i>
+						<span>Reservas</span>
+					</a>
+				</li>
 
-			<hr class="sidebar-divider">
+				<hr class="sidebar-divider">
+			}
 
-			@* Estos hay que mostrarlos por rol más adelante *@
-			<div class="sidebar-heading">
-				Cliente
-			</div>
+			@if (rolID == 2)
+			{
+				<div class="sidebar-heading">
+					Cliente
+				</div>
 
-			<li class="nav-item">
-				<a class="nav-link collapsed" asp-controller="Tours" asp-action="ListadoCliente">
-					<i class="fa-solid fa-mountain-sun"></i>
-					<span>Tours</span>
-				</a>
-			</li>
+				<li class="nav-item">
+					<a class="nav-link collapsed" asp-controller="ToursCliente" asp-action="ListadoCliente">
+						<i class="fa-solid fa-mountain-sun"></i>
+						<span>Tours</span>
+					</a>
+				</li>
 
-			<li class="nav-item">
-				<a class="nav-link collapsed" asp-controller="Reservas" asp-action="ListadoCliente">
-					<i class="fa fa-ticket"></i>
-					<span>Reservas</span>
-				</a>
-			</li>
+				<li class="nav-item">
+					<a class="nav-link collapsed" asp-controller="ReservasCliente" asp-action="ListadoCliente">
+						<i class="fa fa-ticket"></i>
+						<span>Reservas</span>
+					</a>
+				</li>
 
-			<li class="nav-item">
-				<a class="nav-link collapsed" asp-controller="Resennas" asp-action="ListadoCliente">
-					<i class="fa fa-comments"></i>
-					<span>Reseñas</span>
-				</a>
-			</li>
+				<li class="nav-item">
+					<a class="nav-link collapsed" asp-controller="ResennasCliente" asp-action="ListadoCliente">
+						<i class="fa fa-comments"></i>
+						<span>Reseñas</span>
+					</a>
+				</li>
 
-			<hr class="sidebar-divider d-none d-md-block">
+				<hr class="sidebar-divider d-none d-md-block">
+			}
 
 			<div class="text-center d-none d-md-inline">
 				<button class="rounded-circle border-0" id="sidebarToggle"></button>
 			</div>
-
 		</ul>
 
 		<div id="content-wrapper" class="d-flex flex-column">

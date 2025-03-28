@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CapaTours.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CapaTours.Controllers.Cliente
 {
-    public class ToursController : Controller
+
+    [FiltroSeguridadSesion]
+    public class ToursClienteController : Controller
     {
 		private readonly IHttpClientFactory _httpClient;
 		private readonly IConfiguration _configuration;
-		public ToursController(IHttpClientFactory httpClient, IConfiguration configuration)
+		public ToursClienteController(IHttpClientFactory httpClient, IConfiguration configuration)
 		{
 			_httpClient = httpClient;
 			_configuration = configuration;
@@ -14,12 +17,8 @@ namespace CapaTours.Controllers.Cliente
 
         #region Inicio
 
-        [HttpGet]
         public IActionResult Inicio()
         {
-            if (HttpContext.Session.GetString("Token") == null)
-                return RedirectToAction("Login", "Autenticacion");
-
             return View();
         }
 
