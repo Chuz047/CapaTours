@@ -1,4 +1,4 @@
-﻿@* @model List<CapaTours.Models.UsuarioModel>*@
+﻿@model List<CapaTours.Models.UsuarioModel>
 
 <div class="row px-5">
 	<div class="col-12">
@@ -18,7 +18,7 @@
 					<table id="example" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Identificación</th>
                                 <th>Nombre</th>
                                 <th>Correo</th>
                                 <th>Estado</th>
@@ -29,8 +29,8 @@
                             @foreach (var usuario in Model)
                             {
                                 <tr>
-                                    <td>@usuario.UsuarioID</td>
-                                    <td>@usuario.Nombre @usuario.ApellidoPaterno @usuario.ApellidoMaterno</td>
+                                    <td>@usuario.UsuarioID</td> @* Esto tiene que traer identificación, no ID *@
+                                    <td>@usuario.Nombre @usuario.ApellidoPaterno @usuario.ApellidoMaterno</td> @* Esto tiene que mostrar los 3 datos, ahora solo se enseña el primer nombre *@
                                     <td>@usuario.Correo</td>
                                     <td>@(usuario.Estado ? "Activo" : "Inactivo")</td>
                                     <td>
