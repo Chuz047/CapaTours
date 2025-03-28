@@ -16,64 +16,59 @@
 			<div class="col-12 px-0">
 				<div class="table-responsive shadow-lg" style="background-color: #f9f9f9; border-left: 5px solid #44572f; border-radius: 10px;">
 					<table id="example" class="table table-bordered table-hover">
-						<thead>
-							<tr>
-								<th>Identificación</th>
-								<th>Nombre</th>
-								<th>Correo</th>
-								<th>Estado</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								@foreach (var item in Model)
-								{
-								<tr>
-									<td>@item.Identificacion</td>
-									<td>@item.Nombre</td>
-									<td>@item.Correo</td>
-									 <td>
-									<td>
-												@if (item.Estado)
-												{
-											<span class="badge bg-success">Activo</span>
-												}
-												else
-												{
-											<span class="badge bg-danger">Inactivo</span>
-												}
-									</td>
-									<td>
-												@if (item.Estado)
-												{
-											<form method="post" action="@Url.Action("DesactivarUsuario", "Clientes")" class="d-inline">
-												<input type="hidden" name="usuarioID" value="@item.UsuarioID" />
-												<button type="submit" class="btn btn-sm btn-danger me-1">
-													<i class="fa-solid fa-user-slash"></i> Desactivar Cuenta
-												</button>
-											</form>
-												}
-												else
-												{
-											<form method="post" action="@Url.Action("ActivarUsuario", "Clientes")" class="d-inline">
-												<input type="hidden" name="usuarioID" value="@item.UsuarioID" />
-												<button type="submit" class="btn btn-sm btn-success me-1">
-													<i class="fa-solid fa-user-check"></i> Activar Cuenta
-												</button>
-											</form>
-												}
-									</td>
-								</tr>
-								}
-							
-						</tbody>
-					</table>
-
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var usuario in Model)
+                            {
+                                <tr>
+                                    <td>@usuario.UsuarioID</td>
+                                    <td>@usuario.Nombre @usuario.ApellidoPaterno @usuario.ApellidoMaterno</td>
+                                    <td>@usuario.Correo</td>
+                                    <td>
+                                        @if (usuario.Estado)
+                                        {
+                                            <span class="badge bg-success">Activo</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">Inactivo</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (usuario.Estado)
+                                        {
+                                            <form method="post" asp-controller="Clientes" asp-action="DesactivarUsuario" class="d-inline">
+                                                <input type="hidden" name="usuarioID" value="@usuario.UsuarioID" />
+                                                <button type="submit" class="btn btn-sm btn-danger me-1">
+                                                    <i class="fa-solid fa-user-slash"></i> Desactivar Cuenta
+                                                </button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <form method="post" asp-controller="Clientes" asp-action="ActivarUsuario" class="d-inline">
+                                                <input type="hidden" name="usuarioID" value="@usuario.UsuarioID" />
+                                                <button type="submit" class="btn btn-sm btn-success me-1">
+                                                    <i class="fa-solid fa-user-check"></i> Activar Cuenta
+                                                </button>
+                                            </form>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
 
 
