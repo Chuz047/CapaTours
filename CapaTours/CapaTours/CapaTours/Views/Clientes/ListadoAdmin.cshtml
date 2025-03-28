@@ -1,4 +1,4 @@
-﻿@* @model List<CapaTours.Models.ClientesModel>*@
+﻿@model List<CapaTours.Models.UsuarioModel>
 
 <div class="row px-5">
 	<div class="col-12">
@@ -16,57 +16,53 @@
 			<div class="col-12 px-0">
 				<div class="table-responsive shadow-lg" style="background-color: #f9f9f9; border-left: 5px solid #44572f; border-radius: 10px;">
 					<table id="example" class="table table-bordered table-hover">
-						<thead>
-							<tr>
-								<th>Identificación</th>
-								<th>Nombre</th>
-								<th>Correo</th>
-								<th>Estado</th>
-								<th>Acciones</th>
-							</tr>
-						</thead>
-						<tbody>
-							@*Aquí van los resultados del query *@
-							<tr>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td class="text-center">
+                        <thead>
+                            <tr>
+                                <th>Identificación</th>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var usuario in Model)
+                            {
+                                <tr>
+                                    <td>@usuario.UsuarioID</td> @* Esto tiene que traer identificación, no ID *@
+                                    <td>@usuario.Nombre @usuario.ApellidoPaterno @usuario.ApellidoMaterno</td> @* Esto tiene que mostrar los 3 datos, ahora solo se enseña el primer nombre *@
+                                    <td>@usuario.Correo</td>
+                                    <td>@(usuario.Estado ? "Activo" : "Inactivo")</td>
+                                    <td>
+                                        @if (usuario.Estado)
+                                        {
+                                            <form method="post" asp-controller="Clientes" asp-action="DesactivarUsuario" class="d-inline">
+                                                <input type="hidden" name="usuarioID" value="@usuario.UsuarioID" />
+                                                <button type="submit" class="btn btn-sm btn-danger me-1">
+                                                    <i class="fa-solid fa-user-slash"></i> Desactivar Cuenta
+                                                </button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <form method="post" asp-controller="Clientes" asp-action="ActivarUsuario" class="d-inline">
+                                                <input type="hidden" name="usuarioID" value="@usuario.UsuarioID" />
+                                                <button type="submit" class="btn btn-sm" style="background-color: #7B9C36; color:white">
+                                                    <i class="fa-solid fa-user-check"></i> Activar Cuenta
+                                                </button>
+                                            </form>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-									@* A futuro hay que agregar otro boton/modal que solo se muestren cuando Estado = 0, para reactivar la cuenta *@
-									<button class="btn btn-sm btn-danger me-1" data-bs-toggle="modal" data-bs-target="#desactivarClienteModal">
-										<i class="fa-solid fa-user-slash"></i> Desactivar Cuenta
-									</button>
 
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
 
-@* Modal de Desactivar Cuenta *@
-<div class="modal fade" id="desactivarClienteModal" tabindex="-1" aria-labelledby="desactivarClienteModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="desactivarClienteModalLabel">Confirmar Desactivación</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<p>¿Está seguro de que desea desactivar esta cuenta?</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-				<button type="button" class="btn btn-danger">Desactivar</button>
-			</div>
-		</div>
-	</div>
-</div>
 
 @* Data Table *@
 <script>

@@ -27,5 +27,18 @@ namespace CapaTours.Dependencias
                 return response;
             }
         }
+        public HttpResponseMessage ConsultarClientesAdmin(long UsuarioID)
+        {
+            using (var api = _httpClient.CreateClient())
+            {
+                var url = _configuration.GetSection("Variables:urlApi").Value + "Clientes/ListadoAdmin?Id=" + UsuarioID;
+
+                api.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessor.HttpContext!.Session.GetString("Token"));
+
+                var response = api.GetAsync(url).Result;
+
+                return response;
+            }
+        }
     }
 }
