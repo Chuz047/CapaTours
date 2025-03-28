@@ -1,42 +1,44 @@
-﻿@* @model List<CapaTours.Models.ToursModel> *@
+﻿@model CapaTours.Models.TourModel
 
 <div class="row px-5">
-	<div class="col-12 px-0">
-		<div class="row mx-1 mb-4">
-			<div class="col-auto">
-				<a class="btn btn-secondary btn-sm" asp-controller="ToursCliente" asp-action="ListadoCliente">
-					<i class="fa-solid fa-arrow-left"></i> Regresar
-				</a>
-			</div>
-		</div>
+    <div class="col-12 px-0">
+        <div class="row mx-1 mb-4">
+            <div class="col-auto">
+                <a class="btn btn-secondary btn-sm" asp-controller="ToursCliente" asp-action="ListadoCliente">
+                    <i class="fa-solid fa-arrow-left"></i> Regresar
+                </a>
+            </div>
+        </div>
 
         <div class="container mt-5">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <div class="display-3 px-0">Detalles de Tour</div>
-                    <div class="text-muted px-0 ">Encuentra cada detalle del tour que hayas seleccionado</div>
+                    <h1 class="display-3 px-0">@Model.Nombre</h1>
+                    <p class="text-muted px-0">Encuentra cada detalle del tour que hayas seleccionado</p>
                     <br>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><strong>Destino:</strong> Ejemplo</li>
-                        <li class="list-group-item"><strong>Descripción:</strong> Ejemplo</li>
-                        <li class="list-group-item"><strong>Itinerario:</strong> Ejemplo</li>
-                        <li class="list-group-item"><strong>Precio:</strong> Ejemplo</li>
-                        <li class="list-group-item"><strong>Capacidad:</strong> Ejemplo</li>
-                        <li class="list-group-item"><strong>Fecha de Inicio:</strong> Ejemplo</li>
-                        <li class="list-group-item"><strong>Fecha de Fin:</strong> Ejemplo</li>
-                        <li class="list-group-item"><strong>Descuento:</strong> Ejemplo</li>
+                        <li class="list-group-item"><strong>Destino:</strong> @Model.Destino</li>
+                        <li class="list-group-item"><strong>Descripción:</strong> @Model.Descripcion</li>
+                        <li class="list-group-item"><strong>Itinerario:</strong> @Model.Itinerario</li>
+                        <li class="list-group-item"><strong>Precio:</strong> $@Model.Precio</li>
+                        <li class="list-group-item"><strong>Capacidad:</strong> @Model.Capacidad</li>
+                        <li class="list-group-item"><strong>Fecha de Inicio:</strong> @Model.FechaInicio</li>
+                        <li class="list-group-item"><strong>Fecha de Fin:</strong> @Model.FechaFin</li>
+                        <li class="list-group-item"><strong>Descuento:</strong> @(Model.Descuento > 0 ? $"{Model.Descuento}%" : "Sin descuento")</li>
                     </ul>
                     <button class="btn btn-lg mt-3" style="background-color: #7B9C36; color: white;" data-bs-toggle="modal" data-bs-target="#reservarTourModal">
                         ¡Reserva hoy! <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
                 <div class="col-md-6 text-center">
-                    <img src="~/img/tours/detalleGeneral.jpg" alt="Imagen de Tour" class="img-fluid rounded shadow">
+                    <img src="" alt="Imagen de Tour" class="img-fluid rounded shadow">
                 </div>
             </div>
         </div>
-	</div>
+    </div>
 </div>
+
+
 
 @* Modal de Reservar Tour *@
 <div class="modal fade" id="reservarTourModal" tabindex="-1" aria-labelledby="reservarTourModalLabel" aria-hidden="true">
