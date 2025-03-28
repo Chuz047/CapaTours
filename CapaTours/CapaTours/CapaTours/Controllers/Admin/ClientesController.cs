@@ -1,6 +1,5 @@
 ﻿using CapaTours.Dependencias;
 using CapaTours.Models;
-using CapaToursAPI.Models;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;

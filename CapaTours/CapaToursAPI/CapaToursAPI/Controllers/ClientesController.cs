@@ -1,5 +1,4 @@
-﻿using CapaTours.Models;
-using CapaToursAPI.Models;
+﻿using CapaToursAPI.Models;
 using Dapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
