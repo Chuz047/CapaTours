@@ -7,6 +7,10 @@ builder.Services.AddHttpClient();
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUtilitarios, Utilitarios>();
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev
 
 var app = builder.Build();
 
