@@ -3,16 +3,77 @@
 
 @{
     ViewData["Title"] = "Mi Perfil";
-    Layout = "_Layout"; // o el que estés usando para páginas internas
+    Layout = "_Layout";
 }
 
-<div class="container mt-5">
-    <h2 class="text-center">Mi Perfil</h2>
-    <div class="card shadow p-4 mt-4">
-        <p><strong>Nombre:</strong> @Model.Nombre</p>
-        <p><strong>Identificación:</strong> @Model.Identificacion</p>
-        <p><strong>Correo:</strong> @Model.Correo</p>
-        <p><strong>Rol:</strong> @Model.RolID</p>
-        <p><strong>Estado:</strong> @(Model.Estado ? "Activo" : "Inactivo")</p>
+<div class="row px-5">
+    <div class="col-12 px-0">
+        <div class="row mx-1 mb-4">
+            <div class="display-3 px-0 col-12">Mi Perfil</div>
+            <div class="text-muted px-0">Consulta tu información y actualiza tu correo electrónico.</div>
+        </div>
+
+        <div class="mt-4 p-5 rounded shadow-lg" style="background-color: #f9f9f9; border-left: 5px solid #44572F;">
+            <form asp-action="ActualizarPerfil" asp-controller="Usuario" method="post">
+                <input type="hidden" asp-for="UsuarioID" />
+
+                <h5 class="text mt-4">Información Personal</h5>
+                <hr>
+
+                <div class="row g-3 mt-2">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+							<label>Nombre</label>
+                            <input type="text" class="form-control input-lg" value="@Model.Nombre" disabled>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating">
+							<label>Identificación</label>
+                            <input type="text" class="form-control input-lg" value="@Model.Identificacion" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-3 mt-2">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+							<label>Rol</label>
+                            <input type="text" class="form-control input-lg"
+                                   value="@(Model.RolID == 1 ? "Administrador" : Model.RolID == 2 ? "Usuario" : "Desconocido")"
+                                   disabled>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating">
+							<label>Estado</label>
+                            <input type="text" class="form-control input-lg" value="@(Model.Estado ? "Activo" : "Inactivo")" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <h5 class="text mt-4">Actualizar Correo Electrónico</h5>
+                <hr>
+
+                <div class="row g-3 mt-2">
+                    <div class="col-md-12">
+                        <div class="form-floating">
+							<label>Correo Electrónico</label>
+                            <input type="email" class="form-control input-lg" asp-for="Correo" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-2 mt-4">
+                    <div class="col-md">
+                        <button type="submit" class="btn w-100" style="background-color: #44572F; color: white;">
+                            <i class="fa-solid fa-check"></i> Guardar Cambios (Pendiente)
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

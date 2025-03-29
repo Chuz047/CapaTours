@@ -5,8 +5,6 @@ VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaTours", "CapaTours\CapaTours.csproj", "{B9576EED-E8E5-445C-8EF8-AB5EE149743F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapaToursAPI", "..\CapaToursAPI\CapaToursAPI\CapaToursAPI.csproj", "{525761DA-26DF-4056-A6DC-E6B6955616A0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{B9576EED-E8E5-445C-8EF8-AB5EE149743F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9576EED-E8E5-445C-8EF8-AB5EE149743F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9576EED-E8E5-445C-8EF8-AB5EE149743F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{525761DA-26DF-4056-A6DC-E6B6955616A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{525761DA-26DF-4056-A6DC-E6B6955616A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{525761DA-26DF-4056-A6DC-E6B6955616A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{525761DA-26DF-4056-A6DC-E6B6955616A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

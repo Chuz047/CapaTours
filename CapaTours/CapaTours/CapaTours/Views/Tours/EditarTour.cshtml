@@ -26,14 +26,14 @@
 				<div class="row g-3 mt-2">
 					<div class="col-md-6">
 						<div class="form-floating">
-							<input type="text" class="form-control input-lg" asp-for="Nombre" value="@Model.Nombre" required>
 							<label>Nombre</label>
+							<input type="text" class="form-control input-lg" asp-for="Nombre" value="@Model.Nombre" required>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-floating">
-							<input type="text" class="form-control input-lg" asp-for="Destino" value="@Model.Destino" required>
 							<label>Destino</label>
+							<input type="text" class="form-control input-lg" asp-for="Destino" value="@Model.Destino" required>
 						</div>
 					</div>
 				</div>
@@ -41,14 +41,15 @@
 				<div class="row g-3 mt-2">
 					<div class="col-md-6">
 						<div class="form-floating">
-							<input type="number" class="form-control input-lg" asp-for="Precio" value="@Model.Precio" required>
 							<label>Precio</label>
+							<input type="number" class="form-control input-lg" asp-for="Precio" value="@Model.Precio" required>
 						</div>
 					</div>
+
 					<div class="col-md-6">
 						<div class="form-floating">
-							<input type="number" class="form-control input-lg" asp-for="Capacidad" value="@Model.Capacidad" required>
 							<label>Capacidad</label>
+							<input type="number" class="form-control input-lg" asp-for="Capacidad" value="@Model.Capacidad" required>
 						</div>
 					</div>
 				</div>
@@ -56,14 +57,14 @@
 				<div class="row g-3 mt-2">
 					<div class="col-md-6">
 						<div class="form-floating">
-							<input type="datetime-local" class="form-control input-lg" asp-for="FechaInicio" value="@Model.FechaInicio?.ToString("yyyy-MM-ddTHH:mm")" required>
 							<label>Fecha de Inicio</label>
+							<input type="datetime-local" class="form-control input-lg" asp-for="FechaInicio" value="@Model.FechaInicio?.ToString("yyyy-MM-ddTHH:mm")" required>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-floating">
-							<input type="datetime-local" class="form-control input-lg" asp-for="FechaFin" value="@Model.FechaFin?.ToString("yyyy-MM-ddTHH:mm")" required>
 							<label>Fecha de Fin</label>
+							<input type="datetime-local" class="form-control input-lg" asp-for="FechaFin" value="@Model.FechaFin?.ToString("yyyy-MM-ddTHH:mm")" required>
 						</div>
 					</div>
 				</div>
@@ -71,8 +72,8 @@
 				<div class="row g-3 mt-2">
 					<div class="col-md-12">
 						<div class="form-floating">
-							<textarea class="form-control input-lg" asp-for="Descripcion" value="@Model.Descripcion" required></textarea>
 							<label>Descripción</label>
+							<textarea class="form-control input-lg" asp-for="Descripcion" value="@Model.Descripcion" required></textarea>
 						</div>
 					</div>
 				</div>
@@ -80,13 +81,13 @@
 				<div class="row g-3 mt-2">
 					<div class="col-md-12">
 						<div class="form-floating">
-							<textarea class="form-control input-lg" asp-for="Itinerario" value="@Model.Itinerario" required></textarea>
 							<label>Itinerario</label>
+							<textarea class="form-control input-lg" asp-for="Itinerario" value="@Model.Itinerario" required></textarea>
 						</div>
 					</div>
 				</div>
 
-				<h5 class="text mt-4">Imágenes del Tour</h5>
+				<h5 class="text mt-4">Imágenes del Tour (Pendiente)</h5>
 				<hr>
 				<div class="row g-3 mt-2">
 					<div class="col-md-12">
