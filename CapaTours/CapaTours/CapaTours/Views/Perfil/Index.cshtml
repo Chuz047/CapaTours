@@ -1,0 +1,18 @@
+﻿@using CapaTours.Models
+@model UsuarioModel
+
+@{
+    ViewData["Title"] = "Mi Perfil";
+    Layout = "_Layout"; // o el que estés usando para páginas internas
+}
+
+<div class="container mt-5">
+    <h2 class="text-center">Mi Perfil</h2>
+    <div class="card shadow p-4 mt-4">
+        <p><strong>Nombre:</strong> @Model.Nombre</p>
+        <p><strong>Identificación:</strong> @Model.Identificacion</p>
+        <p><strong>Correo:</strong> @Model.Correo</p>
+        <p><strong>Rol:</strong> @Model.RolID</p>
+        <p><strong>Estado:</strong> @(Model.Estado ? "Activo" : "Inactivo")</p>
+    </div>
+</div>

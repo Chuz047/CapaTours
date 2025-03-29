@@ -1,1 +1,35 @@
-﻿
+﻿@using CapaTours.Models
+@model UsuarioModel
+
+@{
+    ViewData["Title"] = "Recuperar Contraseña";
+    Layout = "~/Views/Shared/_LayoutExterno.cshtml";
+}
+
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-body">
+                <h4 class="text-center">Recuperar Contraseña</h4>
+                <p class="text-center">Ingrese su correo y le enviaremos un código.</p>
+
+                @if (ViewBag.Msj != null)
+                {
+                    <div class="alert alert-danger text-center">@ViewBag.Msj</div>
+                }
+                @if (TempData["Msj"] != null)
+                {
+                    <div class="alert alert-success text-center">@TempData["Msj"]</div>
+                }
+
+                <form asp-action="RecuperarContrasenna" asp-controller="Autenticacion" method="post">
+                    <div class="form-group">
+                        <label>Correo</label>
+                        <input asp-for="Correo" class="form-control" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mt-3">Enviar código</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

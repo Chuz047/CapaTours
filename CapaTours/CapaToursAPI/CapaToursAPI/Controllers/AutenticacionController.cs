@@ -86,6 +86,84 @@ namespace CapaToursAPI.Controllers
 
         #endregion
 
+        [HttpGet("ObtenerUsuarioPorCorreo/{correo}")]
+        public IActionResult ObtenerUsuarioPorCorreo(string correo)
+        {
+            using (var context = new SqlConnection(_configuration.GetSection("ConnectionStrings:BDConnection").Value))
+            {
+                var result = context.QueryFirstOrDefault<UsuarioModel>("ObtenerUsuarioCompleto", new { correo }, commandType: System.Data.CommandType.StoredProcedure);
+
+                if (result == null)
+                    return NotFound();
+
+                return Ok(result);
+            }
+        }
+
+        [HttpPost("EnviarRecuperacion")]
+        public IActionResult EnviarRecuperacion([FromBody] string correo)
+        {
+            try
+            {
+                using (var context = new SqlConnection(_configuration.GetConnectionString("BDConnection")))
+                {
+                    var usuario = context.QueryFirstOrDefault<UsuarioModel>(
+                        "SELECT * FROM Usuarios WHERE LTRIM(RTRIM(Correo)) = LTRIM(RTRIM(@correo)) AND Estado = 1",
+                        new { correo });
+
+                    if (usuario == null)
+                        return NotFound(new { mensaje = "El correo no está registrado.", correo });
+
+                    var codigo = Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
+
+                    var asunto = "Recuperación de Contraseña - CapaTours";
+                    var cuerpo = $"Hola {usuario.Nombre},\n\nTu código de recuperación es: {codigo}\n\n";
+
+                    // ⚠️ Verificamos si falla aquí
+                    var enviado = UtilidadesCorreo.EnviarCorreo(correo, asunto, cuerpo);
+
+                    if (enviado)
+                    {
+                        return Ok(new { mensaje = "Correo enviado correctamente", codigo });
+                    }
+                    else
+                    {
+                        return StatusCode(500, new { mensaje = "No se pudo enviar el correo desde el servidor SMTP" });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    mensaje = "Error interno",
+                    error = ex.Message,
+                    stack = ex.StackTrace
+                });
+            }
+        }
+
+
+
+        [HttpPut("RestablecerContrasenna")]
+        public IActionResult RestablecerContrasenna([FromBody] UsuarioModel model)
+        {
+            using (var context = new SqlConnection(_configuration.GetConnectionString("BDConnection")))
+            {
+
+                var sql = "UPDATE Usuarios SET Contrasenna = @Contrasenna, TieneContrasennaTemp = 0, FechaVencimientoTemp = NULL WHERE Correo = @Correo AND Estado = 1";
+                var result = context.Execute(sql, new { model.Contrasenna, model.Correo });
+
+                if (result > 0)
+                    return Ok(new { mensaje = "Contraseña actualizada correctamente" });
+
+                return BadRequest(new { mensaje = "No se pudo actualizar la contraseña" });
+            }
+        }
+
+
+
+
         #region Otros Métodos
         private string GenerarToken(long UsuarioID, long RolID)
         {

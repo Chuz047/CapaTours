@@ -7,6 +7,8 @@ builder.Services.AddHttpClient();
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUtilitarios, Utilitarios>();
+builder.Services.AddScoped<CapaTours.Services.UsuarioService>();
+
 
 
 var app = builder.Build();

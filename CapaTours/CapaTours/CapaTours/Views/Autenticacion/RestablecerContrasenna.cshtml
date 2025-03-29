@@ -1,0 +1,35 @@
+﻿@model CapaTours.Models.UsuarioModel
+
+@{
+    ViewData["Title"] = "Restablecer Contraseña";
+    Layout = "~/Views/Shared/_LayoutExterno.cshtml";
+}
+
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-body">
+                <h4 class="text-center">Nueva Contraseña</h4>
+
+                @if (ViewBag.Msj != null)
+                {
+                    <div class="alert alert-danger text-center">@ViewBag.Msj</div>
+                }
+
+                <form asp-action="RestablecerContrasenna" asp-controller="Autenticacion" method="post">
+                    <div class="form-group">
+                        <label>Nueva contraseña</label>
+                        <input asp-for="Contrasenna" class="form-control" type="password" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Confirmar contraseña</label>
+                        <input name="ConfirmarContrasenna" class="form-control" type="password" required />
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-block mt-3">Restablecer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

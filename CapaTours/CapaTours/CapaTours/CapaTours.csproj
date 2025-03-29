@@ -7,14 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Autenticacion\RecuperarContrasenna.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Views\Autenticacion\RecuperarContrasenna.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="wwwroot\scss\" />
   </ItemGroup>
 
