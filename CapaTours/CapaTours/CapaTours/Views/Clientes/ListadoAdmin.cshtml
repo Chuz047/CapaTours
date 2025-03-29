@@ -36,16 +36,7 @@
                                     <td>@usuario.ApellidoPaterno</td>
                                     <td>@usuario.ApellidoMaterno</td>
                                     <td>@usuario.Correo</td>
-                                    <td>
-                                        @if (usuario.Estado)
-                                        {
-                                            <span class="badge bg-success">Activo</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge bg-danger">Inactivo</span>
-                                        }
-                                    </td>
+                                    <td>@(usuario.Estado ? "Activo" : "Inactivo")</td>
                                     <td>
                                         @if (usuario.Estado)
                                         {
@@ -60,7 +51,7 @@
                                         {
                                             <form method="post" asp-controller="Clientes" asp-action="ActivarUsuario" class="d-inline">
                                                 <input type="hidden" name="usuarioID" value="@usuario.UsuarioID" />
-                                                <button type="submit" class="btn btn-sm btn-success me-1">
+                                                <button type="submit" class="btn btn-sm" style="background-color: #7B9C36; color:white">
                                                     <i class="fa-solid fa-user-check"></i> Activar Cuenta
                                                 </button>
                                             </form>
