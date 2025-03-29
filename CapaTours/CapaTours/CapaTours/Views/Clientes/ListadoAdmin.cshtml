@@ -1,25 +1,27 @@
-﻿@model List<CapaTours.Models.UsuarioModel>
+﻿@* @model List<CapaTours.Models.ClientesModel>*@
 
 <div class="row px-5">
-	<div class="col-12">
-		<div class="row">
-			<div class="col-6">
-				<div class="display-3 px-0">Clientes</div>
-				<div class="text-muted px-0 ">Listado de todos los clientes registrados en el sistema.</div>
-				<br>
-			</div>
-		</div>
+    <div class="col-12">
+        <div class="row">
+            <div class="col-6">
+                <div class="display-3 px-0">Clientes</div>
+                <div class="text-muted px-0 ">Listado de todos los clientes registrados en el sistema.</div>
+                <br>
+            </div>
+        </div>
 
 
-		<div class="row mt-3 mb-2"></div>
-		<div class="row">
-			<div class="col-12 px-0">
-				<div class="table-responsive shadow-lg" style="background-color: #f9f9f9; border-left: 5px solid #44572f; border-radius: 10px;">
-					<table id="example" class="table table-bordered table-hover">
+        <div class="row mt-3 mb-2"></div>
+        <div class="row">
+            <div class="col-12 px-0">
+                <div class="table-responsive shadow-lg" style="background-color: #f9f9f9; border-left: 5px solid #44572f; border-radius: 10px;">
+                    <table id="example" class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th>Identificación</th>
                                 <th>Nombre</th>
+                                <th>Apellido Paterno</th>
+                                <th>Apellido Materno</th>
                                 <th>Correo</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
@@ -29,10 +31,21 @@
                             @foreach (var usuario in Model)
                             {
                                 <tr>
-                                    <td>@usuario.UsuarioID</td> @* Esto tiene que traer identificación, no ID *@
-                                    <td>@usuario.Nombre @usuario.ApellidoPaterno @usuario.ApellidoMaterno</td> @* Esto tiene que mostrar los 3 datos, ahora solo se enseña el primer nombre *@
+                                    <td>@usuario.Identificacion</td>
+                                    <td>@usuario.Nombre</td>
+                                    <td>@usuario.ApellidoPaterno</td>
+                                    <td>@usuario.ApellidoMaterno</td>
                                     <td>@usuario.Correo</td>
-                                    <td>@(usuario.Estado ? "Activo" : "Inactivo")</td>
+                                    <td>
+                                        @if (usuario.Estado)
+                                        {
+                                            <span class="badge bg-success">Activo</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">Inactivo</span>
+                                        }
+                                    </td>
                                     <td>
                                         @if (usuario.Estado)
                                         {
@@ -47,7 +60,7 @@
                                         {
                                             <form method="post" asp-controller="Clientes" asp-action="ActivarUsuario" class="d-inline">
                                                 <input type="hidden" name="usuarioID" value="@usuario.UsuarioID" />
-                                                <button type="submit" class="btn btn-sm" style="background-color: #7B9C36; color:white">
+                                                <button type="submit" class="btn btn-sm btn-success me-1">
                                                     <i class="fa-solid fa-user-check"></i> Activar Cuenta
                                                 </button>
                                             </form>
@@ -60,27 +73,26 @@
                 </div>
             </div>
         </div>
-
-
-
+    </div>
+</div>
 
 @* Data Table *@
 <script>
-	$(document).ready(function () {
+    $(document).ready(function () {
 
-		$("#example").DataTable({
-			language: {
-				url: '//cdn.datatables.net/plug-ins/2.1.8/i18n/es-ES.json',
-			},
-			responsive: true,
-			columnDefs: [
-				{
-					targets: [2],
-					className: 'text-center'
-				}
-			],
-			order: [[0, 'desc']]
-		});
+        $("#example").DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/2.1.8/i18n/es-ES.json',
+            },
+            responsive: true,
+            columnDefs: [
+                {
+                    targets: [2],
+                    className: 'text-center'
+                }
+            ],
+            order: [[0, 'desc']]
+        });
 
-	});
+    });
 </script>
