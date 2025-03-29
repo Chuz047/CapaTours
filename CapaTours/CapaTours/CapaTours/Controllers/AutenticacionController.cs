@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using CapaTours.Models;
@@ -27,10 +28,12 @@ namespace CapaTours.Controllers
 
         [HttpPost]
         public IActionResult Registro(UsuarioModel model)
+        { 
 
         // Encriptación
+        model.Contrasenna = Encrypt(model.Contrasenna!);
 
-        {
+        
             using (var api = _httpClient.CreateClient())
             {
 
@@ -68,6 +71,7 @@ namespace CapaTours.Controllers
         public IActionResult Login(UsuarioModel model)
         {
             // Encriptación 
+            model.Contrasenna = Encrypt(model.Contrasenna!);
 
             using (var api = _httpClient.CreateClient())
             {
