@@ -1,0 +1,33 @@
+﻿@model CapaTours.Models.UsuarioModel
+
+@{
+    ViewData["Title"] = "Código de Recuperación";
+    Layout = "~/Views/Shared/_LayoutExterno.cshtml";
+}
+
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-body">
+                <h4 class="text-center">Ingrese el código recibido por correo</h4>
+
+                @if (ViewBag.Msj != null)
+                {
+                    <div class="alert alert-danger text-center">@ViewBag.Msj</div>
+                }
+
+                <form asp-action="CodigoRecuperacion" asp-controller="Autenticacion" method="post">
+                    <div class="form-group">
+                        <label>Correo</label>
+                        <input type="email" name="correo" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Código</label>
+                        <input type="text" name="codigo" class="form-control" required />
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block">Verificar código</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
