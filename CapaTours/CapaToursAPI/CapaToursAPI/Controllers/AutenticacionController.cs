@@ -150,6 +150,7 @@ namespace CapaToursAPI.Controllers
         {
             using (var context = new SqlConnection(_configuration.GetConnectionString("BDConnection")))
             {
+
                 var sql = "UPDATE Usuarios SET Contrasenna = @Contrasenna, TieneContrasennaTemp = 0, FechaVencimientoTemp = NULL WHERE Correo = @Correo AND Estado = 1";
                 var result = context.Execute(sql, new { model.Contrasenna, model.Correo });
 

@@ -202,6 +202,7 @@ namespace CapaTours.Controllers
 
             // Preparar datos para la API
             model.Correo = correo;
+            model.Contrasenna = Encrypt(model.Contrasenna!);
 
             var cliente = _httpClient.CreateClient();
             var url = _configuration["Variables:urlApi"] + "Autenticacion/RestablecerContrasenna";
