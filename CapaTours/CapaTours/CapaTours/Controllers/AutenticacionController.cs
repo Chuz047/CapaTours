@@ -91,8 +91,7 @@ namespace CapaTours.Controllers
                         HttpContext.Session.SetString("Correo", datosResult!.Correo!);
                         HttpContext.Session.SetString("RolID", datosResult!.RolID.ToString());
                         HttpContext.Session.SetString("UsuarioID", datosResult!.UsuarioID.ToString());
-
-
+                        HttpContext.Session.SetString("Nombre", datosResult!.Nombre.ToString());
 
                         if (datosResult.RolID == 1)
                         {

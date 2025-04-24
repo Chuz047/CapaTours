@@ -44,7 +44,6 @@ namespace CapaTours.Controllers.Admin
 
             return View(new List<UsuarioModel>());
         }
-
         #endregion
 
         [HttpPost]
