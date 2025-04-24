@@ -1,4 +1,5 @@
-﻿using CapaToursAPI.Models;
+﻿using CapaToursAPI.Helpers;
+using CapaToursAPI.Models;
 using Dapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -56,26 +57,56 @@ namespace CapaToursAPI.Controllers.Admin
         {
             using (var context = new SqlConnection(_configuration.GetSection("ConnectionStrings:BDConnection").Value))
             {
-                //Falta la imagen!
-                var result = context.Execute("CrearTour",
-                new { model.Nombre, model.Destino, model.Precio, model.Capacidad, model.FechaInicio, model.FechaFin, model.Descripcion, model.Itinerario });
-
-                var respuesta = new RespuestaModel();
-
-                if (result > 0)
+                try
                 {
-                    respuesta.Indicador = true;
-                    respuesta.Mensaje = "Su información se ha registrado correctamente";
-                }
-                else
-                {
-                    respuesta.Indicador = false;
-                    respuesta.Mensaje = "Su información no se ha registrado correctamente";
-                }
+                   
+                    var result = context.Execute("CrearTourErrorNombre",
+                        new
+                        {
+                            model.Nombre,
+                            model.Destino,
+                            model.Precio,
+                            model.Capacidad,
+                            model.FechaInicio,
+                            model.FechaFin,
+                            model.Descripcion,
+                            model.Itinerario
+                        });
 
-                return Ok(respuesta);
+                    var respuesta = new RespuestaModel();
+
+                    if (result > 0)
+                    {
+                        respuesta.Indicador = true;
+                        respuesta.Mensaje = "Su información se ha registrado correctamente";
+                    }
+                    else
+                    {
+                        respuesta.Indicador = false;
+                        respuesta.Mensaje = "Su información no se ha registrado correctamente";
+                    }
+
+                    return Ok(respuesta);
+                }
+                catch (Exception ex)
+                {
+                    var usuarioIdStr = HttpContext.Session.GetString("UsuarioID");
+                    long.TryParse(usuarioIdStr, out long usuarioId);
+
+                    var connectionString = _configuration.GetSection("ConnectionStrings:BDConnection").Value;
+                    UtilidadesErrores.RegistrarError(connectionString, usuarioId, ex.Message, nameof(CrearTour));
+
+                    var respuestaError = new RespuestaModel
+                    {
+                        Indicador = false,
+                        Mensaje = "Ocurrió un error inesperado al procesar su solicitud"
+                    };
+
+                    return StatusCode(500, respuestaError);
+                }
             }
         }
+
 
         #endregion
 
@@ -87,25 +118,55 @@ namespace CapaToursAPI.Controllers.Admin
         {
             using (var context = new SqlConnection(_configuration.GetSection("ConnectionStrings:BDConnection").Value))
             {
-                var result = context.Execute("EditarTour",
-                    new { model.TourID, model.Nombre, model.Destino, model.Precio, model.Capacidad, model.FechaInicio, model.FechaFin, model.Descripcion, model.Itinerario });
-
-                var respuesta = new RespuestaModel();
-
-                if (result > 0)
+                try
                 {
-                    respuesta.Indicador = true;
-                    respuesta.Mensaje = "Información actualizada";
-                }
-                else
-                {
-                    respuesta.Indicador = false;
-                    respuesta.Mensaje = "No se actualizó la información correctamente";
-                }
+                    var result = context.Execute("EditarTour",
+                        new
+                        {
+                            model.TourID,
+                            model.Nombre,
+                            model.Destino,
+                            model.Precio,
+                            model.Capacidad,
+                            model.FechaInicio,
+                            model.FechaFin,
+                            model.Descripcion,
+                            model.Itinerario
+                        });
 
-                return Ok(respuesta);
+                    var respuesta = new RespuestaModel();
+
+                    if (result > 0)
+                    {
+                        respuesta.Indicador = true;
+                        respuesta.Mensaje = "Información actualizada";
+                    }
+                    else
+                    {
+                        respuesta.Indicador = false;
+                        respuesta.Mensaje = "No se actualizó la información correctamente";
+                    }
+
+                    return Ok(respuesta);
+                }
+                catch (Exception ex)
+                {
+                    long usuarioId = 0; // Sin usar HttpContext.Session
+
+                    var connectionString = _configuration.GetSection("ConnectionStrings:BDConnection").Value;
+                    UtilidadesErrores.RegistrarError(connectionString, usuarioId, ex.Message, nameof(EditarTour));
+
+                    var respuestaError = new RespuestaModel
+                    {
+                        Indicador = false,
+                        Mensaje = "Ocurrió un error inesperado al procesar su solicitud"
+                    };
+
+                    return StatusCode(500, respuestaError);
+                }
             }
         }
+
 
         #endregion
 
