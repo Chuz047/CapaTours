@@ -1,5 +1,4 @@
-﻿using CapaToursAPI.Helpers;
-using CapaToursAPI.Models;
+﻿using CapaToursAPI.Models;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -79,44 +78,25 @@ namespace CapaToursAPI.Controllers.Cliente
         {
             using (var context = new SqlConnection(_configuration.GetSection("ConnectionStrings:BDConnection").Value))
             {
-                try
+                var result = context.QueryFirstOrDefault<ReservaModel>("ConsultarReserva", new { ReservaID });
+
+                var respuesta = new RespuestaModel();
+
+                if (result != null)
                 {
-                    var result = context.QueryFirstOrDefault<ReservaModel>("ConsultarReserva", new { ReservaID });
-
-                    var respuesta = new RespuestaModel();
-
-                    if (result != null)
-                    {
-                        respuesta.Indicador = true;
-                        respuesta.Mensaje = "Información consultada";
-                        respuesta.Datos = result;
-                    }
-                    else
-                    {
-                        respuesta.Indicador = false;
-                        respuesta.Mensaje = "No hay información registrada en este momento";
-                    }
-
-                    return Ok(respuesta);
+                    respuesta.Indicador = true;
+                    respuesta.Mensaje = "Información consultada";
+                    respuesta.Datos = result;
                 }
-                catch (Exception ex)
+                else
                 {
-                    long usuarioId = 0; // No se accede a Session
-
-                    var connectionString = _configuration.GetSection("ConnectionStrings:BDConnection").Value;
-                    UtilidadesErrores.RegistrarError(connectionString, usuarioId, ex.Message, nameof(PagarReserva));
-
-                    var respuestaError = new RespuestaModel
-                    {
-                        Indicador = false,
-                        Mensaje = "Ocurrió un error inesperado al procesar su solicitud"
-                    };
-
-                    return StatusCode(500, respuestaError);
+                    respuesta.Indicador = false;
+                    respuesta.Mensaje = "No hay información registrada en este momento";
                 }
+
+                return Ok(respuesta);
             }
         }
-
 
         [HttpPost]
         [Route("PagarReserva")]
@@ -124,50 +104,25 @@ namespace CapaToursAPI.Controllers.Cliente
         {
             using (var context = new SqlConnection(_configuration.GetSection("ConnectionStrings:BDConnection").Value))
             {
-                try
+                var result = context.Execute("PagarReserva",
+                new { model.ReservaID, model.Comprobante, model.Monto, model.CantidadPersonas});
+
+                var respuesta = new RespuestaModel();
+
+                if (result > 0)
                 {
-                    var result = context.Execute("PagarReserva",
-                        new
-                        {
-                            model.ReservaID,
-                            model.Comprobante,
-                            model.Monto,
-                            model.CantidadPersonas
-                        });
-
-                    var respuesta = new RespuestaModel();
-
-                    if (result > 0)
-                    {
-                        respuesta.Indicador = true;
-                        respuesta.Mensaje = "Su información se ha registrado correctamente";
-                    }
-                    else
-                    {
-                        respuesta.Indicador = false;
-                        respuesta.Mensaje = "Su información no se ha registrado correctamente";
-                    }
-
-                    return Ok(respuesta);
+                    respuesta.Indicador = true;
+                    respuesta.Mensaje = "Su información se ha registrado correctamente";
                 }
-                catch (Exception ex)
+                else
                 {
-                    long usuarioId = 0; // Sin usar sesión
-
-                    var connectionString = _configuration.GetSection("ConnectionStrings:BDConnection").Value;
-                    UtilidadesErrores.RegistrarError(connectionString, usuarioId, ex.Message, nameof(PagarReserva));
-
-                    var respuestaError = new RespuestaModel
-                    {
-                        Indicador = false,
-                        Mensaje = "Ocurrió un error inesperado al procesar su solicitud"
-                    };
-
-                    return StatusCode(500, respuestaError);
+                    respuesta.Indicador = false;
+                    respuesta.Mensaje = "Su información no se ha registrado correctamente";
                 }
+
+                return Ok(respuesta);
             }
         }
-
 
     }
 }
