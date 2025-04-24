@@ -14,6 +14,10 @@
         public DateTime? FechaFin { get; set; }
         public decimal Precio { get; set; }
 
+        // Atributos de Cliente
+        public string? Nombre { get; set; }
+        public string? Correo { get; set; }
+
     }
 }
 

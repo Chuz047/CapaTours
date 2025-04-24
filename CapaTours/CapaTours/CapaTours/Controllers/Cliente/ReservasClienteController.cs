@@ -82,7 +82,9 @@ namespace CapaTours.Controllers.Cliente
                                 Precio = reserva.Precio,
                                 FechaInicio = reserva.FechaInicio,
                                 FechaFin = reserva.FechaFin,
-                                CantidadPersonas = reserva.CantidadPersonas
+                                CantidadPersonas = reserva.CantidadPersonas,
+                                Nombre = reserva.Nombre,
+                                Correo = reserva.Correo
                             };
 
                             return View(pagoModel);
