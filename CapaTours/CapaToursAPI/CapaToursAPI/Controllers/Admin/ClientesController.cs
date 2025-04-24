@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 
-namespace CapaToursAPI.Controllers
+namespace CapaToursAPI.Controllers.Admin
 {
     [AllowAnonymous]
     [Route("api/[controller]")]

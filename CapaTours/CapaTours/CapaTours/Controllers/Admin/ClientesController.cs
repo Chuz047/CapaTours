@@ -92,8 +92,6 @@ namespace CapaTours.Controllers.Admin
             return RedirectToAction("ListadoAdmin");
         }
 
-
-
         #region Editar
 
         [HttpGet]
