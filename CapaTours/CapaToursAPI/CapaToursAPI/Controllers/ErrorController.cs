@@ -23,7 +23,15 @@ namespace CapaToursAPI.Controllers
         {
             var ex = HttpContext.Features.Get<IExceptionHandlerFeature>();
 
-            // Obtener el UsuarioID desde cabecera o sesión
+            if (ex == null || ex.Error == null)
+            {
+                return BadRequest(new RespuestaModel
+                {
+                    Indicador = false,
+                    Mensaje = "No se encontró información del error"
+                });
+            }
+
             string usuarioIdStr = HttpContext.Request.Headers["UsuarioID"];
             long.TryParse(usuarioIdStr, out long usuarioID);
 
@@ -31,7 +39,7 @@ namespace CapaToursAPI.Controllers
 
             using (var context = new SqlConnection(_configuration.GetSection("ConnectionStrings:BDConnection").Value))
             {
-                var Mensaje = ex!.Error.Message;
+                var Mensaje = ex.Error.Message;
 
                 context.Execute("RegistrarError",
                     new
@@ -42,13 +50,11 @@ namespace CapaToursAPI.Controllers
                     });
             }
 
-            var respuesta = new RespuestaModel
+            return BadRequest(new RespuestaModel
             {
                 Indicador = false,
                 Mensaje = "Se presentó un problema en el sistema"
-            };
-
-            return BadRequest(respuesta);
+            });
         }
     }
 }
