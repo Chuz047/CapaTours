@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Data;
+using System.Net.Http.Headers;
+using System.Text.Json;
+using CapaTours.Dependencias;
+using CapaTours.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CapaTours.Controllers.Cliente
 {
@@ -6,27 +11,157 @@ namespace CapaTours.Controllers.Cliente
     {
         private readonly IHttpClientFactory _httpClient;
         private readonly IConfiguration _configuration;
-        public ReservasClienteController(IHttpClientFactory httpClient, IConfiguration configuration)
+        private readonly IUtilitarios _utilitarios;
+       
+        public ReservasClienteController(IHttpClientFactory httpClient, IConfiguration configuration, IUtilitarios utilitarios)
         {
             _httpClient = httpClient;
             _configuration = configuration;
+            _utilitarios = utilitarios;
+            
         }
 
-        #region Listado
+        #region Listado de Reservas del Cliente
 
         [HttpGet]
-        public IActionResult ListadoCliente()
+        public async Task<IActionResult> ListadoCliente()
         {
-            return View();
+            string? usuarioIdStr = HttpContext.Session.GetString("UsuarioID");
+
+            if (string.IsNullOrEmpty(usuarioIdStr) || !long.TryParse(usuarioIdStr, out long usuarioID))
+            {
+                TempData["error"] = "Debe iniciar sesión para ver sus reservas.";
+                return RedirectToAction("Login", "Autenticacion");
+            }
+
+            List<ReservaModel> reservas = new();
+
+            using (var cliente = _httpClient.CreateClient())
+            {
+                var url = _configuration.GetSection("Variables:urlApi").Value + $"ReservasCliente/ListadoCliente?usuarioID={usuarioID}";
+                var response = await cliente.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadFromJsonAsync<RespuestaModel>();
+
+                    if (result != null && result.Indicador && result.Datos != null)
+                    {
+                        reservas = JsonSerializer.Deserialize<List<ReservaModel>>(result.Datos.ToString() ?? "")!;
+                    }
+                }
+            }
+
+            return View(reservas);
         }
 
         #endregion
 
-
         [HttpGet]
-        public IActionResult PagarReserva()
+        public IActionResult PagarReserva(long ReservaID)
         {
-            return View();
+            using (var api = _httpClient.CreateClient())
+            {
+                var url = _configuration.GetSection("Variables:urlApi").Value + "ReservasCliente/PagarReserva?ReservaID=" + ReservaID;
+                var response = api.GetAsync(url).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = response.Content.ReadFromJsonAsync<RespuestaModel>().Result;
+
+                    if (result != null && result.Indicador)
+                    {
+                        var reserva = ((JsonElement)result.Datos).Deserialize<ReservaModel>();
+
+                        if (reserva != null && reserva.ReservaID == ReservaID)
+                        {
+                            var pagoModel = new PagoModel
+                            {
+                                ReservaID = reserva.ReservaID,
+                                NombreTour = reserva.NombreTour,
+                                Precio = reserva.Precio,
+                                FechaInicio = reserva.FechaInicio,
+                                FechaFin = reserva.FechaFin,
+                                CantidadPersonas = reserva.CantidadPersonas
+                            };
+
+                            return View(pagoModel);
+                        }
+                        else
+                        {
+                            ViewBag.Msj = "Reserva no encontrada.";
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.Msj = result?.Mensaje;
+                    }
+                }
+                else
+                {
+                    ViewBag.Msj = "No se pudo completar su petición";
+                }
+
+                return View(new PagoModel());
+            }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> PagarReserva(PagoModel model, IFormFile Comprobante)
+        {
+
+            if (Comprobante != null && Comprobante.Length > 0)
+            {
+                model.Comprobante = await GuardarImagenServicio(Comprobante);
+            }
+
+            using (var api = _httpClient.CreateClient())
+            {
+                var url = _configuration.GetSection("Variables:urlApi").Value + "ReservasCliente/PagarReserva";
+
+                api.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+                var response = await api.PostAsJsonAsync(url, model);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = response.Content.ReadFromJsonAsync<RespuestaModel>().Result;
+
+                    if (result != null && result.Indicador)
+                        return RedirectToAction("ListadoCliente", "ReservasCliente");
+                    else
+                        ViewBag.Msj = result!.Mensaje;
+                }
+                else
+                    ViewBag.Msj = "No se pudo completar su petición";
+            }
+
+            return View(model);
+        }
+
+        private async Task<string> GuardarImagenServicio(IFormFile imagen)
+        {
+            var rutaRelativa = Path.Combine("img", "comprobantes");
+
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", rutaRelativa);
+
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            var uniqueFileName = $"{Guid.NewGuid()}{Path.GetExtension(imagen.FileName)}";
+            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await imagen.CopyToAsync(fileStream);
+            }
+
+            return $"/img/comprobantes/{uniqueFileName}";
+        }
+
+
     }
 }
+
+

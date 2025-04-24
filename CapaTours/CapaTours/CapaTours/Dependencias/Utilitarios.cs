@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace CapaTours.Dependencias
 {
@@ -40,5 +41,33 @@ namespace CapaTours.Dependencias
                 return response;
             }
         }
+
+        // Que es esto???
+        public HttpResponseMessage ConsultarInfoEstados()
+        {
+            using (var api = _httpClient.CreateClient())
+            {
+                var url = _configuration.GetSection("Variables:urlApi").Value + "Ofertas/ConsultarEstados";
+
+                api.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessor.HttpContext!.Session.GetString("Token"));
+                var response = api.GetAsync(url).Result;
+
+                return response;
+            }
+        }
+
+        //public HttpResponseMessage ConsultarReservaCliente(long ReservaID)
+        //{
+        //    using (var api = _httpClient.CreateClient())
+        //    {
+        //        var url = _configuration.GetSection("Variables:urlApi").Value + "Clientes/PagarReserva?Id=" + ReservaID;
+
+        //        api.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessor.HttpContext!.Session.GetString("Token"));
+
+        //        var response = api.GetAsync(url).Result;
+
+        //        return response;
+        //    }
+        //}
     }
 }

@@ -1,8 +1,7 @@
-﻿@* @model List<CapaTours.Models.ReservaModel> *@
+﻿@model CapaTours.Models.PagoModel
 
 <div class='row px-5'>
 	<div class='col-12 px-0'>
-		<!-- Header -->
 		<div class='row mx-1 mb-4'>
 			<div class='col-auto'>
 				<a class='btn btn-secondary btn-sm' asp-controller='ReservasCliente' asp-action='ListadoCliente'>
@@ -11,13 +10,11 @@
 			</div>
 		</div>
 
-		<!-- Modal Container -->
 		<div class='mt-4 p-5 rounded shadow-lg' style='background-color: #f9f9f9; border-left: 5px solid #44572F;'>
 			<h3 class='display-6 mb-4'>Pagar Reserva</h3>
 			<p class='text-muted'>Complete el formulario para procesar el pago de la reserva.</p>
 			<hr>
 
-			<!-- Payment Information -->
 			<div class='row g-3 mt-4'>
 				<div class='col-md-4'>
 					<h5 class='fw-bold text-dark mb-3'>Información Adicional</h5>
@@ -30,12 +27,10 @@
 					<p>*Aquí hay que explicarle al usuario como funciona todo el asunto de pago/confirmación*</p>
 				</div>
 
-				<!-- Separator -->
 				<div class='col-md-1 d-flex justify-content-center'>
 					<div style='border-left: 2px solid #ccc; height: 100%;'></div>
 				</div>
 
-				<!-- Payment Form -->
 				<div class='col-md-7'>
 					<h5 class='mb-3 fw-bold text-dark'>Información Bancaria</h5>
 					<div class='mb-3'>
@@ -49,60 +44,95 @@
 					<hr>
 
 					<h5 class='mb-3 fw-bold text-dark'>Detalles de la Reserva</h5>
-					<form id='paymentForm'>
+
+					<form asp-controller="ReservasCliente" asp-action="PagarReserva" method="post" enctype="multipart/form-data">
+
+						<input type="hidden" asp-for="ReservaID" />
+
 						<div class='row g-3'>
 							<div class='col-md-6'>
 								<div class='form-floating'>
-									<label for='tourName'>Nombre de Tour</label>
-									<input type='text' class='form-control' id='tourName' value='Tour Example' readonly>
-
+									<label for='nombreTour'>Nombre de Tour</label>
+									<input type='text' class='form-control' value='@Model.NombreTour' readonly>
 								</div>
 							</div>
 							<div class='col-md-6'>
 								<div class='form-floating'>
 									<label for='precio'>Precio</label>
-									<input type='text' class='form-control' id='precio' value='$200' readonly>
+									<input type='text' class='form-control' id='precio' value='$@Model.Precio' readonly>
 								</div>
 							</div>
 						</div>
+
 						<div class='row g-3 mt-2'>
 							<div class='col-md-6'>
 								<div class='form-floating'>
-									<label for='startDate'>Fecha de Inicio</label>
-									<input type='date' class='form-control' id='startDate' value='2025-01-01' readonly>
+									<label for='fechaInicio'>Fecha de Inicio</label>
+									<input type='date' class='form-control' id='fechaInicio' value='@Model.FechaInicio?.ToString("yyyy-MM-dd")' readonly>
 								</div>
 							</div>
 							<div class='col-md-6'>
 								<div class='form-floating'>
-									<label for='endDate'>Fecha de Fin</label>
-									<input type='date' class='form-control' id='endDate' value='2025-01-10' readonly>
+									<label for='fechaFin'>Fecha de Fin</label>
+									<input type='date' class='form-control' id='fechaFin' value='@Model.FechaFin?.ToString("yyyy-MM-dd")' readonly>
 								</div>
 							</div>
 						</div>
+
 						<div class='row g-3 mt-2'>
 							<div class='col-md-6'>
 								<div class='form-floating'>
-									<label for='peopleCount'>Cantidad de Personas</label>
-									<input type='number' class='form-control' id='peopleCount' value='4'>
+									<label for='cantidadPersonas'>Cantidad de Personas</label>
+									<input type='number' class='form-control' asp-for="CantidadPersonas" id='cantidadPersonas' min='1' required>
 								</div>
 							</div>
+
 							<div class='col-md-6'>
+								<div class='form-floating'>
+									<label for='monto'>Total a Pagar</label>
+									<input type='text' class='form-control' id='monto' name='Monto' readonly>
+								</div>
+							</div>
+
+							<input type="hidden" asp-for="Monto" id="montoHidden" />
+						</div>
+
+						<div class='row g-3 mt-2'>
+							<div class='col-md-12'>
 								<label for='comprobante' class='form-label'>Comprobante de Pago</label>
-								<input type='file' class='form-control' id='comprobante' accept='image/*'>
+								<input type='file' class='form-control' asp-for="Comprobante" accept='image/*' required>
+							</div>
+						</div>
+
+						<div class='row mt-4'>
+							<div class='col-md-12'>
+								<button type='submit' class='btn w-100' style='background-color: #44572F; color: white;'>
+									<i class='fa-solid fa-check'></i> Confirmar Pago
+								</button>
 							</div>
 						</div>
 					</form>
 				</div>
 			</div>
-
-			<!-- Action Buttons -->
-			<div class='row mt-4'>
-				<div class='col-md-12'>
-					<button type='button' class='btn w-100' style='background-color: #44572F; color: white;'>
-						<i class='fa-solid fa-check'></i> Confirmar Pago
-					</button>
-				</div>
-			</div>
 		</div>
 	</div>
 </div>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+			const precioPorPersona = parseFloat('@Model.Precio');
+			const inputCantidadPersonas = document.getElementById('cantidadPersonas');
+			const inputTotalPagarVisible = document.getElementById('monto');
+			const inputTotalPagarHidden = document.getElementById('montoHidden');
+
+			function actualizarMontoTotal() {
+				const cantidadPersonas = parseInt(inputCantidadPersonas.value) || 0;
+				const montoTotal = cantidadPersonas * precioPorPersona;
+				inputTotalPagarVisible.value = montoTotal.toFixed(2);
+				inputTotalPagarHidden.value = montoTotal.toFixed(2);
+			}
+
+			inputCantidadPersonas.addEventListener('input', actualizarMontoTotal);
+			actualizarMontoTotal();
+		});
+</script>
