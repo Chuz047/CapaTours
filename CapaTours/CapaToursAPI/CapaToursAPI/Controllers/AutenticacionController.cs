@@ -107,9 +107,11 @@ namespace CapaToursAPI.Controllers
             {
                 using (var context = new SqlConnection(_configuration.GetConnectionString("BDConnection")))
                 {
+                    // ✅ Usamos el procedimiento almacenado
                     var usuario = context.QueryFirstOrDefault<UsuarioModel>(
-                        "SELECT * FROM Usuarios WHERE LTRIM(RTRIM(Correo)) = LTRIM(RTRIM(@correo)) AND Estado = 1",
-                        new { correo });
+                        "ObtenerUsuarioPorCorreo",
+                        new { correo },
+                        commandType: System.Data.CommandType.StoredProcedure);
 
                     if (usuario == null)
                         return NotFound(new { mensaje = "El correo no está registrado.", correo });
@@ -119,7 +121,6 @@ namespace CapaToursAPI.Controllers
                     var asunto = "Recuperación de Contraseña - CapaTours";
                     var cuerpo = $"Hola {usuario.Nombre},\n\nTu código de recuperación es: {codigo}\n\n";
 
-                    // ⚠️ Verificamos si falla aquí
                     var enviado = UtilidadesCorreo.EnviarCorreo(correo, asunto, cuerpo);
 
                     if (enviado)
@@ -145,14 +146,16 @@ namespace CapaToursAPI.Controllers
 
 
 
+
         [HttpPut("RestablecerContrasenna")]
         public IActionResult RestablecerContrasenna([FromBody] UsuarioModel model)
         {
             using (var context = new SqlConnection(_configuration.GetConnectionString("BDConnection")))
             {
-
-                var sql = "UPDATE Usuarios SET Contrasenna = @Contrasenna, TieneContrasennaTemp = 0, FechaVencimientoTemp = NULL WHERE Correo = @Correo AND Estado = 1";
-                var result = context.Execute(sql, new { model.Contrasenna, model.Correo });
+                // Ejecutar el procedimiento almacenado
+                var result = context.Execute("RestablecerContrasenna",
+                    new { model.Correo, model.Contrasenna },
+                    commandType: System.Data.CommandType.StoredProcedure);
 
                 if (result > 0)
                     return Ok(new { mensaje = "Contraseña actualizada correctamente" });
@@ -160,6 +163,7 @@ namespace CapaToursAPI.Controllers
                 return BadRequest(new { mensaje = "No se pudo actualizar la contraseña" });
             }
         }
+
 
 
 

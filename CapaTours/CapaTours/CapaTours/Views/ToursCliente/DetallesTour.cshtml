@@ -1,5 +1,10 @@
 ﻿@model CapaTours.Models.TourModel
 
+@{
+    ViewBag.Title = "Detalles del Tour";
+}
+
+
 <div class="row px-5">
     <div class="col-12 px-0">
         <div class="row mx-1 mb-4">
@@ -10,6 +15,41 @@
             </div>
         </div>
 
+
+        <!-- Modal de éxito -->
+        @if (TempData["mensaje"] != null)
+        {
+            <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content border-success">
+                        <div class="modal-header bg-success text-white">
+                            <h5 class="modal-title" id="successModalLabel">¡Éxito!</h5>
+                        </div>
+                        <div class="modal-body">
+                            <p>@TempData["mensaje"]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- Modal de error -->
+        @if (TempData["error"] != null)
+        {
+            <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content border-danger">
+                        <div class="modal-header bg-danger text-white">
+                            <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                        </div>
+                        <div class="modal-body">
+                            <p>@TempData["error"]</p>
+                        </div>
+                     
+                    </div>
+                </div>
+            </div>
+        }
         <div class="container mt-5">
             <div class="row align-items-center">
                 <div class="col-md-6">
@@ -38,24 +78,50 @@
     </div>
 </div>
 
-
-
-@* Modal de Reservar Tour *@
+@* Modal de Reservar Tour con formulario Razor *@
 <div class="modal fade" id="reservarTourModal" tabindex="-1" aria-labelledby="reservarTourModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="reservarTourModalLabel">Reservar Tour</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <label for="reservaInput" class="form-label">Ingrese la cantidad de personas a reservar:</label>
-                <input type="number" class="form-control" id="reservaInput" placeholder="Ejemplo: 3">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn" style="background-color:#44572f; color:white" id="confirmarReservaBtn">Reservar</button>
-            </div>
+
+            @using (Html.BeginForm("ReservarTour", "ToursCliente", FormMethod.Post))
+            {
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reservarTourModalLabel">Reservar Tour</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="CantidadPersonas" class="form-label">Ingrese la cantidad de personas a reservar:</label>
+                    <input type="number" name="CantidadPersonas" class="form-control" min="1" required />
+
+                    <input type="hidden" name="TourID" value="@Model.TourID" />
+                    <input type="hidden" name="UsuarioID" value="@ViewBag.UsuarioID" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn" style="background-color:#44572f; color:white">Reservar</button>
+                </div>
+            }
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        window.onload = function () {
+        @if (TempData["mensaje"] != null)
+        {
+            <text>
+                        var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                        successModal.show();
+            </text>
+        }
+        @if (TempData["error"] != null)
+        {
+            <text>
+                        var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                        errorModal.show();
+            </text>
+        }
+        };
+    </script>
+}

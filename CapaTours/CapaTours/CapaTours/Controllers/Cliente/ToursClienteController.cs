@@ -36,7 +36,7 @@ namespace CapaTours.Controllers.Cliente
 
             using (var api = _httpClient.CreateClient())
             {
-                var url = _configuration.GetSection("Variables:urlApi").Value + "Tours/ListadoAdmin"; 
+                var url = _configuration.GetSection("Variables:urlApi").Value + "Tours/ListadoAdmin";
                 var response = await api.GetAsync(url);
 
                 if (response.IsSuccessStatusCode)
@@ -45,16 +45,16 @@ namespace CapaTours.Controllers.Cliente
 
                     if (result != null && result.Indicador)
                     {
-                        
+
                         tours = JsonSerializer.Deserialize<List<TourModel>>(result.Datos.ToString());
 
-                       
+
                         tours = tours.Where(t => t.Estado == true).ToList();
                     }
                 }
             }
 
-            return View(tours); 
+            return View(tours);
         }
 
         #endregion
@@ -63,7 +63,15 @@ namespace CapaTours.Controllers.Cliente
 
         public async Task<IActionResult> DetallesTour(long id)
         {
-            TourModel tour = null;
+            // Validación del ID
+            if (id <= 0)
+            {
+                TempData["error"] = "ID de tour inválido.";
+                return RedirectToAction("ListadoCliente");
+            }
+
+            // Obtener el tour desde la API
+            TourModel? tour = null;
 
             using (var api = _httpClient.CreateClient())
             {
@@ -74,24 +82,87 @@ namespace CapaTours.Controllers.Cliente
                 {
                     var result = await response.Content.ReadFromJsonAsync<RespuestaModel>();
 
-                    if (result != null && result.Indicador)
+                    if (result != null && result.Indicador && result.Datos != null)
                     {
-                        var tours = JsonSerializer.Deserialize<List<TourModel>>(result.Datos.ToString());
-                        tour = tours?.FirstOrDefault();
+                        var tours = JsonSerializer.Deserialize<List<TourModel>>(result.Datos.ToString() ?? string.Empty);
+
+                        if (tours != null)
+                            tour = tours.FirstOrDefault();
                     }
                 }
             }
 
             if (tour == null)
             {
-                ViewBag.Msj = "No se encontraron detalles para este tour.";
-                return View();
+                TempData["error"] = "No se encontraron detalles para este tour.";
+                return RedirectToAction("ListadoCliente");
             }
+
+            // Obtener el UsuarioID desde la sesión (ya no se usa correo)
+            string? usuarioIdStr = HttpContext.Session.GetString("UsuarioID");
+
+            if (string.IsNullOrEmpty(usuarioIdStr) || !long.TryParse(usuarioIdStr, out long usuarioID))
+            {
+                TempData["error"] = "Debe iniciar sesión.";
+                return RedirectToAction("Login", "Autenticacion");
+            }
+
+            ViewBag.UsuarioID = usuarioID;
 
             return View(tour);
         }
 
+
+
+
+
         #endregion
+
+        [HttpPost]
+        public async Task<IActionResult> ReservarTour(long TourID, long UsuarioID, int CantidadPersonas)
+        {
+            try
+            {
+                // Validación básica
+                if (UsuarioID == 0 || TourID == 0 || CantidadPersonas <= 0)
+                {
+                    TempData["error"] = "Datos inválidos en la reserva.";
+                    return RedirectToAction("DetallesTour", new { id = TourID });
+                }
+
+                using (var cliente = _httpClient.CreateClient())
+                {
+                    var url = _configuration.GetSection("Variables:urlApi").Value + "ReservasCliente/ReservarTour";
+
+                    var body = new
+                    {
+                        TourID = TourID,
+                        UsuarioID = UsuarioID,
+                        CantidadPersonas = CantidadPersonas
+                    };
+
+                    var response = await cliente.PostAsJsonAsync(url, body);
+                    var contenido = await response.Content.ReadAsStringAsync();
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        TempData["mensaje"] = "Reserva realizada con éxito.";
+                        return RedirectToAction("DetallesTour", new { id = TourID });
+                    }
+                    else
+                    {
+                        TempData["error"] = $"Error al reservar: {contenido}";
+                        return RedirectToAction("DetallesTour", new { id = TourID });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = $"Excepción al reservar: {ex.Message}";
+                return RedirectToAction("DetallesTour", new { id = TourID });
+            }
+        }
+
     }
 }
 

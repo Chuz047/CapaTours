@@ -11,6 +11,7 @@ builder.Services.AddScoped<CapaTours.Services.UsuarioService>();
 
 
 
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())

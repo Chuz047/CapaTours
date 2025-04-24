@@ -1,0 +1,28 @@
+﻿@model List<CapaTours.Models.ReservaModel>
+
+
+<h2>Mis Reservas</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre del Tour</th>
+            <th>Personas</th>
+            <th>Estado</th>
+            <th>Inicio</th>
+            <th>Fin</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reserva in Model)
+        {
+            <tr>
+                
+                <td>@reserva.CantidadPersonas</td>
+                <td>@reserva.Estado</td>
+                <td>@reserva.FechaInicio?.ToShortDateString()</td>
+                <td>@reserva.FechaFin?.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>
