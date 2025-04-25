@@ -1,10 +1,10 @@
-﻿@* @model List<CapaTours.Models.ResennasModel> *@
+﻿@model CapaTours.Models.ResennaModel
 
 <div class="row px-5">
 	<div class="col-12 px-0">
 		<div class="row mx-1 mb-4">
 			<div class="col-auto">
-				<a class="btn btn-secondary btn-sm" asp-controller="ResennasCliente" asp-action="ListadoCliente">
+				<a class="btn btn-secondary btn-sm" asp-controller="ReservasCliente" asp-action="ListadoCliente">
 					<i class="fa-solid fa-arrow-left"></i> Regresar
 				</a>
 			</div>
@@ -43,7 +43,7 @@
 					<div class="col-md-12">
 						<div class="form-floating">
 							<label>Título</label>
-							<input type="text" class="form-control input-lg" @*asp-for="Titulo"*@ placeholder="Título" required>
+							<input type="text" class="form-control input-lg" asp-for="Titulo" placeholder="Título" required>
 						</div>
 					</div>
 				</div>
@@ -52,15 +52,20 @@
 					<div class="col-md-12">
 						<div class="form-floating">
 							<label>Comentarios</label>
-							<input type="text" class="form-control input-lg" @*asp-for="Contenido"*@ placeholder="Comentarios" required>
+							<input type="text" class="form-control input-lg" asp-for="Contenido" placeholder="Comentarios" required>
 						</div>
 					</div>
 				</div>
 
+				<input type="hidden" asp-for="UsuarioID" />
+				<input type="hidden" asp-for="TourID" />
+				<input type="hidden" asp-for="ReservaID" />
+				<input type="hidden" id="Calificacion" name="Calificacion" value="0" />
+
 				<!-- Botón Guardar -->
 				<div class="row g-2 mt-4">
 					<div class="col-md">
-						<button type='button' class='btn w-100' style='background-color: #44572F; color: white;'>
+						<button type='submit' class='btn w-100' style='background-color: #44572F; color: white;'>
 							<i class='fa-solid fa-check'></i> Crear Reseña
 						</button>
 					</div>
@@ -71,6 +76,35 @@
 </div>
 
 <script>
+	window.onload = function () {
+		const stars = document.querySelectorAll(".star");
+		const ratingValue = document.getElementById("rating-value");
+		const ratingInput = document.getElementById("Calificacion");
+
+		stars.forEach(star => {
+			star.addEventListener("click", function () {
+				const rating = parseInt(this.getAttribute("data-value"));
+
+				// Set text feedback
+				ratingValue.textContent = `Calificación: ${rating}`;
+
+				// Update hidden input value for form submission
+				ratingInput.value = rating;
+
+				// Visual update of stars
+				stars.forEach((s, index) => {
+					s.classList.remove("selected");
+					s.style.color = index < rating ? 'gold' : 'gray';
+					if (index < rating) {
+						s.classList.add("selected");
+					}
+				});
+			});
+		});
+	};
+</script>
+
+@* <script>
 	window.onload = function() {
 		const stars = document.querySelectorAll(".star");
 		const ratingValue = document.getElementById("rating-value");
@@ -92,4 +126,4 @@
 			});
 		});
 	};
-</script>
+</script> *@

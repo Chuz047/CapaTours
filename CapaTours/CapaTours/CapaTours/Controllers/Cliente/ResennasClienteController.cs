@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Net.Http.Headers;
+using CapaTours.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CapaTours.Controllers.Cliente
 {
@@ -12,36 +14,56 @@ namespace CapaTours.Controllers.Cliente
 			_configuration = configuration;
 		}
 
-		#region CrearResenna
+        #region CrearResenna
 
-		[HttpGet]
-		public IActionResult CrearResenna()
-		{
-			return View();
-		}
+        [HttpGet]
+        public IActionResult CrearResenna(long reservaID, long tourID, long usuarioID)
+        {
+            var model = new ResennaModel
+            {
+                ReservaID = reservaID,
+                TourID = tourID,
+                UsuarioID = usuarioID
+            };
 
-		#endregion
+            return View(model);
+        }
 
-		#region Listado
+        [HttpPost]
+        public async Task<IActionResult> CrearResenna(ResennaModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var api = _httpClient.CreateClient())
+                {
+                    var url = _configuration.GetSection("Variables:urlApi").Value + "ResennasCliente/CrearResenna";
 
-		[HttpGet]
-		public IActionResult ListadoCliente()
-		{
-			return View();
-		}
+                    var response = await api.PostAsJsonAsync(url, model);
 
-		#endregion
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var result = await response.Content.ReadFromJsonAsync<RespuestaModel>();
+                        if (result != null && result.Indicador)
+                        {
+                            TempData["SuccessMessage"] = "Su reseña ha sido agregada correctamente.";
+                            return RedirectToAction("ListadoCliente", "ReservasCliente");
+                        }
+                        else
+                        {
+                            ViewBag.Msj = result?.Mensaje ?? "No se pudo completar su petición";
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.Msj = "Error al procesar la solicitud.";
+                    }
+                }
+            }
 
-		#region EditarResenna
+            return View(model);
+        }
 
-		[HttpGet]
-		public IActionResult EditarResenna()
-		{
-			return View();
-		}
-
-		#endregion
-
+        #endregion
 
 	}
 }
