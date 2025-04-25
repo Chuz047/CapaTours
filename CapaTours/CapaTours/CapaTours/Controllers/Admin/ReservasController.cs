@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CapaTours.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace CapaTours.Controllers.Admin
 {
@@ -15,11 +17,35 @@ namespace CapaTours.Controllers.Admin
         #region Listado
 
         [HttpGet]
-        public IActionResult ListadoAdmin()
+        public async Task<IActionResult> ListadoAdmin()
         {
-            return View();
+            List<ReservaAdminModel> reservas = new();
+
+            using (var cliente = _httpClient.CreateClient())
+            {
+                var url = _configuration.GetSection("Variables:urlApi").Value + "Reservas/ListadoAdmin";
+                var response = await cliente.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadFromJsonAsync<RespuestaModel>();
+
+                    if (result != null && result.Indicador && result.Datos != null)
+                    {
+                        reservas = JsonSerializer.Deserialize<List<ReservaAdminModel>>(result.Datos.ToString() ?? "");
+                    }
+                }
+            }
+
+            return View(reservas);
         }
 
+
+
         #endregion
+
+        
+
+
     }
 }

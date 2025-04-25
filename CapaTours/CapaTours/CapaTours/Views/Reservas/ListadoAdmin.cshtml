@@ -1,4 +1,5 @@
-﻿@* @model List<CapaTours.Models.ReservasModel>*@
+﻿@model List<CapaTours.Models.ReservaAdminModel>
+
 
 <div class="row px-5">
 	<div class="col-12">
@@ -28,25 +29,27 @@
 							</tr>
 						</thead>
 						<tbody>
-							@*Aquí van los resultados del query *@
-							<tr>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td>"Ejemplo"</td>
-								<td class="text-center">
-									<button class="btn btn-sm" style="background-color: #7B9C36; color: white" data-bs-toggle="modal" data-bs-target="#verComprobanteModal">
-										<i class="fa-solid fa-eye"></i> Ver Comprobante
-									</button>
-									<button class="btn btn-sm btn-danger me-1" data-bs-toggle="modal" data-bs-target="#cancelarReservaModal">
-										<i class="fa-regular fa-circle-xmark"></i> Cancelar Reserva
-									</button>
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@item.ReservaID</td>
+        <td>@item.NombreTour</td>
+        <td>@item.Cliente</td>
+        <td>@item.Identificacion</td>
+        <td>@item.CantidadPersonas</td>
+        <td>@item.Estado</td>
+        <td class="text-center">
+            <button class="btn btn-sm" style="background-color: #7B9C36; color: white" data-bs-toggle="modal" data-bs-target="#verComprobanteModal">
+                <i class="fa-solid fa-eye"></i> Ver Comprobante
+            </button>
+            <button class="btn btn-sm btn-danger me-1" data-bs-toggle="modal" data-bs-target="#cancelarReservaModal">
+                <i class="fa-regular fa-circle-xmark"></i> Cancelar Reserva
+            </button>
+        </td>
+    </tr>
+}
+</tbody>
 
-								</td>
-							</tr>
-						</tbody>
 					</table>
 				</div>
 			</div>
