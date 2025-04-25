@@ -2,6 +2,7 @@
 using System.Data;
 using Microsoft.Data.SqlClient;
 using Dapper;
+using CapaToursAPI.Models;
 
 namespace CapaToursAPI.Controllers
 {
@@ -17,7 +18,7 @@ namespace CapaToursAPI.Controllers
         }
 
         [HttpPost("CapturarError")]
-        public IActionResult CapturarError([FromBody] ErrorRequest error)
+        public IActionResult CapturarError([FromBody] ErrorModel error)
         {
             try
             {
@@ -36,12 +37,5 @@ namespace CapaToursAPI.Controllers
                 return StatusCode(500, new { mensaje = "Error al registrar en la base de datos", detalle = ex.Message });
             }
         }
-    }
-
-    public class ErrorRequest
-    {
-        public long UsuarioID { get; set; }
-        public string Mensaje { get; set; } = string.Empty;
-        public string Origen { get; set; } = string.Empty;
     }
 }
