@@ -91,10 +91,10 @@
 											</a>
 										}
 
-										else
+										@if (reserva.Estado == "En Espera")
 										{
 											<button class="btn btn-sm btn-danger me-1" data-bs-toggle="modal" data-bs-target="#anularReservaModal">
-												<i class="fa-regular fa-circle-xmark"></i> Anular Reserva
+												<i class="fa-regular fa-circle-xmark"></i> Cancelar Reserva
 											</button>
 										}
 									</td>

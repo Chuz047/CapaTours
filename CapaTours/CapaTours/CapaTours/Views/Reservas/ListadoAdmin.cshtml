@@ -21,36 +21,50 @@
 								<th>ID de Reserva</th>
 								<th>Tour</th>
 								<th>Cliente</th>
-								<th>Identificación</th>							
+								<th>Identificación</th>
 								<th>Cantidad de Personas</th>
 								<th>Estado</th>
 								<th>Acciones</th>
 							</tr>
 						</thead>
 						<tbody>
-@foreach (var item in Model)
-{
-    <tr>
-        <td>@item.ReservaID</td>
-        <td>@item.NombreTour</td>
-        <td>@item.Cliente</td>
-        <td>@item.Identificacion</td>
-        <td>@item.CantidadPersonas</td>
-        <td>@item.Estado</td>
-        <td class="text-center">
-										<button class="btn btn-sm" style="background-color: #7B9C36; color: white" data-bs-toggle="modal" data-bs-target="#verComprobanteModal_@item.ReservaID">
-											<i class="fa-solid fa-eye"></i> Ver Comprobante
-										</button>
+							@foreach (var item in Model)
+							{
+								<tr>
+									<td>@item.ReservaID</td>
+									<td>@item.NombreTour</td>
+									<td>@item.Cliente</td>
+									<td>@item.Identificacion</td>
+									<td>@item.CantidadPersonas</td>
+									<td>@item.Estado</td>
+									<td class="text-center">
+										@if (item.Estado == "Completado" || item.Estado == "Confirmado")
+										{
+											<button class="btn btn-sm" style="background-color: #7B9C36; color: white" data-bs-toggle="modal" data-bs-target="#verComprobanteModal_@item.ReservaID">
+												<i class="fa-solid fa-eye"></i> Comprobante
+											</button>
+										}
 
-										<button class="btn btn-sm btn-danger me-1"
-												data-bs-toggle="modal"
-												data-bs-target="#cancelarReservaModal_@item.ReservaID">
-											<i class="fa-regular fa-circle-xmark"></i> Cancelar Reserva
-										</button>
-        </td>
-    </tr>
-}
-</tbody>
+										@if (item.Estado == "En Espera")
+										{
+											<button class="btn btn-sm btn-danger me-1"
+													data-bs-toggle="modal"
+													data-bs-target="#cancelarReservaModal_@item.ReservaID">
+												<i class="fa-regular fa-circle-xmark"></i> Cancelar Reserva
+											</button>
+										}
+
+										@if (item.Estado == "Cancelado")
+										{
+											<button class="btn btn-sm" style="background-color: #dc3545; color: white;" disabled>
+												<i class="fa-solid fa-ban"></i> Reserva Cancelada
+											</button>
+										}
+									</td>
+								</tr>
+							}
+						</tbody>
+
 						@* Modal de Comprobante *@
 						@foreach (var item in Model)
 						{
