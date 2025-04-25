@@ -141,6 +141,27 @@ namespace CapaTours.Controllers.Cliente
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> AnularReserva(long reservaID)
+        {
+            using (var cliente = _httpClient.CreateClient())
+            {
+                var url = _configuration.GetSection("Variables:urlApi").Value + $"ReservasCliente/AnularReserva?reservaID={reservaID}";
+                var response = await cliente.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    TempData["mensaje"] = "Reserva anulada correctamente.";
+                }
+                else
+                {
+                    TempData["error"] = "Error al anular la reserva.";
+                }
+            }
+
+            return RedirectToAction("ListadoCliente", "ReservasCliente");
+        }
+
         private async Task<string> GuardarImagenServicio(IFormFile imagen)
         {
             var rutaRelativa = Path.Combine("img", "comprobantes");

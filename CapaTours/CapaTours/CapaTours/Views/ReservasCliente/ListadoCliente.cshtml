@@ -93,7 +93,9 @@
 
 										@if (reserva.Estado == "En Espera")
 										{
-											<button class="btn btn-sm btn-danger me-1" data-bs-toggle="modal" data-bs-target="#anularReservaModal">
+											<button class="btn btn-sm btn-danger me-1"
+													data-bs-toggle="modal"
+													data-bs-target="#cancelarReservaModal_@reserva.ReservaID">
 												<i class="fa-regular fa-circle-xmark"></i> Cancelar Reserva
 											</button>
 										}
@@ -101,6 +103,31 @@
 								</tr>
 							}
 						</tbody>
+						@* Modal de Cancelar Reserva *@
+						@foreach (var reserva in Model)
+						{
+							<form asp-action="AnularReserva" asp-controller="ReservasCliente" method="get">
+								<input type="hidden" name="reservaID" value="@reserva.ReservaID" />
+
+								<div class="modal fade" id="cancelarReservaModal_@reserva.ReservaID" tabindex="-1" aria-labelledby="cancelarReservaModalLabel_@reserva.ReservaID" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="cancelarReservaModalLabel_@reserva.ReservaID">Confirmar Cancelación</h5>
+												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+											</div>
+											<div class="modal-body">
+												<p>¿Está seguro de que desea cancelar esta reserva?</p>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+												<button type="submit" class="btn btn-danger">Cancelar</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						}
 					</table>
 				</div>
 			</div>
