@@ -32,10 +32,10 @@ namespace CapaToursAPI.Controllers
                 });
             }
 
-            string usuarioIdStr = HttpContext.Request.Headers["UsuarioID"];
+            string? usuarioIdStr = HttpContext.Request.Headers["UsuarioID"];
             long.TryParse(usuarioIdStr, out long usuarioID);
 
-            string origen = HttpContext.Request.Headers["Origen"];
+            string? origen = HttpContext.Request.Headers["Origen"];
 
             using (var context = new SqlConnection(_configuration.GetSection("ConnectionStrings:BDConnection").Value))
             {

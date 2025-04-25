@@ -1,20 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Data;
-using Microsoft.Data.SqlClient;
-using Dapper;
+using System.Text;
+using System.Text.Json;
 
 namespace CapaTours.Controllers
 {
     public class PruebaErrorController : Controller
     {
-        private readonly string _connectionString;
+        private readonly IConfiguration _configuration;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public PruebaErrorController(IConfiguration configuration)
+        public PruebaErrorController(IConfiguration configuration, IHttpClientFactory httpClientFactory)
         {
-            _connectionString = configuration.GetConnectionString("BDConnection");
+            _configuration = configuration;
+            _httpClientFactory = httpClientFactory;
         }
 
-        public IActionResult CapturarError()
+        public async Task<IActionResult> CapturarError()
         {
             try
             {
@@ -23,20 +24,37 @@ namespace CapaTours.Controllers
             }
             catch (Exception ex)
             {
-                RegistrarError(1, ex.Message, nameof(PruebaErrorController));
-                return View("Error");
+                await EnviarErrorApi(1, ex.Message, nameof(PruebaErrorController));
+                return View("Error"); // Puedes redirigir a la vista que desees
             }
         }
 
-        private void RegistrarError(long usuarioId, string mensaje, string origen)
+        private async Task EnviarErrorApi(long usuarioId, string mensaje, string origen)
         {
-            using var connection = new SqlConnection(_connectionString);
-            var parametros = new DynamicParameters();
-            parametros.Add("@UsuarioID", usuarioId, DbType.Int64);
-            parametros.Add("@Mensaje", mensaje, DbType.String);
-            parametros.Add("@Origen", origen, DbType.String);
+            try
+            {
+                var client = _httpClientFactory.CreateClient();
+                var url = _configuration["Variables:urlApi"] + "PruebaError/CapturarError";
 
-            connection.Execute("RegistrarError", parametros, commandType: CommandType.StoredProcedure);
+                var errorData = new
+                {
+                    UsuarioID = usuarioId,
+                    Mensaje = mensaje,
+                    Origen = origen
+                };
+
+                var contenido = new StringContent(
+                    JsonSerializer.Serialize(errorData),
+                    Encoding.UTF8,
+                    "application/json");
+
+                var response = await client.PostAsync(url, contenido);
+            }
+            catch
+            {
+                // Silenciar el error si falla la comunicación con el API
+            }
         }
     }
 }
+
