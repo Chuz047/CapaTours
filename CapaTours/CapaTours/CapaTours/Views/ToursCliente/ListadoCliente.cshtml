@@ -17,7 +17,7 @@
 
                         @if (Model.Count > 0)
                         {
-                            @foreach (var tour in Model)
+                            @foreach (var tour in Model.Where(t => t.Estado == true))
                             {
                                 <div class="col-3 mb-4 item-card" data-name="@tour.Nombre" data-id="@tour.TourID">
                                     <div class="card card-hover card-with-border">

@@ -7,8 +7,8 @@ public static class UtilidadesCorreo
     {
         try
         {
-            var remitente = "quchochucho@gmail.com"; //Tu correo real
-            var clave = "ddac emcg nghp jbln";     //Contraseña de aplicación de 16 caracteres
+            var remitente = "capatourscr@gmail.com";
+            var clave = "uyho rhbg dueg twnf";
 
             var smtp = new SmtpClient("smtp.gmail.com")
             {

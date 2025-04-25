@@ -105,22 +105,75 @@ namespace CapaToursAPI.Controllers.Cliente
             using (var context = new SqlConnection(_configuration.GetSection("ConnectionStrings:BDConnection").Value))
             {
                 var result = context.Execute("PagarReserva",
-                new { model.ReservaID, model.Comprobante, model.Monto, model.CantidadPersonas});
+                new { model.ReservaID, model.Comprobante, model.Monto, model.CantidadPersonas });
 
                 var respuesta = new RespuestaModel();
 
                 if (result > 0)
                 {
+                    var asunto = "Confirmación de Pago - CapaTours";
+
+                    var cuerpo = $@"
+Estimado/a {model.Nombre},
+
+Le confirmamos que hemos recibido correctamente su pago para el tour '{model.NombreTour}'.
+
+Detalles de su transacción:
+- Fecha de Reserva: {DateTime.Now:dd/MM/yyyy}
+- Número de Reserva: {model.ReservaID}
+- Cantidad de Personas: {model.CantidadPersonas}
+- Monto Pagado: ₡{model.Monto:N2}
+
+Puede contactarnos si requiere asistencia o desea modificar su reserva.
+
+¡Gracias por confiar en CapaTours!
+
+Atentamente,
+Equipo de CapaTours
+";
+
+                    UtilidadesCorreo.EnviarCorreo(model.Correo, asunto, cuerpo);
+
                     respuesta.Indicador = true;
-                    respuesta.Mensaje = "Su información se ha registrado correctamente";
+                    respuesta.Mensaje = "Su pago ha sido procesado y se ha enviado una confirmación a su correo.";
                 }
                 else
                 {
                     respuesta.Indicador = false;
-                    respuesta.Mensaje = "Su información no se ha registrado correctamente";
+                    respuesta.Mensaje = "No se pudo procesar el pago. Intente nuevamente más tarde.";
                 }
 
                 return Ok(respuesta);
+            }
+        }
+
+        [HttpGet("AnularReserva")]
+        public IActionResult AnularReserva([FromQuery] long reservaID)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("BDConnection")))
+                {
+                    var resultado = connection.Execute(
+                        "AnularReserva",
+                        new { ReservaID = reservaID },
+                        commandType: CommandType.StoredProcedure
+                    );
+
+                    return Ok(new RespuestaModel
+                    {
+                        Indicador = true,
+                        Mensaje = "Reserva cancelada correctamente."
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new RespuestaModel
+                {
+                    Indicador = false,
+                    Mensaje = "Error al cancelar reserva: " + ex.Message
+                });
             }
         }
 

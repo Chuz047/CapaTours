@@ -82,7 +82,9 @@ namespace CapaTours.Controllers.Cliente
                                 Precio = reserva.Precio,
                                 FechaInicio = reserva.FechaInicio,
                                 FechaFin = reserva.FechaFin,
-                                CantidadPersonas = reserva.CantidadPersonas
+                                CantidadPersonas = reserva.CantidadPersonas,
+                                Nombre = reserva.Nombre,
+                                Correo = reserva.Correo
                             };
 
                             return View(pagoModel);
@@ -127,15 +129,37 @@ namespace CapaTours.Controllers.Cliente
                     var result = response.Content.ReadFromJsonAsync<RespuestaModel>().Result;
 
                     if (result != null && result.Indicador)
-                        return RedirectToAction("ListadoCliente", "ReservasCliente");
+                    {
+                        ViewBag.PagoExitoso = true;
+                        return View("PagarReserva", model);
+                    }
                     else
-                        ViewBag.Msj = result!.Mensaje;
+                        ViewBag.Msj = "No se pudo completar su petición";
                 }
-                else
-                    ViewBag.Msj = "No se pudo completar su petición";
             }
 
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AnularReserva(long reservaID)
+        {
+            using (var cliente = _httpClient.CreateClient())
+            {
+                var url = _configuration.GetSection("Variables:urlApi").Value + $"ReservasCliente/AnularReserva?reservaID={reservaID}";
+                var response = await cliente.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    TempData["mensaje"] = "Reserva anulada correctamente.";
+                }
+                else
+                {
+                    TempData["error"] = "Error al anular la reserva.";
+                }
+            }
+
+            return RedirectToAction("ListadoCliente", "ReservasCliente");
         }
 
         private async Task<string> GuardarImagenServicio(IFormFile imagen)

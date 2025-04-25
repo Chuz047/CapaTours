@@ -8,5 +8,15 @@
         public string? Comprobante { get; set; }
         public decimal Monto { get; set; }
         public int CantidadPersonas { get; set; }
+
+        // Atributos de Tour
+        public string? NombreTour { get; set; }
+        public DateTime? FechaInicio { get; set; }
+        public DateTime? FechaFin { get; set; }
+        public decimal Precio { get; set; }
+
+        // Atributos de Cliente
+        public string? Nombre { get; set; }
+        public string? Correo { get; set; }
     }
 }
