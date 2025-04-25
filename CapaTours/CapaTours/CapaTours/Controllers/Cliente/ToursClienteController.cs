@@ -151,7 +151,7 @@ namespace CapaTours.Controllers.Cliente
                     }
                     else
                     {
-                        TempData["error"] = $"Error al reservar: {contenido}";
+                        TempData["error"] = $"Lo sentimos, actualmente no hay capacidad suficiente para reservar.";
                         return RedirectToAction("DetallesTour", new { id = TourID });
                     }
                 }
