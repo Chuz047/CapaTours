@@ -1,11 +1,11 @@
 USE [msdb]
 GO
 
-/****** Object:  Job [ActualizarToursExpirados]    Script Date: 24-Apr-25 22:18:42 ******/
+/****** Object:  Job [ActualizarToursExpirados]    Script Date: 24-Apr-25 22:58:08 ******/
 BEGIN TRANSACTION
 DECLARE @ReturnCode INT
 SELECT @ReturnCode = 0
-/****** Object:  JobCategory [[Uncategorized (Local)]]    Script Date: 24-Apr-25 22:18:42 ******/
+/****** Object:  JobCategory [[Uncategorized (Local)]]    Script Date: 24-Apr-25 22:58:08 ******/
 IF NOT EXISTS (SELECT name FROM msdb.dbo.syscategories WHERE name=N'[Uncategorized (Local)]' AND category_class=1)
 BEGIN
 EXEC @ReturnCode = msdb.dbo.sp_add_category @class=N'JOB', @type=N'LOCAL', @name=N'[Uncategorized (Local)]'
@@ -25,7 +25,7 @@ EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'ActualizarToursExpirados',
 		@category_name=N'[Uncategorized (Local)]', 
 		@owner_login_name=N'DESKTOP-IKHVF0B\dvega', @job_id = @jobId OUTPUT
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [ActualizarToursExpiradosStep]    Script Date: 24-Apr-25 22:18:42 ******/
+/****** Object:  Step [ActualizarToursExpiradosStep]    Script Date: 24-Apr-25 22:58:08 ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'ActualizarToursExpiradosStep', 
 		@step_id=1, 
 		@cmdexec_success_code=0, 
