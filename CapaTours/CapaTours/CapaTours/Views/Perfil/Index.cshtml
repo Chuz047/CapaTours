@@ -14,7 +14,7 @@
         </div>
 
         <div class="mt-4 p-5 rounded shadow-lg" style="background-color: #f9f9f9; border-left: 5px solid #44572F;">
-            <form asp-action="ActualizarPerfil" asp-controller="Usuario" method="post">
+            <form asp-action="ActualizarPerfil" asp-controller="Autenticacion" method="post">
                 <input type="hidden" asp-for="UsuarioID" />
 
                 <h5 class="text mt-4">Información Personal</h5>
@@ -23,23 +23,24 @@
                 <div class="row g-3 mt-2">
                     <div class="col-md-6">
                         <div class="form-floating">
-							<label>Nombre</label>
-                            <input type="text" class="form-control input-lg" value="@Model.Nombre" disabled>
+                            <label>Nombre</label>
+                            <input type="text" class="form-control input-lg" asp-for="Nombre" disabled>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-floating">
-							<label>Identificación</label>
+                            <label>Identificación</label>
                             <input type="text" class="form-control input-lg" value="@Model.Identificacion" disabled>
                         </div>
                     </div>
                 </div>
 
+
                 <div class="row g-3 mt-2">
                     <div class="col-md-6">
                         <div class="form-floating">
-							<label>Rol</label>
+                            <label>Rol</label>
                             <input type="text" class="form-control input-lg"
                                    value="@(Model.RolID == 1 ? "Administrador" : Model.RolID == 2 ? "Usuario" : "Desconocido")"
                                    disabled>
@@ -48,7 +49,7 @@
 
                     <div class="col-md-6">
                         <div class="form-floating">
-							<label>Estado</label>
+                            <label>Estado</label>
                             <input type="text" class="form-control input-lg" value="@(Model.Estado ? "Activo" : "Inactivo")" disabled>
                         </div>
                     </div>
@@ -60,19 +61,29 @@
                 <div class="row g-3 mt-2">
                     <div class="col-md-12">
                         <div class="form-floating">
-							<label>Correo Electrónico</label>
+                            <label>Correo Electrónico</label>
                             <input type="email" class="form-control input-lg" asp-for="Correo" required>
                         </div>
                     </div>
-                </div>
 
-                <div class="row g-2 mt-4">
-                    <div class="col-md">
-                        <button type="submit" class="btn w-100" style="background-color: #44572F; color: white;">
-                            <i class="fa-solid fa-check"></i> Guardar Cambios (Pendiente)
-                        </button>
+
+
+                    <div class="row g-2 mt-4">
+                        <div class="col-md">
+                            <button type="submit" class="btn w-100" style="background-color: #44572F; color: white;">
+                                <i class="fa-solid fa-check"></i> Guardar Cambios
+                            </button>
+                        </div>
                     </div>
-                </div>
+
+                    @if (TempData["Msj"] != null)
+                    {
+                        <div class="alert alert-success mt-3 text-center">@TempData["Msj"]</div>
+                    }
+                    @if (ViewBag.Msj != null)
+                    {
+                        <div class="alert alert-danger mt-3 text-center">@ViewBag.Msj</div>
+                    }
             </form>
         </div>
     </div>

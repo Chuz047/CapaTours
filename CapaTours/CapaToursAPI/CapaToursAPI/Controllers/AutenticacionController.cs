@@ -1,4 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System.Data;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using CapaToursAPI.Models;
@@ -164,6 +165,25 @@ namespace CapaToursAPI.Controllers
             }
         }
 
+        [HttpPut("ActualizarPerfil")]
+        public IActionResult ActualizarPerfil([FromBody] UsuarioModel model)
+        {
+            using (var context = new SqlConnection(_configuration.GetConnectionString("BDConnection")))
+            {
+                var result = context.Execute("ActualizarPerfil",
+                    new
+                    {
+                        model.UsuarioID,
+                        model.Correo
+                    },
+                    commandType: CommandType.StoredProcedure);
+
+                if (result > 0)
+                    return Ok(new { mensaje = "Perfil actualizado correctamente" });
+
+                return BadRequest(new { mensaje = "No se pudo actualizar el perfil" });
+            }
+        }
 
 
 
