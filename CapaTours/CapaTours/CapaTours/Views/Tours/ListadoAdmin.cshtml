@@ -9,7 +9,7 @@
 				<br>
 			</div>
 		</div>
-		<a href="@Url.Action("CrearTour", "Tours")" id="AgregarNuevoPersonal" class="btn mb-0 nowrap" style="white-space: nowrap; background-color: #44572f; color: white"> @* /////////////asp controller *@
+		<a href="@Url.Action("CrearTour", "Tours")" id="AgregarNuevoPersonal" class="btn mb-0 nowrap" style="white-space: nowrap; background-color: #44572f; color: white">
 			<i class="fa-solid fa-plus"></i> Crear Tour
 		</a>
 		<div class="row mt-3 mb-2"></div>
@@ -46,32 +46,71 @@
 									<td>@item.Destino</td>
 									<td>@item.Precio</td>
 									<td>@item.Capacidad</td>
-									<td>@item.FechaInicio</td>
-									<td>@item.FechaFin</td>
+									<td>
+										@if (item.FechaInicio == null || item.FechaFin == null)
+										{
+											<span class="text-muted">N/A</span>
+										}
+										else
+										{
+											@item.FechaInicio
+										}
+									</td>
+
+									<td>
+										@if (item.FechaInicio == null || item.FechaFin == null)
+										{
+											<span class="text-muted">N/A</span>
+										}
+										else
+										{
+											@item.FechaFin
+										}
+									</td>
 									<td>@(item.Estado ? "Activo" : "Inactivo")</td>
 									<td>@item.Descuento</td>
 									<td class="text-center">
 										<a class="btn btn-sm" style="background-color: #7B9C36; color:white" asp-controller="Tours" asp-action="EditarTour" asp-route-TourID="@item.TourID">
-											<i class="fas fa-edit"></i> Editar Detalles
+											@if (item.FechaInicio == null || item.FechaFin == null)
+											{
+												<i class="fa-regular fa-calendar-plus"></i>
+												@:Agregar Fechas
+											}
+											else
+											{
+												<i class="fas fa-edit"></i>
+												@:Editar Detalles
+											}
 										</a>
-										@if (item.Estado)
+
+										@if (item.FechaInicio != null && item.FechaFin != null)
 										{
-											<form method="post" asp-controller="Tours" asp-action="DesactivarTour" class="d-inline">
-												<input type="hidden" name="tourID" value="@item.TourID" />
-												<button type="submit" class="btn btn-sm btn-danger me-1">
-													<i class="fa-regular fa-circle-xmark"></i> Desactivar Tour
-												</button>
-											</form>
+											@if (item.Estado)
+											{
+												<form method="post" asp-controller="Tours" asp-action="DesactivarTour" class="d-inline">
+													<input type="hidden" name="tourID" value="@item.TourID" />
+													<button type="submit" class="btn btn-sm btn-danger me-1">
+														<i class="fa-regular fa-circle-xmark"></i> Desactivar Tour
+													</button>
+												</form>
+											}
+											else
+											{
+												<form method="post" asp-controller="Tours" asp-action="ActivarTour" class="d-inline">
+													<input type="hidden" name="tourID" value="@item.TourID" />
+													<button type="submit" class="btn btn-sm" style="background-color: #7B9C36; color:white">
+														<i class="fa-regular fa-circle-check"></i> Activar Tour
+													</button>
+												</form>
+											}
 										}
 										else
 										{
-											<form method="post" asp-controller="Tours" asp-action="ActivarTour" class="d-inline">
-												<input type="hidden" name="tourID" value="@item.TourID" />
-												<button type="submit" class="btn btn-sm" style="background-color: #7B9C36; color:white">
-													<i class="fa-regular fa-circle-check"></i> Activar Tour
-												</button>
-											</form>
+											<button class="btn btn-sm btn-secondary" disabled>
+												<i class="fa-regular fa-circle-xmark"></i> Fechas No Disponibles
+											</button>
 										}
+
 										<button class="btn btn-sm" style="background-color: #7B9C36; color: white" data-bs-toggle="modal" data-bs-target="#aplicarDescuentoModal">
 											<i class="fas fa-tag"></i> Aplicar Descuento
 										</button>

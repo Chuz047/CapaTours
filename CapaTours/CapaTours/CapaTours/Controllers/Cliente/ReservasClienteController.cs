@@ -82,7 +82,9 @@ namespace CapaTours.Controllers.Cliente
                                 Precio = reserva.Precio,
                                 FechaInicio = reserva.FechaInicio,
                                 FechaFin = reserva.FechaFin,
-                                CantidadPersonas = reserva.CantidadPersonas
+                                CantidadPersonas = reserva.CantidadPersonas,
+                                Nombre = reserva.Nombre,
+                                Correo = reserva.Correo
                             };
 
                             return View(pagoModel);
@@ -127,12 +129,13 @@ namespace CapaTours.Controllers.Cliente
                     var result = response.Content.ReadFromJsonAsync<RespuestaModel>().Result;
 
                     if (result != null && result.Indicador)
-                        return RedirectToAction("ListadoCliente", "ReservasCliente");
+                    {
+                        ViewBag.PagoExitoso = true;
+                        return View("PagarReserva", model);
+                    }
                     else
-                        ViewBag.Msj = result!.Mensaje;
+                        ViewBag.Msj = "No se pudo completar su petición";
                 }
-                else
-                    ViewBag.Msj = "No se pudo completar su petición";
             }
 
             return View(model);

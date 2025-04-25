@@ -1,6 +1,5 @@
 ﻿@model List<CapaTours.Models.ReservaModel>
 
-
 <div class="row px-5">
 	<div class="col-12">
 		<div class="row">
@@ -33,27 +32,65 @@
 								<tr>
 									<td>@reserva.ReservaID</td>
 									<td>@reserva.NombreTour</td>
-									<td>@reserva.FechaInicio?.ToString("dd/MM/yyyy")</td>
-									<td>@reserva.FechaFin?.ToString("dd/MM/yyyy")</td>
+									<td>
+										@if (reserva.Estado == "Completado" || reserva.FechaInicio == null)
+										{
+											<span class="text-muted">N/A</span>
+										}
+										else
+										{
+											@reserva.FechaInicio
+										}
+									</td>
+
+									<td>
+										@if (reserva.Estado == "Completado" || reserva.FechaFin == null)
+										{
+											<span class="text-muted">N/A</span>
+										}
+										else
+										{
+											@reserva.FechaFin
+										}
+									</td>
 									<td>@reserva.CantidadPersonas</td>
 									<td>@reserva.Estado</td>
 									<td class="text-center">
 
-										<a class="btn btn-sm"
-										   style="background-color: #7B9C36; color:white"
-										   asp-controller="ReservasCliente"
-										   asp-action="PagarReserva"
-										   asp-route-reservaID="@reserva.ReservaID">
-											<i class="fa-regular fa-credit-card"></i> Pagar Reserva
-										</a>
+										@if (reserva.Estado == "En Espera")
+										{
+											<a class="btn btn-sm"
+											   style="background-color: #7B9C36; color:white"
+											   asp-controller="ReservasCliente"
+											   asp-action="PagarReserva"
+											   asp-route-reservaID="@reserva.ReservaID">
+												<i class="fa-regular fa-credit-card"></i> Pagar Reserva
+											</a>
+										}
+										else if (reserva.Estado == "Confirmado")
+										{
+											<button class="btn btn-sm" style="background-color: #B0B0B0; color: white;" disabled>
+												<i class="fa-regular fa-credit-card"></i> Pagado
+											</button>
+										}
+										else if (reserva.Estado == "Cancelado")
+										{
+											<button class="btn btn-sm" style="background-color: #dc3545; color: white;" disabled>
+												<i class="fa-solid fa-ban"></i> Reserva Cancelada
+											</button>
+										}
 
 										@if (reserva.Estado == "Completado")
 										{
 											<a class="btn btn-sm" style="background-color: #7B9C36; color:white"
-											   asp-controller="ResennasCliente" asp-action="CrearResenna">
+											   asp-controller="ResennasCliente" asp-action="CrearResenna"
+											   asp-route-reservaID="@reserva.ReservaID"
+											   asp-route-tourID="@reserva.TourID"
+											   asp-route-usuarioID="@reserva.UsuarioID">
 												<i class="fa fa-star"></i> Añadir Reseña
 											</a>
 										}
+
 										else
 										{
 											<button class="btn btn-sm btn-danger me-1" data-bs-toggle="modal" data-bs-target="#anularReservaModal">
