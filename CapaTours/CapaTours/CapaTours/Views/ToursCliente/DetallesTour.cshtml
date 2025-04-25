@@ -1,4 +1,4 @@
-﻿@model CapaTours.Models.TourModel
+﻿@using CapaTours.Models;
 
 @{
     ViewBag.Title = "Detalles del Tour";
@@ -66,33 +66,30 @@
                     </ul>
 
                     <!-- BLOQUE DE RESEÑAS -->
-                    @if (ViewBag.Resennas != null && ViewBag.Resennas.Count > 0)
+                    <h4 class="mt-4">Reseñas del Tour</h4>
+
+                    @if (ViewBag.Resennas != null && ((List<ResennaTourModel>)ViewBag.Resennas).Count > 0)
                     {
-                        <div class="mt-5">
-                            <h3 class="mb-3">Reseñas de otros viajeros</h3>
-                            <div class="list-group">
-                                @foreach (var item in ViewBag.Resennas)
-                                {
-                                    <div class="list-group-item mb-3 shadow-sm rounded">
-                                        <h5 class="mb-1">@item.Titulo</h5>
-                                        <p class="mb-1">@item.Contenido</p>
-                                        <small class="text-muted">
-                                            Por @item.Usuario -
-                                            <span style="color: gold;">
-                                                @for (int i = 0; i < item.Calificacion; i++)
-                                                {
-                                                    <i class="fas fa-star"></i>
-                                                }
-                                            </span>
-                                        </small>
+                        var resennas = (List<ResennaTourModel>)ViewBag.Resennas;
+                        <div class="row">
+                            @foreach (var resenna in resennas)
+                            {
+                                <div class="col-md-6 mb-3">
+                                    <div class="card shadow-sm p-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title">@resenna.Titulo</h5>
+                                            <p class="card-text">@resenna.Contenido</p>
+                                            <p class="text-warning">Calificación: @resenna.Calificacion ⭐</p>
+                                            <footer class="blockquote-footer">Por @resenna.Usuario</footer>
+                                        </div>
                                     </div>
-                                }
-                            </div>
+                                </div>
+                            }
                         </div>
                     }
                     else
                     {
-                        <div class="mt-5 text-muted">Este tour aún no tiene reseñas. ¡Sé el primero en dejar una!</div>
+                        <p class="text-muted">Aún no hay reseñas para este tour.</p>
                     }
                     <!-- FIN BLOQUE DE RESEÑAS -->
 
