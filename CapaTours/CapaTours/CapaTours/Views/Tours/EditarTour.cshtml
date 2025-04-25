@@ -17,7 +17,7 @@
 
 		<div class="mt-4 p-5 rounded shadow-lg" style="background-color: #f9f9f9; border-left: 5px solid #44572F;">
 
-			<form asp-action="EditarTour" asp-controller="Tours" method="post">
+			<form asp-action="EditarTour" asp-controller="Tours" method="post" enctype="multipart/form-data">
 				<input type="hidden" asp-for="TourID" />
 
 				<h5 class="text mt-4">Información del Tour</h5>
@@ -87,12 +87,15 @@
 					</div>
 				</div>
 
-				<h5 class="text mt-4">Imágenes del Tour (Pendiente)</h5>
+				<h5 class="text mt-4">Imágen del Tour</h5>
 				<hr>
+				<div class="mb-3 text-center">
+					<img src="@Model.Imagen" alt="Imágen" class="img-fluid border rounded" style="max-height: 300px;" />
+				</div>
 				<div class="row g-3 mt-2">
 					<div class="col-md-12">
-						<label for="Imagenes" class="form-label text-muted">Subir nuevas imágenes</label>
-						<input type="file" class="form-control" id="Imagenes" name="Imagenes" multiple>
+						<label for="imagen" class="form-label text-muted">Subir nueva imágen</label>
+						<input type='file' class='form-control' asp-for="Imagen" accept='image/*'>
 					</div>
 				</div>
 

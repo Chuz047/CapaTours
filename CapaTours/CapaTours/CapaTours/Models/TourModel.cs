@@ -13,5 +13,6 @@
         public DateTime? FechaFin { get; set; }    
         public bool Estado { get; set; }        
         public decimal? Descuento { get; set; } 
+        public string? Imagen { get; set; }
     }
 }

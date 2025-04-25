@@ -1,5 +1,4 @@
-﻿@using CapaTours.Models
-@model TourModel
+﻿@model CapaTours.Models.TourModel
 
 <div class="row px-5">
 	<div class="col-12 px-0">
@@ -90,13 +89,13 @@
 					</div>
 				</div>
 
-				<h5 class="text mt-4">Imágenes del Tour (Pendiente)</h5>
+				<h5 class="text mt-4">Imágenes del Tour</h5>
 				<hr>
 
 				<div class="row g-3 mt-2">
 					<div class="col-md-12">
-						<label for="Imagenes" class="form-label text-muted">Subir imágenes</label>
-						<input type="file" class="form-control" id="Imagenes" name="Imagenes" multiple>
+						<label for='imagen' class='form-label'>Imágen</label>
+						<input type='file' class='form-control' asp-for="Imagen" accept='image/*' required>
 					</div>
 				</div>
 
