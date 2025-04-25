@@ -1,4 +1,4 @@
-﻿using CapaTours.Models;
+﻿
 using CapaToursAPI.Models;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
@@ -60,26 +60,7 @@ namespace CapaToursAPI.Controllers.Cliente
             return Ok(respuesta);
         }
 
-        [HttpGet]
-        [Route("ListarPorTour")]
-        public IActionResult ListarPorTour(long tourID)
-        {
-            try
-            {
-                using var connection = new SqlConnection(_configuration.GetConnectionString("BDConnection"));
-                var reseñas = connection.Query<ResennaTourModel>(
-                    "ListarResennasPorTour",
-                    new { TourID = tourID },
-                    commandType: CommandType.StoredProcedure
-                ).ToList();
-
-                return Ok(reseñas);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { mensaje = "Error al obtener reseñas", detalle = ex.Message });
-            }
-        }
+       
 
 
     }

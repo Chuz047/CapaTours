@@ -168,25 +168,20 @@ namespace CapaTours.Controllers.Cliente
             var cliente = _httpClient.CreateClient();
             var urlApi = _configuration["Variables:urlApi"];
 
-            // Obtener el tour
-            var tourResponse = await cliente.GetFromJsonAsync<TourModel>(urlApi + $"Tours/ObtenerTourPorID?id={id}");
+           
+            var tourResponse = await cliente.GetFromJsonAsync<TourModel>(urlApi + $"ToursCliente/ObtenerTourPorID?id={id}");
 
-            // Obtener las reseñas
-            var resennasResponse = await cliente.GetAsync(urlApi + $"ResennasCliente/ListarPorTour?tourID={id}");
-            var listaResennas = new List<ResennaTourModel>();
+            var resennasResponse = await cliente.GetAsync(urlApi + $"ToursCliente/ListarPorTour?tourID={id}");
+            var listaResennas = new List<ResennaModel>();
 
             if (resennasResponse.IsSuccessStatusCode)
             {
-                listaResennas = await resennasResponse.Content.ReadFromJsonAsync<List<ResennaTourModel>>();
+                listaResennas = await resennasResponse.Content.ReadFromJsonAsync<List<ResennaModel>>();
             }
 
             ViewBag.Resennas = listaResennas;
             return View(tourResponse);
         }
-
+    }
 
     }
-}
-
-
-
