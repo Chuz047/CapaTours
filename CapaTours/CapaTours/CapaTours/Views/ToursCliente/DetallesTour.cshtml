@@ -4,7 +4,6 @@
     ViewBag.Title = "Detalles del Tour";
 }
 
-
 <div class="row px-5">
     <div class="col-12 px-0">
         <div class="row mx-1 mb-4">
@@ -14,7 +13,6 @@
                 </a>
             </div>
         </div>
-
 
         <!-- Modal de éxito -->
         @if (TempData["mensaje"] != null)
@@ -45,11 +43,11 @@
                         <div class="modal-body">
                             <p>@TempData["error"]</p>
                         </div>
-                     
                     </div>
                 </div>
             </div>
         }
+
         <div class="container mt-5">
             <div class="row align-items-center">
                 <div class="col-md-6">
@@ -66,10 +64,43 @@
                         <li class="list-group-item"><strong>Fecha de Fin:</strong> @Model.FechaFin</li>
                         <li class="list-group-item"><strong>Descuento:</strong> @(Model.Descuento > 0 ? $"{Model.Descuento}%" : "Sin descuento")</li>
                     </ul>
+
+                    <!-- BLOQUE DE RESEÑAS -->
+                    @if (ViewBag.Resennas != null && ViewBag.Resennas.Count > 0)
+                    {
+                        <div class="mt-5">
+                            <h3 class="mb-3">Reseñas de otros viajeros</h3>
+                            <div class="list-group">
+                                @foreach (var item in ViewBag.Resennas)
+                                {
+                                    <div class="list-group-item mb-3 shadow-sm rounded">
+                                        <h5 class="mb-1">@item.Titulo</h5>
+                                        <p class="mb-1">@item.Contenido</p>
+                                        <small class="text-muted">
+                                            Por @item.Usuario -
+                                            <span style="color: gold;">
+                                                @for (int i = 0; i < item.Calificacion; i++)
+                                                {
+                                                    <i class="fas fa-star"></i>
+                                                }
+                                            </span>
+                                        </small>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="mt-5 text-muted">Este tour aún no tiene reseñas. ¡Sé el primero en dejar una!</div>
+                    }
+                    <!-- FIN BLOQUE DE RESEÑAS -->
+
                     <button class="btn btn-lg mt-3" style="background-color: #7B9C36; color: white;" data-bs-toggle="modal" data-bs-target="#reservarTourModal">
                         ¡Reserva hoy! <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
+
                 <div class="col-md-6 text-center">
                     <img src="" alt="Imagen de Tour" class="img-fluid rounded shadow">
                 </div>
@@ -78,11 +109,10 @@
     </div>
 </div>
 
-@* Modal de Reservar Tour con formulario Razor *@
+<!-- Modal de Reservar Tour -->
 <div class="modal fade" id="reservarTourModal" tabindex="-1" aria-labelledby="reservarTourModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-
             @using (Html.BeginForm("ReservarTour", "ToursCliente", FormMethod.Post))
             {
                 <div class="modal-header">
@@ -92,7 +122,6 @@
                 <div class="modal-body">
                     <label for="CantidadPersonas" class="form-label">Ingrese la cantidad de personas a reservar:</label>
                     <input type="number" name="CantidadPersonas" class="form-control" min="1" required />
-
                     <input type="hidden" name="TourID" value="@Model.TourID" />
                     <input type="hidden" name="UsuarioID" value="@ViewBag.UsuarioID" />
                 </div>
@@ -104,6 +133,7 @@
         </div>
     </div>
 </div>
+
 
 @section Scripts {
     <script>

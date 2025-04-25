@@ -163,6 +163,28 @@ namespace CapaTours.Controllers.Cliente
             }
         }
 
+        public async Task<IActionResult> Detalles(long id)
+        {
+            var cliente = _httpClient.CreateClient();
+            var urlApi = _configuration["Variables:urlApi"];
+
+            // Obtener el tour
+            var tourResponse = await cliente.GetFromJsonAsync<TourModel>(urlApi + $"Tours/ObtenerTourPorID?id={id}");
+
+            // Obtener las reseñas
+            var resennasResponse = await cliente.GetAsync(urlApi + $"ResennasCliente/ListarPorTour?tourID={id}");
+            var listaResennas = new List<ResennaTourModel>();
+
+            if (resennasResponse.IsSuccessStatusCode)
+            {
+                listaResennas = await resennasResponse.Content.ReadFromJsonAsync<List<ResennaTourModel>>();
+            }
+
+            ViewBag.Resennas = listaResennas;
+            return View(tourResponse);
+        }
+
+
     }
 }
 
