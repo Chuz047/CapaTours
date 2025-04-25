@@ -44,7 +44,26 @@ namespace CapaTours.Controllers.Admin
 
         #endregion
 
-        
+        [HttpGet]
+        public async Task<IActionResult> AnularReserva(long reservaID)
+        {
+            using (var cliente = _httpClient.CreateClient())
+            {
+                var url = _configuration.GetSection("Variables:urlApi").Value + $"Reservas/AnularReserva?reservaID={reservaID}";
+                var response = await cliente.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    TempData["mensaje"] = "Reserva anulada correctamente.";
+                }
+                else
+                {
+                    TempData["error"] = "Error al anular la reserva.";
+                }
+            }
+
+            return RedirectToAction("ListadoAdmin");
+        }
 
 
     }

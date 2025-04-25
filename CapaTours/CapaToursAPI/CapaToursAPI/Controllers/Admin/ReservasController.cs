@@ -26,7 +26,7 @@ namespace CapaToursAPI.Controllers.Admin
                 using (var connection = new SqlConnection(_configuration.GetConnectionString("BDConnection")))
                 {
                     var reservas = connection.Query<ReservaAdminModel>(
-                        "ObtenerTodasLasReservasAdmin",
+                        "ObtenerReservasAdmin",
                         commandType: CommandType.StoredProcedure
                     ).ToList();
 
@@ -48,7 +48,35 @@ namespace CapaToursAPI.Controllers.Admin
             }
         }
 
-        
+        [HttpGet("AnularReserva")]
+        public IActionResult AnularReserva([FromQuery] long reservaID)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_configuration.GetConnectionString("BDConnection")))
+                {
+                    var resultado = connection.Execute(
+                        "AnularReserva",
+                        new { ReservaID = reservaID },
+                        commandType: CommandType.StoredProcedure
+                    );
+
+                    return Ok(new RespuestaModel
+                    {
+                        Indicador = true,
+                        Mensaje = "Reserva cancelada correctamente."
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new RespuestaModel
+                {
+                    Indicador = false,
+                    Mensaje = "Error al cancelar reserva: " + ex.Message
+                });
+            }
+        }
 
     }
 }
