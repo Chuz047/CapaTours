@@ -2,6 +2,8 @@ using CapaTours.Dependencias;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 builder.Services.AddSession();
@@ -17,6 +19,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseExceptionHandler("/Error/CapturarError");
+
 
 app.UseSession();
 
