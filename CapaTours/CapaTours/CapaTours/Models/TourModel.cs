@@ -14,5 +14,9 @@
         public bool Estado { get; set; }        
         public decimal? Descuento { get; set; } 
         public string? Imagen { get; set; }
+
+
+        // Lista de Reseñas
+        public List<ResennaModel>? Resennas { get; set; }
     }
 }
