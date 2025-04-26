@@ -36,7 +36,7 @@ namespace CapaTours.Controllers.Cliente
 
             using (var api = _httpClient.CreateClient())
             {
-                var url = _configuration.GetSection("Variables:urlApi").Value + "Tours/ListadoAdmin";
+                var url = _configuration.GetSection("Variables:urlApi").Value + "ToursCliente/ListadoCliente";
                 var response = await api.GetAsync(url);
 
                 if (response.IsSuccessStatusCode)
@@ -45,11 +45,11 @@ namespace CapaTours.Controllers.Cliente
 
                     if (result != null && result.Indicador)
                     {
-
+                        // Deserialize the list of tours
                         tours = JsonSerializer.Deserialize<List<TourModel>>(result.Datos.ToString());
 
-
-                        tours = tours.Where(t => t.Estado == true).ToList();
+                        // Filter the tours by Estado (active ones)
+                        tours = tours?.Where(t => t.Estado == true).ToList();
                     }
                 }
             }
@@ -75,7 +75,7 @@ namespace CapaTours.Controllers.Cliente
 
             using (var api = _httpClient.CreateClient())
             {
-                var url = _configuration.GetSection("Variables:urlApi").Value + $"Tours/ListadoAdmin?TourID={id}";
+                var url = _configuration.GetSection("Variables:urlApi").Value + $"ToursCliente/ListadoCliente?TourID={id}";
                 var response = await api.GetAsync(url);
 
                 if (response.IsSuccessStatusCode)
@@ -84,10 +84,14 @@ namespace CapaTours.Controllers.Cliente
 
                     if (result != null && result.Indicador && result.Datos != null)
                     {
-                        var tours = JsonSerializer.Deserialize<List<TourModel>>(result.Datos.ToString() ?? string.Empty);
+                        // Deserialize the TourModel
+                        tour = JsonSerializer.Deserialize<TourModel>(result.Datos.ToString());
 
-                        if (tours != null)
-                            tour = tours.FirstOrDefault();
+                        // Check if Resennas (reviews) exist and assign them to the tour
+                        if (tour != null && tour.Resennas == null)
+                        {
+                            tour.Resennas = tour.Resennas ?? new List<ResennaModel>();  // Ensure Resennas is not null
+                        }
                     }
                 }
             }
@@ -111,10 +115,6 @@ namespace CapaTours.Controllers.Cliente
 
             return View(tour);
         }
-
-
-
-
 
         #endregion
 
@@ -163,8 +163,25 @@ namespace CapaTours.Controllers.Cliente
             }
         }
 
+        public async Task<IActionResult> Detalles(long id)
+        {
+            var cliente = _httpClient.CreateClient();
+            var urlApi = _configuration["Variables:urlApi"];
+
+           
+            var tourResponse = await cliente.GetFromJsonAsync<TourModel>(urlApi + $"ToursCliente/ObtenerTourPorID?id={id}");
+
+            var resennasResponse = await cliente.GetAsync(urlApi + $"ToursCliente/ListarPorTour?tourID={id}");
+            var listaResennas = new List<ResennaModel>();
+
+            if (resennasResponse.IsSuccessStatusCode)
+            {
+                listaResennas = await resennasResponse.Content.ReadFromJsonAsync<List<ResennaModel>>();
+            }
+
+            ViewBag.Resennas = listaResennas;
+            return View(tourResponse);
+        }
     }
-}
 
-
-
+    }

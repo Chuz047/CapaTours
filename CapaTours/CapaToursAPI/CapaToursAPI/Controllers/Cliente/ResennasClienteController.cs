@@ -1,4 +1,5 @@
-﻿using CapaToursAPI.Models;
+﻿
+using CapaToursAPI.Models;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -58,5 +59,11 @@ namespace CapaToursAPI.Controllers.Cliente
 
             return Ok(respuesta);
         }
+
+       
+
+
     }
+
+
 }
