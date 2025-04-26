@@ -39,7 +39,7 @@ namespace CapaToursAPI.Controllers.Admin
                 else
                 {
                     respuesta.Indicador = false;
-                    respuesta.Mensaje = "No hay información registrada en este momento";
+                    respuesta.Mensaje = "No hay tours registrados en este momento.";
                 }
 
                 return Ok(respuesta);

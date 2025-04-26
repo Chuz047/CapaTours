@@ -15,6 +15,14 @@
 		<div class="row">
 			<div class="col-12 px-0">
 				<div class="table-responsive shadow-lg" style="background-color: #f9f9f9; border-left: 5px solid #44572f; border-radius: 10px;">
+
+					@if (@ViewBag.Msj != null)
+					{
+						<div class="alert alert-default text-center" role="alert">
+							@ViewBag.Msj
+						</div>
+					}
+
 					<table id="example" class="table table-bordered table-hover">
 						<thead>
 							<tr>
@@ -84,7 +92,7 @@
 											}
 											<div class="mb-3">
 												<label class="form-label">Fecha</label>
-												<input type="date" class="form-control" value="@item.FechaComprobante?.ToString("yyyy-MM-dd")" readonly />
+												<input type="datetime" class="form-control" value="@item.FechaComprobante" readonly />
 											</div>
 											<div class="mb-3">
 												<label class="form-label">Monto</label>
@@ -160,7 +168,7 @@
 
 				$('#comprobanteImagen').attr('src', comprobante);
 				$('#fechaComprobante').val(fecha);
-				$('#montoComprobante').val(monto);
+				 $('#montoComprobante').val('₡ ' + monto);
 			});
 		});
 </script>

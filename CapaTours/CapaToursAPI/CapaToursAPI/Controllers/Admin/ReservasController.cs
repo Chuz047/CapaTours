@@ -21,30 +21,28 @@ namespace CapaToursAPI.Controllers.Admin
         [HttpGet("ListadoAdmin")]
         public IActionResult ListadoAdmin()
         {
-            try
+            using (var connection = new SqlConnection(_configuration.GetConnectionString("BDConnection")))
             {
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("BDConnection")))
-                {
-                    var reservas = connection.Query<ReservaAdminModel>(
-                        "ObtenerReservasAdmin",
-                        commandType: CommandType.StoredProcedure
-                    ).ToList();
+                var result = connection.Query<ReservaAdminModel>(
+                    "ObtenerReservasAdmin",
+                    commandType: CommandType.StoredProcedure
+                ).ToList();
 
-                    return Ok(new RespuestaModel
-                    {
-                        Indicador = true,
-                        Mensaje = "Reservas cargadas correctamente.",
-                        Datos = reservas
-                    });
-                }
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new RespuestaModel
+                var respuesta = new RespuestaModel();
+
+                if (result.Any())
                 {
-                    Indicador = false,
-                    Mensaje = "Error al obtener reservas: " + ex.Message
-                });
+                    respuesta.Indicador = true;
+                    respuesta.Mensaje = "Información consultada";
+                    respuesta.Datos = result;
+                }
+                else
+                {
+                    respuesta.Indicador = false;
+                    respuesta.Mensaje = "No hay reservas registradas en este momento.";
+                }
+
+                return Ok(respuesta);
             }
         }
 

@@ -44,31 +44,29 @@ namespace CapaToursAPI.Controllers.Cliente
         [HttpGet("ListadoCliente")]
         public IActionResult ListadoCliente([FromQuery] long usuarioID)
         {
-            try
+            using (var connection = new SqlConnection(_configuration.GetConnectionString("BDConnection")))
             {
-                using (var connection = new SqlConnection(_configuration.GetConnectionString("BDConnection")))
-                {
-                    var reservas = connection.Query<ReservaModel>(
-                        "ObtenerReservasPorUsuario",
-                        new { UsuarioID = usuarioID },
-                        commandType: CommandType.StoredProcedure
-                    ).ToList();
+                var reservas = connection.Query<ReservaModel>(
+                    "ObtenerReservasPorUsuario",
+                    new { UsuarioID = usuarioID },
+                    commandType: CommandType.StoredProcedure
+                ).ToList();
 
-                    return Ok(new RespuestaModel
-                    {
-                        Indicador = true,
-                        Mensaje = "Reservas cargadas correctamente.",
-                        Datos = reservas
-                    });
-                }
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new RespuestaModel
+                var respuesta = new RespuestaModel();
+
+                if (reservas.Any())
                 {
-                    Indicador = false,
-                    Mensaje = "Error al obtener reservas: " + ex.Message
-                });
+                    respuesta.Indicador = true;
+                    respuesta.Mensaje = "Información consultada";
+                    respuesta.Datos = reservas;
+                }
+                else
+                {
+                    respuesta.Indicador = false;
+                    respuesta.Mensaje = "No hay reservas registradas en este momento.";
+                }
+
+                return Ok(respuesta);
             }
         }
 

@@ -34,12 +34,19 @@ namespace CapaTours.Controllers.Admin
                     {
                         reservas = JsonSerializer.Deserialize<List<ReservaAdminModel>>(result.Datos.ToString() ?? "");
                     }
+                    else
+                    {
+                        ViewBag.Msj = result?.Mensaje ?? "No se encontraron reservas.";
+                    }
+                }
+                else
+                {
+                    ViewBag.Msj = "No se pudo obtener la información de reservas.";
                 }
             }
 
             return View(reservas);
         }
-
 
 
         #endregion

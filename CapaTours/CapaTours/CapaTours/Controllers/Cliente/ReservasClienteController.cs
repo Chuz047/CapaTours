@@ -49,6 +49,14 @@ namespace CapaTours.Controllers.Cliente
                     {
                         reservas = JsonSerializer.Deserialize<List<ReservaModel>>(result.Datos.ToString() ?? "")!;
                     }
+                    else
+                    {
+                        ViewBag.Msj = result?.Mensaje ?? "No se encontraron reservas.";
+                    }
+                }
+                else
+                {
+                    ViewBag.Msj = "No se pudo obtener la información de reservas.";
                 }
             }
 
