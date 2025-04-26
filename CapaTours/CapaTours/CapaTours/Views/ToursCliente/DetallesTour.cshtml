@@ -52,9 +52,10 @@
             <div class="row align-items-center">
                 <div class="col-md-6">
                     <h1 class="display-3 px-0">@Model.Nombre</h1>
-                    <p class="text-muted px-0">Encuentra cada detalle del tour que hayas seleccionado</p>
-                    <br>
-                    <ul class="list-group list-group-flush">
+                    <div class="text-muted mt-3">
+                        <strong>¡Disfrute de un recorrido completo!</strong> El precio incluye transporte y almuerzo. Asegúrese de conocer todos los detalles antes de realizar su reserva.
+                    </div>
+                    <ul class="list-group list-group-flush mt-3">
                         <li class="list-group-item"><strong>Destino:</strong> @Model.Destino</li>
                         <li class="list-group-item"><strong>Descripción:</strong> @Model.Descripcion</li>
                         <li class="list-group-item"><strong>Itinerario:</strong> @Model.Itinerario</li>
@@ -62,11 +63,9 @@
                         <li class="list-group-item"><strong>Capacidad:</strong> @Model.Capacidad</li>
                         <li class="list-group-item"><strong>Fecha de Inicio:</strong> @Model.FechaInicio</li>
                         <li class="list-group-item"><strong>Fecha de Fin:</strong> @Model.FechaFin</li>
-                        <li class="list-group-item"><strong>Descuento:</strong> @(Model.Descuento > 0 ? $"{Model.Descuento}%" : "Sin descuento")</li>
                     </ul>
-
                     <button class="btn btn-lg mt-3" style="background-color: #7B9C36; color: white;" data-bs-toggle="modal" data-bs-target="#reservarTourModal">
-                        ¡Reserva hoy! <i class="fa-solid fa-arrow-right"></i>
+                        ¡Reserve hoy! <i class="fa-solid fa-arrow-right"></i>
                     </button>
 
                     @if (Model.Resennas != null && Model.Resennas.Count > 0)
@@ -84,14 +83,15 @@
                                             <p class="text-warning mb-1">@resenna.Calificacion / 5 ⭐</p>
                                         </div>
                                     </div>
-                                </div>   
+                                </div>
                             }
                         </div>
                     }
                 </div>
 
                 <div class="col-md-6 text-center">
-                    <img src="@Model.Imagen" alt="Imagen de Tour" class="img-fluid rounded shadow"> 
+                    <img src="@Model.Imagen" alt="Imagen de Tour" class="img-fluid rounded shadow"
+                         style="width: 100%; height: 518px; object-fit: cover;">
                 </div>
             </div>
         </div>
@@ -105,11 +105,11 @@
             @using (Html.BeginForm("ReservarTour", "ToursCliente", FormMethod.Post))
             {
                 <div class="modal-header">
-                    <h5 class="modal-title" id="reservarTourModalLabel">Reservar Tour</h5>
+                    <h5 class="modal-title" id="reservarTourModalLabel">¡Asegure su lugar en el tour!</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <label for="CantidadPersonas" class="form-label">Ingrese la cantidad de personas a reservar:</label>
+                    <label for="CantidadPersonas" class="form-label">Indique la cantidad de personas para la reserva:</label>
                     <input type="number" name="CantidadPersonas" class="form-control" min="1" required />
                     <input type="hidden" name="TourID" value="@Model.TourID" />
                     <input type="hidden" name="UsuarioID" value="@ViewBag.UsuarioID" />
@@ -130,15 +130,15 @@
         @if (TempData["mensaje"] != null)
         {
             <text>
-                        var successModal = new bootstrap.Modal(document.getElementById('successModal'));
-                        successModal.show();
+                            var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                            successModal.show();
             </text>
         }
         @if (TempData["error"] != null)
         {
             <text>
-                        var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
-                        errorModal.show();
+                            var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                            errorModal.show();
             </text>
         }
         };

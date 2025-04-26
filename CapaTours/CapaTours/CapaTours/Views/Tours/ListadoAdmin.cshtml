@@ -5,7 +5,7 @@
 		<div class="row">
 			<div class="col-6">
 				<div class="display-3 px-0">Tours</div>
-				<div class="text-muted px-0">Listado de todos los tours registrados en el sistema.</div>
+				<div class="text-muted px-0 fst-italic">Creación y administración de los tours disponibles en la plataforma.</div>
 				<br>
 			</div>
 		</div>
@@ -34,7 +34,6 @@
 								<th>Fecha de Inicio</th>
 								<th>Fecha de Fin</th>
 								<th>Estado</th>
-								<th>Descuento (Pendiente)</th>
 								<th>Acciones</th>
 							</tr>
 						</thead>
@@ -68,7 +67,6 @@
 										}
 									</td>
 									<td>@(item.Estado ? "Activo" : "Inactivo")</td>
-									<td>@item.Descuento</td>
 									<td class="text-center">
 										<a class="btn btn-sm" style="background-color: #7B9C36; color:white" asp-controller="Tours" asp-action="EditarTour" asp-route-TourID="@item.TourID">
 											@if (item.FechaInicio == null || item.FechaFin == null)

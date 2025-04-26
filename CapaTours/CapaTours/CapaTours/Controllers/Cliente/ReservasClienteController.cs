@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CapaTours.Controllers.Cliente
 {
+    [FiltroSeguridadSesion]
     public class ReservasClienteController : Controller
     {
         private readonly IHttpClientFactory _httpClient;
@@ -21,7 +22,7 @@ namespace CapaTours.Controllers.Cliente
             
         }
 
-        #region Listado de Reservas del Cliente
+        #region Listado
 
         [HttpGet]
         public async Task<IActionResult> ListadoCliente()
@@ -64,6 +65,8 @@ namespace CapaTours.Controllers.Cliente
         }
 
         #endregion
+
+        #region PagarReserva
 
         [HttpGet]
         public IActionResult PagarReserva(long ReservaID)
@@ -149,6 +152,10 @@ namespace CapaTours.Controllers.Cliente
             return View(model);
         }
 
+        #endregion
+
+        #region AnularReserva
+
         [HttpGet]
         public async Task<IActionResult> AnularReserva(long reservaID)
         {
@@ -156,19 +163,14 @@ namespace CapaTours.Controllers.Cliente
             {
                 var url = _configuration.GetSection("Variables:urlApi").Value + $"ReservasCliente/AnularReserva?reservaID={reservaID}";
                 var response = await cliente.GetAsync(url);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    TempData["mensaje"] = "Reserva anulada correctamente.";
-                }
-                else
-                {
-                    TempData["error"] = "Error al anular la reserva.";
-                }
             }
 
             return RedirectToAction("ListadoCliente", "ReservasCliente");
         }
+
+        #endregion
+
+        #region GuardarImagenServicio
 
         private async Task<string> GuardarImagenServicio(IFormFile imagen)
         {
@@ -192,7 +194,7 @@ namespace CapaTours.Controllers.Cliente
             return $"/img/comprobantes/{uniqueFileName}";
         }
 
-
+        #endregion
     }
 }
 

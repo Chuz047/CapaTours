@@ -1,9 +1,9 @@
-﻿using System.Net.Http.Headers;
-using CapaTours.Models;
+﻿using CapaTours.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CapaTours.Controllers.Cliente
 {
+    [FiltroSeguridadSesion]
     public class ResennasClienteController : Controller
     {
 		private readonly IHttpClientFactory _httpClient;

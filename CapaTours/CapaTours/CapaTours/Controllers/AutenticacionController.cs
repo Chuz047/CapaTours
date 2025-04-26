@@ -130,6 +130,8 @@ namespace CapaTours.Controllers
         }
         #endregion
 
+        #region RecuperarContrasenna
+
         [HttpGet]
         public IActionResult RecuperarContrasenna()
         {
@@ -144,10 +146,8 @@ namespace CapaTours.Controllers
                 var cliente = _httpClient.CreateClient();
                 var url = _configuration["Variables:urlApi"] + "Autenticacion/EnviarRecuperacion";
 
-                // ✅ Serializa correctamente el string
                 var content = new StringContent(JsonSerializer.Serialize(model.Correo), Encoding.UTF8, "application/json");
 
-                // ✅ Hace la solicitud POST a la API
                 var response = await cliente.PostAsync(url, content);
 
                 if (response.IsSuccessStatusCode)
@@ -162,22 +162,19 @@ namespace CapaTours.Controllers
                     TempData["Msj"] = "Código enviado a tu correo.";
                     return RedirectToAction("CodigoRecuperacion");
                 }
-
-                // 🛑 Mostrar detalle del error si la API responde mal
                 ViewBag.Msj = $"Error en API: {response.StatusCode}";
                 return View();
             }
             catch (Exception ex)
             {
-                // 🛑 Captura errores silenciosos
                 ViewBag.Msj = $"Error inesperado: {ex.Message}";
                 return View();
             }
         }
 
+        #endregion
 
-
-
+        #region RestablecerContrasenna()
 
         [HttpGet]
         public IActionResult RestablecerContrasenna()
@@ -202,7 +199,6 @@ namespace CapaTours.Controllers
                 return RedirectToAction("RecuperarContrasenna");
             }
 
-            // Preparar datos para la API
             model.Correo = correo;
             model.Contrasenna = Encrypt(model.Contrasenna!);
 
@@ -223,6 +219,9 @@ namespace CapaTours.Controllers
             return View();
         }
 
+        #endregion
+
+        #region CodigoRecuperacion
 
         [HttpGet]
         public IActionResult CodigoRecuperacion()
@@ -251,6 +250,10 @@ namespace CapaTours.Controllers
             return View();
         }
 
+        #endregion
+
+        #region ActualizarPerfil
+
         [HttpPost]
         public async Task<IActionResult> ActualizarPerfil(UsuarioModel model)
         {
@@ -278,10 +281,9 @@ namespace CapaTours.Controllers
             return RedirectToAction("Index", "Perfil");
         }
 
+        #endregion
 
-
-
-        #region Otros Métodos
+        #region Cifrar/Descrifrar Contraseñas
         private string Encrypt(string texto)
         {
             byte[] iv = new byte[16];

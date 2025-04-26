@@ -1,13 +1,12 @@
-﻿using CapaTours.Dependencias;
-using CapaTours.Models;
-using Dapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using System.Text.Json;
+using CapaTours.Dependencias;
+using CapaTours.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CapaTours.Controllers.Admin
 {
+    [FiltroSeguridadSesion]
     public class ClientesController : Controller
     {
         private readonly IHttpClientFactory _httpClient;
@@ -20,8 +19,7 @@ namespace CapaTours.Controllers.Admin
             _utilitarios = utilitarios;
         }
 
-        #region ListadoAdmin
-
+        #region Listado
         [HttpGet]
         public IActionResult ListadoAdmin()
         {
@@ -44,7 +42,10 @@ namespace CapaTours.Controllers.Admin
 
             return View(new List<UsuarioModel>());
         }
-        #endregion
+
+        #endregion Listado
+
+        #region DesactivarUsuario
 
         [HttpPost]
         public IActionResult DesactivarUsuario(long usuarioID)
@@ -69,6 +70,9 @@ namespace CapaTours.Controllers.Admin
             return RedirectToAction("ListadoAdmin");
         }
 
+        #endregion
+
+        #region ActivarUsuario
         [HttpPost]
         public IActionResult ActivarUsuario(long usuarioID)
         {
@@ -92,13 +96,6 @@ namespace CapaTours.Controllers.Admin
             return RedirectToAction("ListadoAdmin");
         }
 
-        #region Editar
-
-        [HttpGet]
-        public IActionResult EditarCliente()
-        {
-            return View();
-        }
         #endregion
     }
 }

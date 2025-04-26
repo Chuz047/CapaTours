@@ -4,6 +4,7 @@ using System.Text.Json;
 
 namespace CapaTours.Controllers.Admin
 {
+    [FiltroSeguridadSesion]
     public class ReservasController : Controller
     {
         private readonly IHttpClientFactory _httpClient;
@@ -48,8 +49,9 @@ namespace CapaTours.Controllers.Admin
             return View(reservas);
         }
 
-
         #endregion
+
+        #region AnularReserva
 
         [HttpGet]
         public async Task<IActionResult> AnularReserva(long reservaID)
@@ -58,20 +60,11 @@ namespace CapaTours.Controllers.Admin
             {
                 var url = _configuration.GetSection("Variables:urlApi").Value + $"Reservas/AnularReserva?reservaID={reservaID}";
                 var response = await cliente.GetAsync(url);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    TempData["mensaje"] = "Reserva anulada correctamente.";
-                }
-                else
-                {
-                    TempData["error"] = "Error al anular la reserva.";
-                }
             }
 
             return RedirectToAction("ListadoAdmin");
         }
 
-
+        #endregion
     }
 }

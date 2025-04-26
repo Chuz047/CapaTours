@@ -5,7 +5,7 @@
 		<div class="row">
 			<div class="col-6">
 				<div class="display-3 px-0">Reservas</div>
-				<div class="text-muted px-0 ">Listado de todas las reservas registradas en el sistema.</div>
+				<div class="text-muted px-0 fst-italic">Visualización del historial de reservas y sus comprobantes de pago.</div>
 				<br>
 			</div>
 		</div>
@@ -158,6 +158,7 @@
 			],
 			order: [[0, 'desc']]
 		});
+		$('html, body').scrollTop(0)
 
 	});
 		// Cargar datos en el modal "Ver Comprobante"

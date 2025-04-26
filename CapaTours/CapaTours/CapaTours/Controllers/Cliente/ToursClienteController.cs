@@ -28,7 +28,7 @@ namespace CapaTours.Controllers.Cliente
         }
         #endregion
 
-        #region ListadoCliente
+        #region Listado
 
         public async Task<IActionResult> ListadoCliente()
         {
@@ -45,10 +45,7 @@ namespace CapaTours.Controllers.Cliente
 
                     if (result != null && result.Indicador)
                     {
-                        // Deserialize the list of tours
                         tours = JsonSerializer.Deserialize<List<TourModel>>(result.Datos.ToString());
-
-                        // Filter the tours by Estado (active ones)
                         tours = tours?.Where(t => t.Estado == true).ToList();
                     }
                 }
@@ -63,14 +60,12 @@ namespace CapaTours.Controllers.Cliente
 
         public async Task<IActionResult> DetallesTour(long id)
         {
-            // Validación del ID
             if (id <= 0)
             {
                 TempData["error"] = "ID de tour inválido.";
                 return RedirectToAction("ListadoCliente");
             }
 
-            // Obtener el tour desde la API
             TourModel? tour = null;
 
             using (var api = _httpClient.CreateClient())
@@ -84,13 +79,11 @@ namespace CapaTours.Controllers.Cliente
 
                     if (result != null && result.Indicador && result.Datos != null)
                     {
-                        // Deserialize the TourModel
                         tour = JsonSerializer.Deserialize<TourModel>(result.Datos.ToString());
 
-                        // Check if Resennas (reviews) exist and assign them to the tour
                         if (tour != null && tour.Resennas == null)
                         {
-                            tour.Resennas = tour.Resennas ?? new List<ResennaModel>();  // Ensure Resennas is not null
+                            tour.Resennas = tour.Resennas ?? new List<ResennaModel>();
                         }
                     }
                 }
@@ -102,7 +95,6 @@ namespace CapaTours.Controllers.Cliente
                 return RedirectToAction("ListadoCliente");
             }
 
-            // Obtener el UsuarioID desde la sesión (ya no se usa correo)
             string? usuarioIdStr = HttpContext.Session.GetString("UsuarioID");
 
             if (string.IsNullOrEmpty(usuarioIdStr) || !long.TryParse(usuarioIdStr, out long usuarioID))
@@ -118,12 +110,13 @@ namespace CapaTours.Controllers.Cliente
 
         #endregion
 
+        #region ReservarTour
+
         [HttpPost]
         public async Task<IActionResult> ReservarTour(long TourID, long UsuarioID, int CantidadPersonas)
         {
             try
             {
-                // Validación básica
                 if (UsuarioID == 0 || TourID == 0 || CantidadPersonas <= 0)
                 {
                     TempData["error"] = "Datos inválidos en la reserva.";
@@ -163,25 +156,7 @@ namespace CapaTours.Controllers.Cliente
             }
         }
 
-        public async Task<IActionResult> Detalles(long id)
-        {
-            var cliente = _httpClient.CreateClient();
-            var urlApi = _configuration["Variables:urlApi"];
-
-           
-            var tourResponse = await cliente.GetFromJsonAsync<TourModel>(urlApi + $"ToursCliente/ObtenerTourPorID?id={id}");
-
-            var resennasResponse = await cliente.GetAsync(urlApi + $"ToursCliente/ListarPorTour?tourID={id}");
-            var listaResennas = new List<ResennaModel>();
-
-            if (resennasResponse.IsSuccessStatusCode)
-            {
-                listaResennas = await resennasResponse.Content.ReadFromJsonAsync<List<ResennaModel>>();
-            }
-
-            ViewBag.Resennas = listaResennas;
-            return View(tourResponse);
-        }
+        #endregion
     }
 
-    }
+}

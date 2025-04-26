@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace CapaTours.Controllers.Admin
 {
     [FiltroSeguridadSesion]
-    //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public class ToursController : Controller
     {
         private readonly IHttpClientFactory _httpClient;
@@ -20,7 +19,7 @@ namespace CapaTours.Controllers.Admin
             _utilitarios = utilitarios;
         }
 
-        #region ListadoAdmin
+        #region Listado
 
         [HttpGet]
         public IActionResult ListadoAdmin()
@@ -217,9 +216,7 @@ namespace CapaTours.Controllers.Admin
 
         #endregion
 
-        #region AplicarDescuento
-
-        #endregion
+        #region GuardarImagenServicio
 
         private async Task<string> GuardarImagenServicio(IFormFile imagen)
         {
@@ -242,6 +239,8 @@ namespace CapaTours.Controllers.Admin
 
             return $"/img/tours/{uniqueFileName}";
         }
+        
+        #endregion
     }
 }
 
