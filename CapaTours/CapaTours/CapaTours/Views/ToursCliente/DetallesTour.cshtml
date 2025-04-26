@@ -1,4 +1,4 @@
-﻿@using CapaTours.Models;
+﻿@model CapaTours.Models.TourModel
 
 @{
     ViewBag.Title = "Detalles del Tour";
@@ -65,45 +65,26 @@
                         <li class="list-group-item"><strong>Descuento:</strong> @(Model.Descuento > 0 ? $"{Model.Descuento}%" : "Sin descuento")</li>
                     </ul>
 
-                    <!-- BLOQUE DE RESEÑAS -->
-                    @if (ViewBag.Resennas != null && ((List<ResennaModel>)ViewBag.Resennas).Count > 0)
+                    <button class="btn btn-lg mt-3" style="background-color: #7B9C36; color: white;" data-bs-toggle="modal" data-bs-target="#reservarTourModal">
+                        ¡Reserva hoy! <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                    @if (Model.Resennas != null && Model.Resennas.Count > 0)
                     {
-                        var resennas = (List<ResennaModel>)ViewBag.Resennas;
                         <h4 class="mt-5 mb-3">Reseñas del Tour</h4>
                         <div class="row">
-                            @foreach (var resenna in resennas)
+                            @foreach (var resenna in Model.Resennas)
                             {
                                 <div class="col-md-6 mb-3">
                                     <div class="card shadow-sm">
                                         <div class="card-body">
+                                            <p class="text-muted small">por @resenna.NombreUsuario</p>
                                             <h5 class="card-title">@resenna.Titulo</h5>
                                             <p class="card-text text-truncate" style="max-height: 3em;">@resenna.Contenido</p>
-                                            <p class="text-warning mb-1">⭐ @resenna.Calificacion / 5</p>
-                                            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#resennaModal_@resenna.ReservaID">
-                                                Ver más
-                                            </button>
+                                            <p class="text-warning mb-1">@resenna.Calificacion / 5 ⭐</p>
                                         </div>
                                     </div>
-                                </div>
-
-                                <!-- Modal de la reseña -->
-                                <div class="modal fade" id="resennaModal_@resenna.ReservaID" tabindex="-1" aria-labelledby="resennaModalLabel_@resenna.ReservaID" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="resennaModalLabel_@resenna.ReservaID">@resenna.Titulo</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>@resenna.Contenido</p>
-                                                <p class="text-warning">Calificación: @resenna.Calificacion ⭐</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </div>   
                             }
                         </div>
                     }
@@ -111,11 +92,6 @@
                     {
                         <p class="text-muted mt-4">Aún no hay reseñas para este tour.</p>
                     }
-                    <!-- FIN BLOQUE DE RESEÑAS -->
-
-                    <button class="btn btn-lg mt-3" style="background-color: #7B9C36; color: white;" data-bs-toggle="modal" data-bs-target="#reservarTourModal">
-                        ¡Reserva hoy! <i class="fa-solid fa-arrow-right"></i>
-                    </button>
                 </div>
 
                 <div class="col-md-6 text-center">

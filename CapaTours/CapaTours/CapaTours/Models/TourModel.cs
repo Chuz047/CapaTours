@@ -12,6 +12,9 @@
         public DateTime? FechaInicio { get; set; } 
         public DateTime? FechaFin { get; set; }    
         public bool Estado { get; set; }        
-        public decimal? Descuento { get; set; } 
+        public decimal? Descuento { get; set; }
+
+        // Lista de Reseñas
+        public List<ResennaModel>? Resennas { get; set; }
     }
 }
