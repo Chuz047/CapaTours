@@ -56,8 +56,14 @@ namespace CapaTours.Controllers.Admin
         }
 
         [HttpPost]
-        public IActionResult CrearTour(TourModel model)
+        public async Task<IActionResult> CrearTour(TourModel model, IFormFile Imagen)
         {
+
+            if (Imagen != null && Imagen.Length > 0)
+            {
+                model.Imagen = await GuardarImagenServicio(Imagen);
+            }
+
             using (var api = _httpClient.CreateClient())
             {
                 var url = _configuration.GetSection("Variables:urlApi").Value + "Tours/CrearTour";
@@ -78,7 +84,7 @@ namespace CapaTours.Controllers.Admin
                     ViewBag.Msj = "No se pudo completar su petición";
             }
 
-            return View();
+            return View(model);
 
         }
 
@@ -124,8 +130,13 @@ namespace CapaTours.Controllers.Admin
         }
 
         [HttpPost]
-        public IActionResult EditarTour(TourModel model)
+        public async Task<IActionResult> EditarTour(TourModel model, IFormFile Imagen)
         {
+            if (Imagen != null && Imagen.Length > 0)
+            {
+                model.Imagen = await GuardarImagenServicio(Imagen);
+            }
+
             using (var api = _httpClient.CreateClient())
             {
                 var url = _configuration.GetSection("Variables:urlApi").Value + "Tours/EditarTour";
@@ -209,6 +220,28 @@ namespace CapaTours.Controllers.Admin
         #region AplicarDescuento
 
         #endregion
+
+        private async Task<string> GuardarImagenServicio(IFormFile imagen)
+        {
+            var rutaRelativa = Path.Combine("img", "tours");
+
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", rutaRelativa);
+
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            var uniqueFileName = $"{Guid.NewGuid()}{Path.GetExtension(imagen.FileName)}";
+            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await imagen.CopyToAsync(fileStream);
+            }
+
+            return $"/img/tours/{uniqueFileName}";
+        }
     }
 }
 

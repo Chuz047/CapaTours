@@ -58,7 +58,7 @@ namespace CapaToursAPI.Controllers.Admin
             {
                 //Falta la imagen!
                 var result = context.Execute("CrearTour",
-                new { model.Nombre, model.Destino, model.Precio, model.Capacidad, model.FechaInicio, model.FechaFin, model.Descripcion, model.Itinerario });
+                new { model.Nombre, model.Destino, model.Precio, model.Capacidad, model.FechaInicio, model.FechaFin, model.Descripcion, model.Itinerario, model.Imagen });
 
                 var respuesta = new RespuestaModel();
 
@@ -88,7 +88,7 @@ namespace CapaToursAPI.Controllers.Admin
             using (var context = new SqlConnection(_configuration.GetSection("ConnectionStrings:BDConnection").Value))
             {
                 var result = context.Execute("EditarTour",
-                    new { model.TourID, model.Nombre, model.Destino, model.Precio, model.Capacidad, model.FechaInicio, model.FechaFin, model.Descripcion, model.Itinerario });
+                    new { model.TourID, model.Nombre, model.Destino, model.Precio, model.Capacidad, model.FechaInicio, model.FechaFin, model.Descripcion, model.Itinerario, model.Imagen });
 
                 var respuesta = new RespuestaModel();
 
