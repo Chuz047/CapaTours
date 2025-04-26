@@ -17,6 +17,8 @@ namespace CapaToursAPI.Controllers
             _connectionString = configuration.GetConnectionString("BDConnection");
         }
 
+        #region CapturarError
+
         [HttpPost("CapturarError")]
         public IActionResult CapturarError([FromBody] ErrorModel error)
         {
@@ -37,5 +39,7 @@ namespace CapaToursAPI.Controllers
                 return StatusCode(500, new { mensaje = "Error al registrar en la base de datos", detalle = ex.Message });
             }
         }
+
+        #endregion
     }
 }

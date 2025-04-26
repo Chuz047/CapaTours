@@ -18,6 +18,8 @@ namespace CapaToursAPI.Controllers.Cliente
             _configuration = configuration;
         }
 
+        #region Listado
+
         [HttpGet]
         [Route("ListadoCliente")]
         public IActionResult ConsultarToursCliente(long? TourID) 
@@ -63,5 +65,6 @@ namespace CapaToursAPI.Controllers.Cliente
                 return Ok(respuesta);
             }
         }
+        #endregion
     }
 }

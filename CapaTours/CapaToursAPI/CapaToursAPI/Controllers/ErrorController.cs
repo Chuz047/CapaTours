@@ -18,6 +18,8 @@ namespace CapaToursAPI.Controllers
             _configuration = configuration;
         }
 
+        #region CapturarError
+
         [Route("CapturarError")]
         public IActionResult CapturarError()
         {
@@ -56,5 +58,7 @@ namespace CapaToursAPI.Controllers
                 Mensaje = "Se presentó un problema en el sistema"
             });
         }
+
+        #endregion
     }
 }

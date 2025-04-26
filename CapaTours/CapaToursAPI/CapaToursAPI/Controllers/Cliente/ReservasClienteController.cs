@@ -1,9 +1,8 @@
-﻿using CapaToursAPI.Models;
+﻿using System.Data;
+using CapaToursAPI.Models;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using System.Data;
 
 namespace CapaToursAPI.Controllers.Cliente
 {
@@ -17,6 +16,8 @@ namespace CapaToursAPI.Controllers.Cliente
         {
             _configuration = configuration;
         }
+
+        #region ReservarTour
 
         [HttpPost("ReservarTour")]
         public IActionResult ReservarTour([FromBody] ReservaModel model)
@@ -40,6 +41,10 @@ namespace CapaToursAPI.Controllers.Cliente
                 return BadRequest(new { mensaje = ex.Message });
             }
         }
+
+        #endregion
+
+        #region Listado
 
         [HttpGet("ListadoCliente")]
         public IActionResult ListadoCliente([FromQuery] long usuarioID)
@@ -69,6 +74,10 @@ namespace CapaToursAPI.Controllers.Cliente
                 return Ok(respuesta);
             }
         }
+
+        #endregion
+
+        #region PagarReserva
 
         [HttpGet]
         [Route("PagarReserva")]
@@ -145,6 +154,10 @@ Equipo de CapaTours
             }
         }
 
+        #endregion
+
+        #region AnularReserva
+
         [HttpGet("AnularReserva")]
         public IActionResult AnularReserva([FromQuery] long reservaID)
         {
@@ -174,6 +187,8 @@ Equipo de CapaTours
                 });
             }
         }
+
+        #endregion
 
     }
 }

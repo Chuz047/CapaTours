@@ -87,6 +87,8 @@ namespace CapaToursAPI.Controllers
 
         #endregion
 
+        #region ObtenerUsuarioPorCorreo
+
         [HttpGet("ObtenerUsuarioPorCorreo/{correo}")]
         public IActionResult ObtenerUsuarioPorCorreo(string correo)
         {
@@ -100,6 +102,10 @@ namespace CapaToursAPI.Controllers
                 return Ok(result);
             }
         }
+
+        #endregion
+
+        #region EnviarRecuperacion
 
         [HttpPost("EnviarRecuperacion")]
         public IActionResult EnviarRecuperacion([FromBody] string correo)
@@ -145,8 +151,9 @@ namespace CapaToursAPI.Controllers
             }
         }
 
+        #endregion
 
-
+        #region RestablecerContrasenna
 
         [HttpPut("RestablecerContrasenna")]
         public IActionResult RestablecerContrasenna([FromBody] UsuarioModel model)
@@ -164,6 +171,10 @@ namespace CapaToursAPI.Controllers
                 return BadRequest(new { mensaje = "No se pudo actualizar la contraseña" });
             }
         }
+
+        #endregion
+
+        #region ActualizarPerfil
 
         [HttpPut("ActualizarPerfil")]
         public IActionResult ActualizarPerfil([FromBody] UsuarioModel model)
@@ -185,10 +196,9 @@ namespace CapaToursAPI.Controllers
             }
         }
 
+        #endregion
 
-
-
-        #region Otros Métodos
+        #region GenerarToken
         private string GenerarToken(long UsuarioID, long RolID)
         {
             string? SecretKey = _configuration.GetSection("Variables:llaveCifrado").Value!;

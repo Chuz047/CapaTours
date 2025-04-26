@@ -15,6 +15,7 @@ namespace CapaTours.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
+        #region CapturarErrorPrueba
         public async Task<IActionResult> CapturarError()
         {
             try
@@ -28,7 +29,9 @@ namespace CapaTours.Controllers
                 return View("Error"); // Puedes redirigir a la vista que desees
             }
         }
+        #endregion
 
+        #region EnviarErrorApi
         private async Task EnviarErrorApi(long usuarioId, string mensaje, string origen)
         {
             try
@@ -55,6 +58,7 @@ namespace CapaTours.Controllers
                 // Silenciar el error si falla la comunicación con el API
             }
         }
+        #endregion
     }
 }
 

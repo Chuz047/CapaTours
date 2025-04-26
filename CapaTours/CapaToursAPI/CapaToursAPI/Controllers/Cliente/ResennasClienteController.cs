@@ -1,10 +1,7 @@
-﻿
-using CapaToursAPI.Models;
+﻿using CapaToursAPI.Models;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using System.Data;
 namespace CapaToursAPI.Controllers.Cliente
 {
     [Route("api/[controller]")]
@@ -17,6 +14,8 @@ namespace CapaToursAPI.Controllers.Cliente
         {
             _configuration = configuration;
         }
+
+        #region CrearResenna
 
         [HttpPost]
         [Route("CrearResenna")]
@@ -60,10 +59,8 @@ namespace CapaToursAPI.Controllers.Cliente
             return Ok(respuesta);
         }
 
-       
-
+        #endregion
 
     }
-
 
 }

@@ -1,6 +1,5 @@
 ﻿using CapaToursAPI.Models;
 using Dapper;
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using System.Data;
@@ -17,6 +16,8 @@ namespace CapaToursAPI.Controllers.Admin
         {
             _configuration = configuration;
         }
+
+        #region Listado
 
         [HttpGet("ListadoAdmin")]
         public IActionResult ListadoAdmin()
@@ -45,6 +46,10 @@ namespace CapaToursAPI.Controllers.Admin
                 return Ok(respuesta);
             }
         }
+
+        #endregion
+
+        #region AnularReserva
 
         [HttpGet("AnularReserva")]
         public IActionResult AnularReserva([FromQuery] long reservaID)
@@ -75,6 +80,8 @@ namespace CapaToursAPI.Controllers.Admin
                 });
             }
         }
+
+        #endregion
 
     }
 }

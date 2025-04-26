@@ -18,7 +18,7 @@ namespace CapaToursAPI.Controllers.Admin
             _configuration = configuration;
         }
 
-        #region ListadoAdmin
+        #region Listado
 
         [HttpGet]
         [Route("ListadoAdmin")]
@@ -48,6 +48,8 @@ namespace CapaToursAPI.Controllers.Admin
         }
 
         #endregion
+
+        #region DesactivarUsuario
         [HttpPut]
         [Route("DesactivarUsuario")]
         public IActionResult DesactivarUsuario([FromBody] long usuarioID)
@@ -72,6 +74,11 @@ namespace CapaToursAPI.Controllers.Admin
                 return Ok(respuesta);
             }
         }
+
+        #endregion
+
+        #region ActivarUsuario
+
         [HttpPut]
         [Route("ActivarUsuario")]
         public IActionResult ActivarUsuario([FromBody] long usuarioID)
@@ -97,6 +104,7 @@ namespace CapaToursAPI.Controllers.Admin
             }
         }
 
+        #endregion
 
     }
 }

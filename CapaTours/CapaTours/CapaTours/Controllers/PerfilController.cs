@@ -14,15 +14,7 @@ namespace CapaTours.Controllers
             _usuarioService = usuarioService;
         }
 
-        public override void OnActionExecuting(ActionExecutingContext context)
-        {
-            if (HttpContext.Session.GetString("Correo") == null)
-            {
-                context.Result = RedirectToAction("Login", "Autenticacion");
-                return;
-            }
-            base.OnActionExecuting(context);
-        }
+        #region Vista de Perfil
 
         public async Task<IActionResult> Index()
         {
@@ -32,10 +24,24 @@ namespace CapaTours.Controllers
             if (usuario == null)
                 return RedirectToAction("Login", "Autenticacion");
 
-            // Armar nombre completo en propiedad Nombre
             usuario.Nombre = $"{usuario.Nombre} {usuario.ApellidoPaterno} {usuario.ApellidoMaterno}".Trim();
 
             return View(usuario);
         }
+
+        #endregion
+
+        #region Otros Métodos
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            if (HttpContext.Session.GetString("Correo") == null)
+            {
+                context.Result = RedirectToAction("Login", "Autenticacion");
+                return;
+            }
+            base.OnActionExecuting(context);
+        }
+        #endregion
+
     }
 }

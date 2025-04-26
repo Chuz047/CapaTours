@@ -15,6 +15,7 @@ namespace CapaTours.Controllers
             _httpClient = httpClient;
         }
 
+        #region CapturarError
         public IActionResult CapturarError()
         {
             try
@@ -45,4 +46,5 @@ namespace CapaTours.Controllers
             return View("CapturarError");
         }
     }
+    #endregion
 }

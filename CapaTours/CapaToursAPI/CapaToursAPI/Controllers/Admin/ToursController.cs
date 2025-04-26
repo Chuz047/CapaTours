@@ -18,7 +18,7 @@ namespace CapaToursAPI.Controllers.Admin
             _configuration = configuration;
         }
 
-        #region ListadoAdmin
+        #region Listado
 
         [HttpGet]
         [Route("ListadoAdmin")]
