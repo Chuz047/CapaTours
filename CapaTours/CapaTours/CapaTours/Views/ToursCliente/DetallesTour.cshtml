@@ -1,0 +1,146 @@
+﻿@model CapaTours.Models.TourModel
+
+@{
+    ViewBag.Title = "Detalles del Tour";
+}
+
+<div class="row px-5">
+    <div class="col-12 px-0">
+        <div class="row mx-1 mb-4">
+            <div class="col-auto">
+                <a class="btn btn-secondary btn-sm" asp-controller="ToursCliente" asp-action="ListadoCliente">
+                    <i class="fa-solid fa-arrow-left"></i> Regresar
+                </a>
+            </div>
+        </div>
+
+        <!-- Modal de éxito -->
+        @if (TempData["mensaje"] != null)
+        {
+            <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content border-success">
+                        <div class="modal-header bg-success text-white">
+                            <h5 class="modal-title" id="successModalLabel">¡Éxito!</h5>
+                        </div>
+                        <div class="modal-body">
+                            <p>@TempData["mensaje"]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- Modal de error -->
+        @if (TempData["error"] != null)
+        {
+            <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content border-danger">
+                        <div class="modal-header bg-danger text-white">
+                            <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                        </div>
+                        <div class="modal-body">
+                            <p>@TempData["error"]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="container mt-5">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="display-3 px-0">@Model.Nombre</h1>
+                    <div class="text-muted mt-3">
+                        <strong>¡Disfrute de un recorrido completo!</strong> El precio incluye transporte y almuerzo. Asegúrese de conocer todos los detalles antes de realizar su reserva.
+                    </div>
+                    <ul class="list-group list-group-flush mt-3">
+                        <li class="list-group-item"><strong>Destino:</strong> @Model.Destino</li>
+                        <li class="list-group-item"><strong>Descripción:</strong> @Model.Descripcion</li>
+                        <li class="list-group-item"><strong>Itinerario:</strong> @Model.Itinerario</li>
+                        <li class="list-group-item"><strong>Precio:</strong> ₡@Model.Precio</li>
+                        <li class="list-group-item"><strong>Capacidad:</strong> @Model.Capacidad</li>
+                        <li class="list-group-item"><strong>Fecha de Inicio:</strong> @Model.FechaInicio</li>
+                        <li class="list-group-item"><strong>Fecha de Fin:</strong> @Model.FechaFin</li>
+                    </ul>
+                    <button class="btn btn-lg mt-3" style="background-color: #7B9C36; color: white;" data-bs-toggle="modal" data-bs-target="#reservarTourModal">
+                        ¡Reserve hoy! <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                    @if (Model.Resennas != null && Model.Resennas.Count > 0)
+                    {
+                        <h4 class="mt-5 mb-3">Reseñas del Tour</h4>
+                        <div class="row">
+                            @foreach (var resenna in Model.Resennas)
+                            {
+                                <div class="col-md-6 mb-3">
+                                    <div class="card shadow-sm">
+                                        <div class="card-body">
+                                            <p class="text-muted small">por @resenna.NombreUsuario</p>
+                                            <h5 class="card-title">@resenna.Titulo</h5>
+                                            <p class="card-text text-truncate" style="max-height: 3em;">@resenna.Contenido</p>
+                                            <p class="text-warning mb-1">@resenna.Calificacion / 5 ⭐</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+
+                <div class="col-md-6 text-center">
+                    <img src="@Model.Imagen" alt="Imagen de Tour" class="img-fluid rounded shadow"
+                         style="width: 100%; height: 518px; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Reservar Tour -->
+<div class="modal fade" id="reservarTourModal" tabindex="-1" aria-labelledby="reservarTourModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            @using (Html.BeginForm("ReservarTour", "ToursCliente", FormMethod.Post))
+            {
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reservarTourModalLabel">¡Asegure su lugar en el tour!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="CantidadPersonas" class="form-label">Indique la cantidad de personas para la reserva:</label>
+                    <input type="number" name="CantidadPersonas" class="form-control" min="1" required />
+                    <input type="hidden" name="TourID" value="@Model.TourID" />
+                    <input type="hidden" name="UsuarioID" value="@ViewBag.UsuarioID" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn" style="background-color:#44572f; color:white">Reservar</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        window.onload = function () {
+        @if (TempData["mensaje"] != null)
+        {
+            <text>
+                            var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                            successModal.show();
+            </text>
+        }
+        @if (TempData["error"] != null)
+        {
+            <text>
+                            var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                            errorModal.show();
+            </text>
+        }
+        };
+    </script>
+}

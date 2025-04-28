@@ -1,0 +1,55 @@
+﻿@model CapaTours.Models.UsuarioModel
+
+@{
+    ViewData["Title"] = "Restablecer Contraseña";
+    Layout = "_LayoutExterno";
+}
+
+<body style="background-color: #B9C9A4;">
+    <div class="cards-autenticacion">
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card-autenticacion o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image" style="background-image: url('/img/backgrounds/restablecercontrasenna.jpg');"></div>
+
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Restablecer Contraseña</h1>
+                                        <h1 class="h6 text-gray-600 mb-4">Ingrese su nueva contraseña.</h1>
+                                    </div>
+
+                                    @if (ViewBag.Msj != null)
+                                    {
+                                        <div class="alert alert-danger text-center">@ViewBag.Msj</div>
+                                    }
+
+                                    <form asp-action="RestablecerContrasenna" asp-controller="Autenticacion" method="post">
+                                        <div class="form-group">
+                                            <input asp-for="Contrasenna" class="form-control input-lg" type="password" placeholder="Nueva contraseña" required />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input name="ConfirmarContrasenna" class="form-control input-lg" type="password" placeholder="Confirmar contraseña" required />
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary btn-user btn-block" style="background-color: #44572f;">
+                                            Restablecer
+                                        </button>
+                                    </form>
+
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small" href="@Url.Action("Login","Autenticacion")" style="color: #44572f;">Volver al inicio de sesión</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

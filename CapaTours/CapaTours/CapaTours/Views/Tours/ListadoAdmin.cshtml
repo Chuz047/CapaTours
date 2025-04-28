@@ -1,0 +1,162 @@
+﻿@model List<CapaTours.Models.TourModel>
+
+<div class="row px-5">
+	<div class="col-12">
+		<div class="row">
+			<div class="col-6">
+				<div class="display-3 px-0">Tours</div>
+				<div class="text-muted px-0 fst-italic">Creación y administración de los tours disponibles en la plataforma.</div>
+				<br>
+			</div>
+		</div>
+		<a href="@Url.Action("CrearTour", "Tours")" id="AgregarNuevoPersonal" class="btn mb-0 nowrap" style="white-space: nowrap; background-color: #44572f; color: white">
+			<i class="fa-solid fa-plus"></i> Crear Tour
+		</a>
+		<div class="row mt-3 mb-2"></div>
+		<div class="row">
+			<div class="col-12 px-0">
+				<div class="table-responsive shadow-lg" style="background-color: #f9f9f9; border-left: 5px solid #44572f; border-radius: 10px;">
+
+					@if (@ViewBag.Msj != null)
+					{
+						<div class="alert alert-default text-center" role="alert">
+							@ViewBag.Msj
+						</div>
+					}
+
+					<table id="example" class="table table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>Nombre</th>
+								<th>Destino</th>
+								<th>Precio por Persona</th>
+								<th>Capacidad</th>
+								<th>Fecha de Inicio</th>
+								<th>Fecha de Fin</th>
+								<th>Estado</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var item in Model)
+							{
+								<tr>
+									<td>@item.Nombre</td>
+									<td>@item.Destino</td>
+									<td>@item.Precio</td>
+									<td>@item.Capacidad</td>
+									<td>
+										@if (item.FechaInicio == null || item.FechaFin == null)
+										{
+											<span class="text-muted">N/A</span>
+										}
+										else
+										{
+											@item.FechaInicio
+										}
+									</td>
+
+									<td>
+										@if (item.FechaInicio == null || item.FechaFin == null)
+										{
+											<span class="text-muted">N/A</span>
+										}
+										else
+										{
+											@item.FechaFin
+										}
+									</td>
+									<td>@(item.Estado ? "Activo" : "Inactivo")</td>
+									<td class="text-center">
+										<a class="btn btn-sm" style="background-color: #7B9C36; color:white" asp-controller="Tours" asp-action="EditarTour" asp-route-TourID="@item.TourID">
+											@if (item.FechaInicio == null || item.FechaFin == null)
+											{
+												<i class="fa-regular fa-calendar-plus"></i>
+												@:Agregar Fechas
+											}
+											else
+											{
+												<i class="fas fa-edit"></i>
+												@:Editar Detalles
+											}
+										</a>
+
+										@if (item.FechaInicio != null && item.FechaFin != null)
+										{
+											@if (item.Estado)
+											{
+												<form method="post" asp-controller="Tours" asp-action="DesactivarTour" class="d-inline">
+													<input type="hidden" name="tourID" value="@item.TourID" />
+													<button type="submit" class="btn btn-sm btn-danger me-1">
+														<i class="fa-regular fa-circle-xmark"></i> Desactivar Tour
+													</button>
+												</form>
+											}
+											else
+											{
+												<form method="post" asp-controller="Tours" asp-action="ActivarTour" class="d-inline">
+													<input type="hidden" name="tourID" value="@item.TourID" />
+													<button type="submit" class="btn btn-sm" style="background-color: #7B9C36; color:white">
+														<i class="fa-regular fa-circle-check"></i> Activar Tour
+													</button>
+												</form>
+											}
+										}
+										else
+										{
+											<button class="btn btn-sm btn-secondary" disabled>
+												<i class="fa-regular fa-circle-xmark"></i> Fechas No Disponibles
+											</button>
+										}
+
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@* Modal de Aplicar Descuento *@
+<div class="modal fade" id="aplicarDescuentoModal" tabindex="-1" aria-labelledby="aplicarDescuentoModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="aplicarDescuentoModalLabel">Aplicar Descuento</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<label for="descuentoInput" class="form-label">Ingrese el porcentaje de descuento:</label>
+				<input type="number" class="form-control" id="descuentoInput" placeholder="Ejemplo: 10">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn" style="background-color:#44572f; color:white" id="confirmarDescuentoBtn">Aplicar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+@* DataTable *@
+<script>
+	$(document).ready(function () {
+
+		$("#example").DataTable({
+			language: {
+				url: '//cdn.datatables.net/plug-ins/2.1.8/i18n/es-ES.json',
+			},
+			responsive: true,
+			columnDefs: [
+				{
+					targets: [2],
+					className: 'text-center'
+				}
+			],
+			order: [[0, 'desc']]
+		});
+
+	});
+</script>

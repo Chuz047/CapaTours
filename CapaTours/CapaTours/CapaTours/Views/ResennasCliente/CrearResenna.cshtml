@@ -1,0 +1,129 @@
+﻿@model CapaTours.Models.ResennaModel
+
+<div class="row px-5">
+	<div class="col-12 px-0">
+		<div class="row mx-1 mb-4">
+			<div class="col-auto">
+				<a class="btn btn-secondary btn-sm" asp-controller="ReservasCliente" asp-action="ListadoCliente">
+					<i class="fa-solid fa-arrow-left"></i> Regresar
+				</a>
+			</div>
+		</div>
+
+		<!-- Encabezado -->
+		<div class="row mx-1 mb-4">
+			<div class="display-3 px-0 col-12">Creación de Reseñas</div>
+			<div class="text-muted px-0">Complete el formulario para agregar una nueva reseña.</div>
+		</div>
+
+		<!-- Contenedor del Formulario -->
+		<div class="mt-4 p-5 rounded shadow-lg" style="background-color: #f9f9f9; border-left: 5px solid #44572F;">
+
+			<form asp-action="CrearResenna" asp-controller="ResennasCliente">
+
+				<h5 class="text mt-4">Información de la Reseña</h5>
+				<hr>
+				<div class="row g-3 mt-2">
+					<!-- Calificación -->
+					<div class="container text-center mt-5">
+						<h3>Califique su experiencia</h3>
+						<div id="star-rating">
+							<i class="fas fa-star star" data-value="1"></i>
+							<i class="fas fa-star star" data-value="2"></i>
+							<i class="fas fa-star star" data-value="3"></i>
+							<i class="fas fa-star star" data-value="4"></i>
+							<i class="fas fa-star star" data-value="5"></i>
+						</div>
+						<p id="rating-value" class="mt-2">Calificación: 0</p>
+					</div>
+
+				</div>
+				<!-- Título -->
+				<div class="row g-3 mt-2">
+					<div class="col-md-12">
+						<div class="form-floating">
+							<label>Título</label>
+							<input type="text" class="form-control input-lg" asp-for="Titulo" placeholder="Título" required>
+						</div>
+					</div>
+				</div>
+				<!-- Comentarios -->
+				<div class="row g-3 mt-2">
+					<div class="col-md-12">
+						<div class="form-floating">
+							<label>Comentarios</label>
+							<input type="text" class="form-control input-lg" asp-for="Contenido" placeholder="Comentarios" required>
+						</div>
+					</div>
+				</div>
+
+				<input type="hidden" asp-for="UsuarioID" />
+				<input type="hidden" asp-for="TourID" />
+				<input type="hidden" asp-for="ReservaID" />
+				<input type="hidden" id="Calificacion" name="Calificacion" value="0" />
+
+				<!-- Botón Guardar -->
+				<div class="row g-2 mt-4">
+					<div class="col-md">
+						<button type='submit' class='btn w-100' style='background-color: #44572F; color: white;'>
+							<i class='fa-solid fa-check'></i> Crear Reseña
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+	window.onload = function () {
+		const stars = document.querySelectorAll(".star");
+		const ratingValue = document.getElementById("rating-value");
+		const ratingInput = document.getElementById("Calificacion");
+
+		stars.forEach(star => {
+			star.addEventListener("click", function () {
+				const rating = parseInt(this.getAttribute("data-value"));
+
+				// Set text feedback
+				ratingValue.textContent = `Calificación: ${rating}`;
+
+				// Update hidden input value for form submission
+				ratingInput.value = rating;
+
+				// Visual update of stars
+				stars.forEach((s, index) => {
+					s.classList.remove("selected");
+					s.style.color = index < rating ? 'gold' : 'gray';
+					if (index < rating) {
+						s.classList.add("selected");
+					}
+				});
+			});
+		});
+	};
+</script>
+
+@* <script>
+	window.onload = function() {
+		const stars = document.querySelectorAll(".star");
+		const ratingValue = document.getElementById("rating-value");
+
+		stars.forEach(star => {
+			star.addEventListener("click", function() {
+				const rating = this.getAttribute("data-value");
+				ratingValue.textContent = `Calificación: ${rating}`;
+
+				stars.forEach(s => {
+					s.classList.remove("selected");
+					s.style.color = 'gray';
+				});
+
+				for (let i = 0; i < rating; i++) {
+					stars[i].classList.add("selected");
+					stars[i].style.color = 'gold';
+				}
+			});
+		});
+	};
+</script> *@

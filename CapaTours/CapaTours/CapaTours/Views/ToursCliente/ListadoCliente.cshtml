@@ -1,0 +1,50 @@
+﻿@model List<CapaTours.Models.TourModel>
+
+<div class="row px-5">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-6">
+                <div class="display-3 px-0">Tours Disponibles</div>
+                <div class="text-muted mt-3">
+                    <strong>¿Está listo para su próxima aventura?</strong>
+                    Puede reservar su tour directamente desde los detalles de cada experiencia. ¡Haga clic en "Detalles" para conocer más y asegurar su lugar!
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3 mb-2"></div>
+        <div class="row">
+            <div class="col-12 px-0">
+                <div class="col-12">
+                    <div class="row" id="itemList">
+
+                        @if (Model.Count > 0)
+                        {
+                            @foreach (var tour in Model.Where(t => t.Estado == true))
+                            {
+                                <div class="col-3 mb-4 item-card" data-name="@tour.Nombre" data-id="@tour.TourID">
+                                    <div class="card card-hover card-with-border">
+                                        <img src="@tour.Imagen" alt="@tour.Nombre" class="img-thumbnail">
+                                        <div class="card-body">
+                                            <h5 class="card-title">@tour.Nombre</h5>
+                                            <p class="card-text"><i class="fa-solid fa-location-dot"></i> @tour.Destino</p>
+                                            <a class="btn" style="background-color: #7B9C36; color:white" asp-controller="ToursCliente" asp-action="DetallesTour" asp-route-id="@tour.TourID">
+                                                <i class="fas fa-eye"></i> Detalles
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="col-12 text-center">
+                                <p>No hay tours disponibles en este momento.</p>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
