@@ -11,13 +11,11 @@ promotions. Built using C#, CSS, HTML, Javascript, Microsoft SQL Server and SCSS
     - 📋 **List View**: Displays all tours in a table with key details and tour status (Pending, In Progress, Completed).
     - ✏️ **Edit**: Modify existing tours using a pre-filled form.
     - ❌ **Deactivate**: Option to disable outdated or unavailable tours.
-    - 🎟️ **Promotions**: Apply or remove discounts for specific tours.
 - **Client Management** 👥📜
     - 📋 **List View**: Displays all registered clients in a table with key information.
     - 🚫 **Account Deactivation**: Confirmation modal to deactivate a client account.
 - **Reservations Management** 📅📑
     - 📋 **List View**: Displays all reservations along with relevant details.
-    - 🔎 **Filters**: Search and filter by ID/passport number.
     - 💵 **Payment Details**: Modal displaying payment information for a reservation.
     - ❌ **Cancel Reservations**: Option to manually cancel a reservation.
 
